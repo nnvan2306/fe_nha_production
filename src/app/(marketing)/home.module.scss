@@ -1,0 +1,63 @@
+.form-home {
+    width           : 100vw;
+    height          : 100vh;
+    background-image: linear-gradient(to bottom, #84fab0, #8fd3f4);
+
+    .thubnail-left {
+        animation: show-thumbnail-left 1.5s ease-in-out forwards;
+
+    }
+
+    .content-home {
+        .form-control-home {
+            button {
+                &:hover {
+                    animation: hover-button 0.3s ease-in-out forwards;
+                }
+            }
+        }
+    }
+
+    .thumbnail-right {
+        animation: show-thumbnail-right 1.5s ease-in-out forwards;
+    }
+}
+
+
+
+@keyframes show-thumbnail-left {
+    0% {
+        opacity    : 0;
+        margin-left: -50%;
+    }
+
+    100% {
+        margin-left: 50%;
+        opacity    : 1;
+    }
+}
+
+
+@keyframes show-thumbnail-right {
+    0% {
+        opacity    : 0;
+        margin-left: 150%;
+    }
+
+    100% {
+        margin-right: 50%;
+        opacity     : 1;
+    }
+}
+
+
+@keyframes hover-button {
+    0% {}
+
+    100% {
+        margin    : 0 10px;
+        width     : 220px;
+        height    : 80px;
+        margin-top: -10px;
+    }
+}
