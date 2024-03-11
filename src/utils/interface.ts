@@ -23,4 +23,12 @@ export interface GroupRoute {
         label:string,
         url:string
     },
+    login:{
+        label:string,
+        url:string,
+    },
+    register:{
+        label:string,
+        url:string,
+    }
 }

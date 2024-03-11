@@ -63,12 +63,17 @@ const Header: React.FC = () => {
                 </Col>
                 <Col span={5}>
                     <div className="text-[#fff] flex justify-center items-center">
-                        <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
-                            Đăng Nhập
-                        </button>
-                        <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
-                            Đăng Ký
-                        </button>
+                        <Link href={routes.login.url}>
+                            <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
+                                Đăng Nhập
+                            </button>
+                        </Link>
+
+                        <Link href={routes.register.url}>
+                            <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
+                                Đăng Ký
+                            </button>
+                        </Link>
                     </div>
                 </Col>
             </Row>

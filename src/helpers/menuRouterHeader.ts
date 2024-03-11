@@ -24,5 +24,13 @@ export const routes : GroupRoute  ={
     booking:{
         label:'booking',
         url:'/home/detail/booking',
+    },
+    login:{
+        label:'login',
+        url:'/auth/login',
+    },
+    register:{
+        label:'register',
+        url:'/auth/register',
     }
 }
