@@ -17,3 +17,17 @@ ul {
 .ant-btn-primary {
     background-color: #1677ff !important;
 }
+
+.ant-menu-item-selected{
+    background-color: #3F1052 !important;
+    border-bottom: 3px solid #fff !important;
+}
+
+.ant-menu{
+    display: flex !important;
+    justify-content: center;
+
+    .ant-menu-item{
+        padding: 0 20px;
+    }
+}
