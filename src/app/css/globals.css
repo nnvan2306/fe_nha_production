@@ -6,7 +6,9 @@
 
 
 :root{
-  --height-header:80px
+  --height-header:80px;
+  --box-shadow-div:  rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
 }
 
 
