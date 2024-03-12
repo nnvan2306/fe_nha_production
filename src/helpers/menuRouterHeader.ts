@@ -1,6 +1,6 @@
-import { GroupRoute } from "@/utils/interface";
+import { IGroupRoute } from "@/utils/interface";
 
-export const routes : GroupRoute  ={
+export const routes : IGroupRoute  ={
     match:{
         label:'match',
         url:'/home/detail/match',
@@ -11,7 +11,7 @@ export const routes : GroupRoute  ={
     },
     rank:{
         label:'rank',
-        url:'/home/detail/rank',
+        url:'/home/rating',
     },
     statistic:{
         label:'statistic',

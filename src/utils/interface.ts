@@ -1,7 +1,4 @@
-
-
-
-export interface GroupRoute {
+export interface IGroupRoute {
     match: {
         label:string,
         url:string
@@ -34,4 +31,23 @@ export interface GroupRoute {
         label:string,
         url:string,
     }
+}
+
+
+export interface IDataLogin {
+    email:string,
+    password:string,
+}
+
+export interface IDataRegister {
+    email:string,
+    name:string,
+    password:string,
+    rePassword:string,
+}
+
+export interface IRaking {
+    message:string,
+    errorCode:number,
+    data:[]
 }
