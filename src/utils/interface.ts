@@ -46,8 +46,42 @@ export interface IDataRegister {
     rePassword:string,
 }
 
-export interface IRaking {
+export interface IRes<T> {
     message:string,
     errorCode:number,
-    data:[]
+    data:T,
+}
+
+export interface ISeason {
+    id:number,
+    index:number,
+    name:string,
+    description:string,
+    des_text:string,
+}
+
+export interface IListSeason {
+    value:number,
+    label:string,
+}
+
+export interface IRating{
+    id:number,
+    win:number,
+    lose:number,
+    draw:number,
+    totalGoal:number,
+    totalLostGoal:number,
+    seasonId:number,
+    teamId:number,
+    // Team:T |undefined,
+}
+
+export interface ITeam {
+    id:number,
+    code:number,
+    name:string,
+    logo_url:string,
+    description:string,
+    des_text:string,
 }

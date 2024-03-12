@@ -11,7 +11,7 @@ export const routes : IGroupRoute  ={
     },
     rank:{
         label:'rank',
-        url:'/home/rating',
+        url:'/home/rating/1',
     },
     statistic:{
         label:'statistic',

@@ -1,11 +1,11 @@
-"use server"
+// "use server"
 
-import { IRaking } from "@/utils/interface"
+// import { IRes } from "@/utils/interface"
 
-export const  Login = async(seasonId : number | 1) : Promise<IRaking>=>{
-    const res = await fetch(`${process.env.BASE_URL}/get-rating?seasonId=${seasonId}`,{
-        cache: "no-store",
-    })
-    const data =await res.json();
-    return data;
-}
+// export const  getRatingAction = async(seasonId : number | 1) : Promise<IRes<>>=>{
+//     const res = await fetch(`${process.env.BASE_URL}/get-rating?seasonId=${seasonId}`,{
+//         cache: "no-store",
+//     })
+//     const data =await res.json();
+//     return data;
+// }
