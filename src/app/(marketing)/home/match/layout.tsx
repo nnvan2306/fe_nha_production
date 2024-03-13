@@ -3,11 +3,11 @@ import className from "classnames/bind";
 import styles from "./Match.module.scss";
 import { useEffect, useState } from "react";
 import { getAllSeasonAction } from "@/action/seasonAction";
-import { IDataSearchMatch, IList, ISeason } from "@/utils/interface";
+import { IDataSearchMatch, IList, IMatch, ISeason } from "@/utils/interface";
 import { getAllTeamAction } from "@/action/teamAction";
 import { useRouter } from "next/navigation";
 import { routes } from "@/helpers/menuRouterHeader";
-import { Button } from "antd";
+import { Button, Empty } from "antd";
 import { getMatchAction } from "@/action/matchAction";
 
 const cx: Function = className.bind(styles);
@@ -23,6 +23,7 @@ export default function LayoutMatch({
     const [hostId, setHostId] = useState<number>(0);
     const [guestId, setGuestId] = useState<number>(0);
     const [loadings, setLoadings] = useState<boolean>(false);
+    const [listMatch, setListMatch] = useState<IMatch[]>([]);
 
     const router = useRouter();
 
@@ -81,10 +82,14 @@ export default function LayoutMatch({
         };
 
         const res = await getMatchAction(dataBuider);
-        console.log(res);
+        if (res.errorCode === 0) {
+            setListMatch(res.data);
+        }
 
         setLoadings(false);
     };
+
+    console.log(listMatch);
 
     return (
         <div className="w-[60%] h-[100%] ml-[50%] translate-x-[-50%] ">
@@ -160,6 +165,15 @@ export default function LayoutMatch({
                         Tìm kiếm
                     </Button>
                 </div>
+            </div>
+            {listMatch.length === 0 ? <Empty className="mt-[50px]" /> : <></>}
+
+            <div className="w-[100%]">
+                {listMatch &&
+                    listMatch.length > 0 &&
+                    listMatch.map((item: IMatch, index: number) => {
+                        return <div className="" key={index}></div>;
+                    })}
             </div>
 
             <div className="">{children}</div>
