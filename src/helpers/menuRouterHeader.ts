@@ -3,7 +3,7 @@ import { IGroupRoute } from "@/utils/interface";
 export const routes : IGroupRoute  ={
     match:{
         label:'match',
-        url:'/home/detail/match',
+        url:'/home/match',
     },
     blog:{
         label:'blog',

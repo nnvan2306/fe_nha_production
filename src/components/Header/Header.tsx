@@ -58,7 +58,6 @@ const Header: React.FC = () => {
                             items={menu}
                             className="bg-[#3F1052] text-[#fff]"
                         />
-                        ;
                     </div>
                 </Col>
                 <Col span={5}>

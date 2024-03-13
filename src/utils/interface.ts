@@ -60,8 +60,8 @@ export interface ISeason {
     des_text:string,
 }
 
-export interface IListSeason {
-    value:number,
+export interface IList {
+    value:number ,
     label:string,
 }
 
@@ -74,7 +74,7 @@ export interface IRating{
     totalLostGoal:number,
     seasonId:number,
     teamId:number,
-    // Team:T |undefined,
+    Team:ITeam |undefined,
 }
 
 export interface ITeam {
@@ -84,4 +84,18 @@ export interface ITeam {
     logo_url:string,
     description:string,
     des_text:string,
+}
+
+export interface IMatch {
+    id:number,
+    title:string,
+    meta:string,
+    date:string,
+    hour:string,
+    match_url:string,
+    hostGoal:number,
+    guestGoal:number,
+    hostId:number,
+    guestId:number,
+    seasonId:number,
 }
