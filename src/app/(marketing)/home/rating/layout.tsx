@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 const PageTableRating = ({ children }: { children: React.ReactNode }) => {
     const [listSeason, setListSeason] = useState<IList[]>([]);
-    const [seasonId, setSeasonId] = useState<number>(1);
+    const [seasonId, setSeasonId] = useState<number>(0);
 
     const router: AppRouterInstance = useRouter();
 
@@ -54,6 +54,7 @@ const PageTableRating = ({ children }: { children: React.ReactNode }) => {
                         })}
                 </select>
             </div>
+
             <div className="">{children}</div>
 
             <div className="w-[100%] h-[150px] mt-[20px]  rounded-[10px] shadow-sm bg-[#ddd]">

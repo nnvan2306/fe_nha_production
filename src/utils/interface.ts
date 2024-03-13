@@ -99,3 +99,9 @@ export interface IMatch {
     guestId:number,
     seasonId:number,
 }
+
+export interface IDataSearchMatch {
+    seasonId:number,
+    hostId:number,
+    guestId:number,
+}

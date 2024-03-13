@@ -1,6 +1,6 @@
 import { Empty } from "antd";
 
-export default function PageMatch() {
+export default function PageRating() {
     return (
         <div className="">
             <Empty />
