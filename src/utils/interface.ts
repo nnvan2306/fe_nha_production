@@ -98,6 +98,7 @@ export interface IMatch {
     hostId:number,
     guestId:number,
     seasonId:number,
+    Teams:ITeam[],
 }
 
 export interface IDataSearchMatch {
