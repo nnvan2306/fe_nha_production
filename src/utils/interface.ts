@@ -101,6 +101,20 @@ export interface IMatch {
     Teams:ITeam[],
 }
 
+export interface IPlayer {
+    id:number,
+    name:string,
+    code:number,
+    avatar_url:string,
+    nationality:string,
+    height:number,
+    weight:number,
+    birthday:Date,
+    teamId:number,
+    description:string,
+    des_text:string,
+}
+
 export interface IDataSearchMatch {
     seasonId:number,
     hostId:number,

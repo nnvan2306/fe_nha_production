@@ -57,7 +57,7 @@ const PageTableRating = ({ children }: { children: React.ReactNode }) => {
 
             <div className="">{children}</div>
 
-            <div className="w-[100%] h-[150px] mt-[20px]  rounded-[10px] shadow-sm bg-[#ddd]">
+            <div className="w-[100%]  mt-[20px]  rounded-[10px] shadow-sm bg-[#ddd]">
                 <Row>
                     <Col span={12} className="p-[20px]">
                         <p className="font-[700] mb-[10px]">

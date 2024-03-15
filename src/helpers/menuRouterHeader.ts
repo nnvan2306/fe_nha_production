@@ -7,7 +7,7 @@ export const routes : IGroupRoute  ={
     },
     blog:{
         label:'blog',
-        url:'/home/detail/blog',
+        url:'/home/blog',
     },
     rank:{
         label:'rank',
@@ -15,15 +15,15 @@ export const routes : IGroupRoute  ={
     },
     statistic:{
         label:'statistic',
-        url:'/home/detail/statistic'
+        url:'/home/statistic'
     },
     player:{
         label:'player',
-        url:'/home/detail/player',
+        url:'/home/player',
     },
     booking:{
         label:'booking',
-        url:'/home/detail/booking',
+        url:'/home/booking',
     },
     login:{
         label:'login',
