@@ -1,5 +1,7 @@
 "use client";
 
+import className from "classnames/bind";
+import styles from "./Match.module.scss";
 import { useEffect, useState } from "react";
 import { getAllSeasonAction } from "@/action/seasonAction";
 import { IDataSearchMatch, IList, IMatch, ISeason } from "@/utils/interface";
@@ -10,6 +12,8 @@ import { getMatchAction } from "@/action/matchAction";
 import Image from "next/image";
 import poster from "../../../../../public/poster.png";
 import { routes } from "@/helpers/menuRouterHeader";
+
+const cx: Function = className.bind(styles);
 
 export default function PageMatch() {
     const [listSeasons, setListSeasons] = useState<IList[]>([]);
@@ -159,21 +163,24 @@ export default function PageMatch() {
             </div>
             {listMatch.length === 0 ? <Empty className="mt-[50px]" /> : <></>}
 
-            <div className="w-[100%] grid grid-cols-2 gap-1">
+            <div className="w-[100%] grid grid-cols-2 gap-3">
                 {listMatch &&
                     listMatch.length > 0 &&
                     listMatch.map((item: IMatch, index: number) => {
                         return (
                             <>
                                 <div
-                                    className="w-[100%] h-[150px]  mx-[20px] flex border-[1px] cursor-pointer"
+                                    className={cx(
+                                        "item-match",
+                                        "w-[100%] h-[150px] border-[1px] border-solid border-[#ccc] flex cursor-pointer rounded-[5px]"
+                                    )}
                                     key={index}
                                     onClick={() =>
                                         handlePushDetailMatch(item.id)
                                     }
                                 >
-                                    <div className="w-[70%] h-[100%] border-r-[1px] flex justify-between">
-                                        <div className="w-[80%] mt-[35px]">
+                                    <div className="w-[70%] h-[100%]  flex justify-between">
+                                        <div className="w-[80%] mt-[45px]">
                                             <div className="w-[100%] flex items-center">
                                                 <Image
                                                     className="w-[30%] h-[30px] object-contain"
@@ -196,7 +203,7 @@ export default function PageMatch() {
                                             </div>
                                         </div>
 
-                                        <div className="w-[15%] mt-[35px]">
+                                        <div className="w-[15%] mt-[50px]">
                                             <div className="w-[100%] h-[30px] flex items-center">
                                                 <p>
                                                     {item.hostGoal}{" "}
@@ -211,7 +218,7 @@ export default function PageMatch() {
                                                 </p>
                                             </div>
 
-                                            <div className="w-[100%] h-[25px] flex items-center">
+                                            <div className="w-[100%] h-[50px] flex items-center">
                                                 <p>
                                                     {item.guestGoal}
                                                     {item.hostGoal <
@@ -226,11 +233,11 @@ export default function PageMatch() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="w-[30%] h-[100%]">
-                                        <p className="mt-[10px] text-center">
+                                    <div className="w-[30%] h-[100%] border-[1px] border-solid border-[#ccc]">
+                                        <p className="mt-[10px] mb-[2px] text-center">
                                             KT
                                         </p>
-                                        <p className="text-center">
+                                        <p className="text-center mb-[2px]">
                                             {item.date}
                                         </p>
                                         <div className=" w-[100px] h-[80px] ml-[50%] translate-x-[-50%] relative">

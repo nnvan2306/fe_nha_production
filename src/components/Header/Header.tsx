@@ -37,13 +37,16 @@ const Header: React.FC = () => {
     return (
         <div className="w-[100%] h-[100%] bg-[#3F1052]">
             <Row>
-                <Col span={5} className="flex">
-                    <div className="ml-[20px] w-[var(--height-header)] h-[var(--height-header)] object-cover overflow-hidden rounded-full">
+                <Col
+                    span={5}
+                    className="h-[var(--height-header)] flex items-center"
+                >
+                    <div className="ml-[20px] w-[var(--height-header)]  h-[var(--height-header)] flex items-center overflow-hidden rounded-full">
                         <Image
-                            className="w-[100%] h-[100%]"
+                            className="w-[70%] h-[70%] object-cover"
                             src={logo}
                             alt="logo_nha"
-                            objectFit="cover"
+                            // objectFit="cover"
                         ></Image>
                     </div>
                     <p className="text-[25px] text-[#fff] leading-[var(--height-header)] ml-[10px]">
@@ -61,15 +64,15 @@ const Header: React.FC = () => {
                     </div>
                 </Col>
                 <Col span={5}>
-                    <div className="text-[#fff] flex justify-center items-center">
+                    <div className=" flex justify-center items-center">
                         <Link href={routes.login.url}>
-                            <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
+                            <button className="bg-[#3F1052] w-[100px] h-[40px] mt-[20px] p-[10px] text-[#fff] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
                                 Đăng Nhập
                             </button>
                         </Link>
 
                         <Link href={routes.register.url}>
-                            <button className="w-[100px] h-[40px] mt-[20px] p-[10px] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
+                            <button className=" bg-[#3F1052] w-[100px] h-[40px] mt-[20px] p-[10px] text-[#fff] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
                                 Đăng Ký
                             </button>
                         </Link>

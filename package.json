@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.0",
     "antd": "^5.15.2",
     "bootstrap": "^5.3.2",
     "bootstrap-icons": "^1.11.1",
