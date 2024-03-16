@@ -113,6 +113,8 @@ export interface IPlayer {
     teamId:number,
     description:string,
     des_text:string,
+    location:number,
+    Team:ITeam,
 }
 
 export interface IDataSearchMatch {
