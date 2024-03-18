@@ -113,7 +113,7 @@ export interface IPlayer {
     teamId:number,
     description:string,
     des_text:string,
-    location:number,
+    location:string,
     Team:ITeam,
 }
 
@@ -138,8 +138,17 @@ export interface IStatistic{
     updatedAt:string,
     PlayerId:number,
     SeasonId:number,
+    rank:number,
     Season:{
         index:number,
         name:string,
+    },
+    Player:{
+        name:string ,
+        avatar_url:string,
+        Team:{
+            name:string ,
+            logo_url:string,
+        }
     }
 }

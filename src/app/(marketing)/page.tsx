@@ -1,6 +1,6 @@
 import className from "classnames/bind";
 import styles from "./home.module.scss";
-import { Button, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import Image from "next/image";
 import thumbnailRight from "../../../public/cup_thumbnail-right.png";
 import thumbnailLeft from "../../../public/logo_thumbnail-left.png";

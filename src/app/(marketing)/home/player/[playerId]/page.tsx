@@ -1,7 +1,7 @@
 "use client";
 
 import { getOnePlayerAction } from "@/action/playerAction";
-import { handleGetStatisticAction } from "@/action/statisticAction";
+import { handleGetStatisticPlayer } from "@/action/statisticAction";
 import { routes } from "@/helpers/menuRouterHeader";
 import { IPlayer, IStatistic } from "@/utils/interface";
 import { Col, Divider, Row } from "antd";
@@ -22,7 +22,7 @@ const PlayerDetail = ({
     useEffect(() => {
         const fetch = async () => {
             const res = await getOnePlayerAction(playerId);
-            const resStatistic = await handleGetStatisticAction(playerId);
+            const resStatistic = await handleGetStatisticPlayer(playerId);
             if (res.errorCode === 0 && resStatistic.errorCode === 0) {
                 setInfo(res.data);
 
@@ -40,7 +40,6 @@ const PlayerDetail = ({
         fetch();
     }, [playerId]);
 
-    console.log(info);
     const handleBack = () => {
         router.push(routes.player.url);
     };
@@ -180,13 +179,13 @@ const PlayerDetail = ({
                                 Vị trí :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.location === 1
+                                    {info?.location === "1"
                                         ? "Thủ môn"
-                                        : info?.location === 2
+                                        : info?.location === "2"
                                         ? "Trung vệ"
-                                        : info?.location === 3
+                                        : info?.location === "3"
                                         ? "Hậu vệ"
-                                        : info?.location === 4
+                                        : info?.location === "4"
                                         ? "Tiền vệ"
                                         : "Tiền đạo"}
                                 </span>

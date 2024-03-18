@@ -2,12 +2,13 @@
 
 import { getRatingAction } from "@/action/ratingAction";
 import { handleSortRating } from "@/helpers/handleSort";
-import { IRating, ITeam } from "@/utils/interface";
+import { IRating } from "@/utils/interface";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 
 const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
     const [listRating, setListRating] = useState<IRating[]>([]);
+
     useEffect(() => {
         const fetch = async () => {
             const res = await getRatingAction(id);
