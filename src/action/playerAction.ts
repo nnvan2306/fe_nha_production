@@ -11,7 +11,7 @@ export const getPlayerAction =async():Promise<IRes<IPlayer[]>>=>{
 }
 
 export const getOnePlayerAction = async(id:number):Promise<IRes<IPlayer>>=>{
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-player-active?playerId=${id}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-one-player?playerId=${id}`,{
         cache: "no-store",
     })
     const data = await res.json();

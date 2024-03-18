@@ -36,7 +36,7 @@ export default function PageLogin({
                     type="email"
                     id="email"
                     placeholder="enter your email"
-                    className="w-[100%] border-b-[1px] p-[10px] rounded-[10px]"
+                    className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px] "
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -51,7 +51,7 @@ export default function PageLogin({
                         type="text"
                         placeholder="Enter your password"
                         id="name"
-                        className="w-[100%] border-b-[1px] p-[10px] rounded-[10px]"
+                        className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px]"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
@@ -69,7 +69,7 @@ export default function PageLogin({
                     type="password"
                     placeholder="Enter your password"
                     id="password"
-                    className="w-[100%] border-b-[1px] p-[10px] rounded-[10px]"
+                    className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px]"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
@@ -85,7 +85,7 @@ export default function PageLogin({
                         type="password"
                         placeholder="Enter your password"
                         id="rePassword"
-                        className="w-[100%] border-b-[1px] p-[10px] rounded-[10px]"
+                        className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px]"
                         value={rePassword}
                         onChange={(e) => setRePassword(e.target.value)}
                     />
@@ -99,8 +99,8 @@ export default function PageLogin({
             </p>
 
             <div className="mt-[40px] w-[100%]">
-                <button className=" w-[80%] py-[8px] ml-[50%] translate-x-[-50%] bg-[#ccc] rounded-full cursor-pointer hover:opacity-[0.6] bg-gradient-to-r from-[#74ebd5] to-[#9face6]">
-                    Login
+                <button className=" w-[80%] py-[8px] ml-[50%] translate-x-[-50%] bg-[#ccc] rounded-full cursor-pointer hover:opacity-[0.6] bg-gradient-to-r from-[#74ebd5] to-[#9face6] border-none text-[#fff]">
+                    {slug === routes.login.label ? "Login" : "Register"}
                 </button>
             </div>
 

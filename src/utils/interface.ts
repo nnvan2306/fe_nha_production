@@ -123,3 +123,23 @@ export interface IDataSearchMatch {
     guestId:number,
 }
 
+
+export interface IStatistic{
+    id:number,
+    goal:number,
+    assist:number,
+    yellowCard:number,
+    redCard:number,
+    pA:number,
+    seasonName:string,
+    seasonId:number,
+    playerId:number,
+    createdAt:string,
+    updatedAt:string,
+    PlayerId:number,
+    SeasonId:number,
+    Season:{
+        index:number,
+        name:string,
+    }
+}
