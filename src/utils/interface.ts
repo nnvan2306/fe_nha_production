@@ -75,6 +75,7 @@ export interface IRating{
     seasonId:number,
     teamId:number,
     Team:ITeam |undefined,
+    
 }
 
 export interface ITeam {
@@ -84,6 +85,7 @@ export interface ITeam {
     logo_url:string,
     description:string,
     des_text:string,
+    Matches :IMatch[],
 }
 
 export interface IMatch {

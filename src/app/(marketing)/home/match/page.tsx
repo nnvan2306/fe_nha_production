@@ -75,9 +75,9 @@ export default function PageMatch() {
             return;
         }
         let dataBuider: IDataSearchMatch = {
-            seasonId: seasonId,
-            hostId: hostId,
-            guestId: guestId,
+            seasonId: +seasonId,
+            hostId: +hostId,
+            guestId: +guestId,
         };
 
         const res = await getMatchAction(dataBuider);
