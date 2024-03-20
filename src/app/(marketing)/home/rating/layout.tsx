@@ -25,6 +25,8 @@ const PageTableRating = ({ children }: { children: React.ReactNode }) => {
                         };
                     })
                 );
+                setSeasonId(res.data[0].id);
+                handleChangeSeason(res.data[0].id);
             }
         };
         fetch();
@@ -34,6 +36,7 @@ const PageTableRating = ({ children }: { children: React.ReactNode }) => {
         setSeasonId(id);
         router.push(`/home/rating/${id}`);
     };
+
     return (
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
             <div className="w-[100%] mt-[20px]">

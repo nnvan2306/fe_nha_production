@@ -154,3 +154,10 @@ export interface IStatistic{
         }
     }
 }
+
+export interface IResult{
+    result:number 
+}
+export interface IListResult{
+    arr:IResult[]
+}

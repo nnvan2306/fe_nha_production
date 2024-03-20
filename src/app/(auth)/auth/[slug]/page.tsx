@@ -16,6 +16,7 @@ export default function PageLogin({
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+    console.log(slug);
     return (
         <div
             className={cx(

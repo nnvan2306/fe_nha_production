@@ -1,13 +1,18 @@
 "use client";
 
+import className from "classnames/bind";
+import styles from "./RatingDetail.module.scss";
 import { getRatingAction } from "@/action/ratingAction";
 import { handleSortRating } from "@/helpers/handleSort";
-import { IMatch, IRating } from "@/utils/interface";
+import { IListResult, IMatch, IRating, IResult } from "@/utils/interface";
 import Image from "next/image";
 import { memo, useEffect, useState } from "react";
 
+const cx: Function = className.bind(styles);
+
 const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
     const [listRating, setListRating] = useState<IRating[]>([]);
+    const [listResult, setListResult] = useState<IListResult[]>([]);
 
     useEffect(() => {
         const fetch = async () => {
@@ -18,7 +23,6 @@ const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
 
                 arrSort.forEach((item: IRating) => {
                     //sort lay ra 5 tran gan nhat
-
                     item.Team?.Matches.sort((a: IMatch, b: IMatch) => {
                         let timeA = new Date(a.date).getTime();
                         let timeB = new Date(b.date).getTime();
@@ -26,44 +30,50 @@ const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
                     });
                 });
 
-                // arrSort.forEach((item: IRating) => {
-                //     // gan gia tri cho result
-                //     item.Team?.Matches.map((itemChild: IMatch) => {
-                //         let result: number;
-                //         if (item.Team?.id === itemChild.hostId) {
-                //             if (itemChild.hostGoal === itemChild.guestGoal) {
-                //                 result = 1;
-                //             } else if (itemChild.hostGoal < itemChild.guestId) {
-                //                 result = 0;
-                //             } else {
-                //                 result = 2;
-                //             }
-                //         } else {
-                //             if (itemChild.guestGoal === itemChild.hostGoal) {
-                //                 result = 1;
-                //             } else if (
-                //                 itemChild.guestGoal < itemChild.hostGoal
-                //             ) {
-                //                 result = 0;
-                //             } else {
-                //                 result = 2;
-                //             }
-                //         }
+                arrSort.forEach((item: IRating) => {
+                    // gan gia tri cho result
+                    let arrResult = item.Team?.Matches.map(
+                        (itemChild: IMatch) => {
+                            let result: number;
+                            if (item.Team?.id === itemChild.hostId) {
+                                if (
+                                    itemChild.hostGoal === itemChild.guestGoal
+                                ) {
+                                    result = 1;
+                                } else if (
+                                    itemChild.hostGoal < itemChild.guestId
+                                ) {
+                                    result = 0;
+                                } else {
+                                    result = 2;
+                                }
+                            } else {
+                                if (
+                                    itemChild.guestGoal === itemChild.hostGoal
+                                ) {
+                                    result = 1;
+                                } else if (
+                                    itemChild.guestGoal < itemChild.hostGoal
+                                ) {
+                                    result = 0;
+                                } else {
+                                    result = 2;
+                                }
+                            }
 
-                //         return {
-                //             ...itemChild,
-                //             result: result,
-                //         };
-                //     });
-                // });
+                            return {
+                                result: result,
+                            };
+                        }
+                    );
 
+                    setListResult((prev) => [...prev, { arr: arrResult }]);
+                });
                 setListRating(arrSort);
             }
         };
         fetch();
     }, [id]);
-
-    console.log(listRating);
 
     return (
         <div className="w-[100%] mt-[20px]">
@@ -95,21 +105,15 @@ const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
                                 >
                                     <td className="w-[100%] flex py-[5px]">
                                         {index < 4 ? (
-                                            <div className="border-l-[4px] border-l-[blue]"></div>
-                                        ) : (
-                                            <></>
-                                        )}
-                                        {index === 4 ? (
-                                            <div className="border-l-[4px] border-l-[orange]"></div>
+                                            <div className="w-[3px] h-[30px] bg-[blue]"></div>
+                                        ) : index === 4 ? (
+                                            <div className="w-[3px] h-[30px] bg-[orange]"></div>
+                                        ) : index >= 16 ? (
+                                            <div className="w-[3px] h-[30px] bg-[red]"></div>
                                         ) : (
                                             <></>
                                         )}
 
-                                        {index >= 16 ? (
-                                            <div className="border-l-[4px] border-l-[red]"></div>
-                                        ) : (
-                                            <></>
-                                        )}
                                         <span className="ml-[30px]">
                                             {index + 1}
                                         </span>
@@ -148,23 +152,40 @@ const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
                                     <td className="w-[5%] text-center font-[700]">
                                         {item.win * 3 + item.draw}
                                     </td>
-                                    <td className="w-[20%%] text-center">
-                                        {item.Team?.Matches &&
-                                            item.Team.Matches.length > 0 &&
-                                            item.Team.Matches.map(
+                                    <td className="w-[20%%] text-center flex justify-end items-center pr-[40px]">
+                                        {listResult[index].arr &&
+                                            listResult[index].arr.length > 0 &&
+                                            listResult[index].arr.map(
                                                 (
-                                                    itemChild: IMatch,
-                                                    index: number
+                                                    itemChild: IResult,
+                                                    indexChild: number
                                                 ) => {
-                                                    if (index <= 0) {
+                                                    if (indexChild < 5) {
                                                         return (
                                                             <div
-                                                                key={index}
-                                                                className="flex"
-                                                            ></div>
+                                                                className={cx(
+                                                                    itemChild.result ===
+                                                                        0
+                                                                        ? "bg-[red]"
+                                                                        : itemChild.result ===
+                                                                          1
+                                                                        ? "bg-[#bbb]"
+                                                                        : "bg-[green]",
+                                                                    "w-[15px] h-[16px] m-[5px] rounded-full overflow-hidden  flex items-center justify-center "
+                                                                )}
+                                                                key={indexChild}
+                                                            >
+                                                                {itemChild.result ===
+                                                                0 ? (
+                                                                    <i className="bi bi-x text-[#fff] text-[12px]"></i>
+                                                                ) : itemChild.result ===
+                                                                  1 ? (
+                                                                    <i className="bi bi-dash text-[#fff] text-[12px]"></i>
+                                                                ) : (
+                                                                    <i className="bi bi-check-lg text-[#fff] text-[12px]"></i>
+                                                                )}
+                                                            </div>
                                                         );
-                                                    } else {
-                                                        return <></>;
                                                     }
                                                 }
                                             )}

@@ -93,8 +93,8 @@ export default function PageMatch() {
         setLoadings(false);
     };
 
-    const handlePushDetailMatch = async (id: number) => {
-        router.push(`${routes.match.url}/${id}`);
+    const handlePushDetailMatch = async (matchId: number) => {
+        router.push(`${routes.match.url}/${matchId}`);
     };
 
     return (
@@ -183,7 +183,7 @@ export default function PageMatch() {
                                 onClick={() => handlePushDetailMatch(item.id)}
                             >
                                 <div className="w-[70%] h-[100%]  flex justify-between">
-                                    <div className="w-[80%] mt-[45px]">
+                                    <div className="w-[80%] mt-[40px] py-[5px]">
                                         <div className="w-[100%] flex items-center">
                                             <Image
                                                 className="w-[30%] h-[30px] object-contain"
@@ -194,7 +194,7 @@ export default function PageMatch() {
                                             ></Image>
                                             <p>{item.Teams[0].name}</p>
                                         </div>
-                                        <div className="w-[100%] flex">
+                                        <div className="w-[100%] flex items-center py-[5px]">
                                             <Image
                                                 className="w-[30%] h-[30px] object-contain"
                                                 width={100}
@@ -206,7 +206,7 @@ export default function PageMatch() {
                                         </div>
                                     </div>
 
-                                    <div className="w-[15%] mt-[50px]">
+                                    <div className="w-[15%] mt-[40px]">
                                         <div className="w-[100%] h-[30px] flex items-center">
                                             <p>
                                                 {item.hostGoal}{" "}

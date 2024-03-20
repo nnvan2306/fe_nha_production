@@ -9,3 +9,11 @@ export const getMatchAction = async(dataBuider:IDataSearchMatch):Promise<IRes<IM
     let data = await res.json();
     return data;
 }
+
+export const getMatchDetailAction =async(id:number):Promise<IRes<IMatch >>=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-match-by-id?id=${id}`,{
+        cache:"no-store",
+    })
+    const data = await res.json();
+    return data;
+}
