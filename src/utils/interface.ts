@@ -100,7 +100,23 @@ export interface IMatch {
     hostId:number,
     guestId:number,
     seasonId:number,
+    hostConnerKick:number,
+    guestConnerKick:number,
+    hostRedCard:number,
+    guestRedCard:number,
+    hostShoot:number,
+    guestShoot:number,
+    hostTarget:number,
+    guestTarget:number,
+    hostYellowCard:number,
+    guestYellowCard:number,
+    hostBallControl:number,
     Teams:ITeam[],
+    Season:{
+        id:number,
+        name:string,
+    }
+    
 }
 
 export interface IPlayer {

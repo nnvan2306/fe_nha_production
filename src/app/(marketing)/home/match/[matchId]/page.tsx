@@ -34,7 +34,7 @@ const PageMatchDetail = ({
     console.log(infoMatch);
 
     return (
-        <div className=" w-[100%] relative">
+        <div className=" w-[100%] relative pb-[50px]">
             <div className="w-[10%] absolute mt-[10px] ml-[10px]">
                 <Link
                     href={{
@@ -85,8 +85,8 @@ const PageMatchDetail = ({
                     <div className="w-[45%] flex  justify-start">
                         <p className="text-[30px] font-[500] mr-[20px]">
                             {infoMatch?.guestId === infoMatch?.Teams[0].id
-                                ? infoMatch?.guestId
-                                : infoMatch?.hostId}
+                                ? infoMatch?.hostGoal
+                                : infoMatch?.guestGoal}
                         </p>
                         <div className="text-center">
                             <Image
@@ -116,13 +116,27 @@ const PageMatchDetail = ({
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}${infoMatch?.match_url}`}
                         controls
                     ></video>
+                    <div className="mt-[10px] w-[100%]">
+                        <span className="text-[20px] font-[600] uppercase">
+                            {infoMatch?.title}
+                        </span>
+                        <span className="text-[20px] mx-[10px]">|</span>
+                        <span className="text-[20px] font-[600] uppercase">
+                            {infoMatch?.meta}
+                        </span>
+                        <span className="text-[20px] mx-[10px]">|</span>
+                        <br />
+                        <span className="text-[20px] font-[600] uppercase">
+                            ngoại hang anh <span>{infoMatch?.Season.name}</span>
+                        </span>
+                    </div>
                 </div>
 
-                <div className="w-[95%] ml-[50%] translate-x-[-50%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md">
+                <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px]">
                     <table className="w-[100%]">
                         <thead>
                             <tr>
-                                <td className="w-[10%] text-center">
+                                <td className="w-[10%] text-center py-[10px]">
                                     <Image
                                         src={
                                             infoMatch?.hostId ===
@@ -156,10 +170,108 @@ const PageMatchDetail = ({
                         <tbody>
                             <tr>
                                 <td className="text-center">
-                                    {/* {infoMatch?.hostId === infoMatch?.Teams[0].id ? infoMatch.} */}
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostShoot
+                                        : infoMatch?.guestShoot}
                                 </td>
-                                <td className="text-center">Số lần sút</td>
-                                <td></td>
+                                <td className="text-center p-[10px]">
+                                    Số lần sút
+                                </td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostShoot
+                                        : infoMatch?.guestShoot}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="text-center">
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostTarget
+                                        : infoMatch?.guestTarget}
+                                </td>
+                                <td className="text-center p-[10px]">
+                                    Sút trúng đích
+                                </td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostTarget
+                                        : infoMatch?.guestTarget}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="text-center">
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostBallControl
+                                        : 100 - infoMatch?.hostBallControl}
+                                </td>
+                                <td className="text-center p-[10px]">
+                                    Kiểm soát bóng
+                                </td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostBallControl
+                                        : 100 - infoMatch?.hostBallControl}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="text-center">
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostYellowCard
+                                        : infoMatch?.guestYellowCard}
+                                </td>
+                                <td className="text-center p-[10px]">
+                                    Thẻ vàng
+                                </td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostYellowCard
+                                        : infoMatch?.guestYellowCard}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="text-center">
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostRedCard
+                                        : infoMatch?.guestRedCard}
+                                </td>
+                                <td className="text-center p-[10px]">Thẻ đỏ</td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostRedCard
+                                        : infoMatch?.guestRedCard}
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td className="text-center">
+                                    {infoMatch?.hostId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostConnerKick
+                                        : infoMatch?.guestConnerKick}
+                                </td>
+                                <td className="text-center p-[10px]">
+                                    Phạt góc
+                                </td>
+                                <td className="text-center">
+                                    {infoMatch?.guestId ===
+                                    infoMatch?.Teams[0].id
+                                        ? infoMatch?.hostConnerKick
+                                        : infoMatch?.guestConnerKick}
+                                </td>
                             </tr>
                         </tbody>
                     </table>
