@@ -61,7 +61,7 @@ export default function Page() {
                                 <Link href={"/home"}>
                                     <button
                                         className={cx(
-                                            " mx-[20px] px-[10px] w-[200px] h-[60px] border-[1px] bg-[#2575fc] rounded-[10px] text-[#fff] text-[20px] font-[500]"
+                                            " mx-[20px] px-[10px] w-[200px] h-[60px] border-none bg-[#2575fc] rounded-[10px] text-[#fff] text-[20px] font-[500]"
                                         )}
                                     >
                                         Get Started
@@ -72,7 +72,7 @@ export default function Page() {
                                     <button
                                         className={cx(
                                             "button-get",
-                                            "mx-[20px] px-[10px] w-[200px] h-[60px] border-[1px] bg-[#fecfef] rounded-[10px] text-[#000] text-[20px] font-[500]"
+                                            "mx-[20px] px-[10px] w-[200px] h-[60px] border-none  bg-[#fecfef] rounded-[10px] text-[#000] text-[20px] font-[500]"
                                         )}
                                     >
                                         More
