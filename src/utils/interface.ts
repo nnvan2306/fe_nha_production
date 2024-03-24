@@ -177,3 +177,12 @@ export interface IResult{
 export interface IListResult{
     arr:IResult[]
 }
+
+export interface IScored{
+    id:number,
+    namePlayer:string,
+    minuteGoal:number,
+    isPenalty:boolean,
+    matchId:number,
+    teamId:number,
+}

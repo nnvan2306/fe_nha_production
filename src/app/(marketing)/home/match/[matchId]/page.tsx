@@ -1,8 +1,9 @@
 "use client";
 
 import { getMatchDetailAction } from "@/action/matchAction";
+import { getScoredAction } from "@/action/scoredAction";
 import { routes } from "@/helpers/menuRouterHeader";
-import { IMatch } from "@/utils/interface";
+import { IMatch, IScored } from "@/utils/interface";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -14,14 +15,17 @@ const PageMatchDetail = ({
     params: { matchId: number };
 }) => {
     const [infoMatch, setInfoMatch] = useState<IMatch | null>(null);
+    const [listScored, setListScored] = useState<IScored[]>([]);
 
     const router = useRouter();
 
     useEffect(() => {
         const fetch = async () => {
             const res = await getMatchDetailAction(matchId);
-            if (res.errorCode === 0) {
+            const scored = await getScoredAction(matchId);
+            if (res.errorCode === 0 && scored.errorCode === 0) {
                 setInfoMatch(res.data);
+                setListScored(scored.data);
             }
         };
         fetch();
@@ -31,7 +35,7 @@ const PageMatchDetail = ({
         router.push(`${routes.match.url}`);
     };
 
-    console.log(infoMatch);
+    console.log(listScored);
 
     return (
         <div className=" w-[100%] relative pb-[50px]">
@@ -65,11 +69,34 @@ const PageMatchDetail = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[400] mr-[20px]">
+                            <p className="text-[25px] font-[400] mr-[20px] mb-[10px]">
                                 {infoMatch?.hostId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
                             </p>
+                            {listScored &&
+                                listScored.length > 0 &&
+                                listScored.map(
+                                    (item: IScored, index: number) => {
+                                        return (
+                                            <p
+                                                key={index}
+                                                className="text-start"
+                                            >
+                                                {item.teamId ===
+                                                infoMatch?.hostId
+                                                    ? `${item.namePlayer} ${
+                                                          item.minuteGoal
+                                                      }' ${
+                                                          item.isPenalty
+                                                              ? "(P)"
+                                                              : ""
+                                                      }`
+                                                    : null}
+                                            </p>
+                                        );
+                                    }
+                                )}
                         </div>
                         <p className="text-[30px] font-[500]">
                             {infoMatch?.hostId === infoMatch?.Teams[0].id
@@ -101,16 +128,36 @@ const PageMatchDetail = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[500]">
+                            <p className="text-[25px] font-[500] mb-[10px]">
                                 {infoMatch?.guestId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
                             </p>
+                            {listScored &&
+                                listScored.length > 0 &&
+                                listScored.map(
+                                    (item: IScored, index: number) => {
+                                        return (
+                                            <p key={index} className="text-end">
+                                                {item.teamId ===
+                                                infoMatch?.guestId
+                                                    ? `${item.namePlayer} ${
+                                                          item.minuteGoal
+                                                      }' ${
+                                                          item.isPenalty
+                                                              ? "(P)"
+                                                              : ""
+                                                      }`
+                                                    : null}
+                                            </p>
+                                        );
+                                    }
+                                )}
                         </div>
                     </div>
                 </div>
 
-                <div className="w-[100%]">
+                <div className="w-[100%] mt-[30px]">
                     <video
                         className="w-[100%] rounded-[10px] shadow-sm"
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}${infoMatch?.match_url}`}
@@ -132,12 +179,13 @@ const PageMatchDetail = ({
                     </div>
                 </div>
 
-                <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px]">
+                <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px] py-[30px]">
                     <table className="w-[100%]">
                         <thead>
                             <tr>
                                 <td className="w-[10%] text-center py-[10px]">
                                     <Image
+                                        className="object-contain"
                                         src={
                                             infoMatch?.hostId ===
                                             infoMatch?.Teams[0].id
@@ -154,6 +202,7 @@ const PageMatchDetail = ({
                                 </td>
                                 <td className="w-[10%] text-center">
                                     <Image
+                                        className="object-contain"
                                         src={
                                             infoMatch?.guestId ===
                                             infoMatch?.Teams[0].id
@@ -209,7 +258,9 @@ const PageMatchDetail = ({
                                     {infoMatch?.hostId ===
                                     infoMatch?.Teams[0].id
                                         ? infoMatch?.hostBallControl
-                                        : 100 - infoMatch?.hostBallControl}
+                                        : infoMatch?.hostBallControl
+                                        ? 100 - infoMatch?.hostBallControl
+                                        : infoMatch?.hostBallControl}
                                 </td>
                                 <td className="text-center p-[10px]">
                                     Kiểm soát bóng
@@ -218,7 +269,9 @@ const PageMatchDetail = ({
                                     {infoMatch?.guestId ===
                                     infoMatch?.Teams[0].id
                                         ? infoMatch?.hostBallControl
-                                        : 100 - infoMatch?.hostBallControl}
+                                        : infoMatch?.hostBallControl
+                                        ? 100 - infoMatch?.hostBallControl
+                                        : infoMatch?.hostBallControl}
                                 </td>
                             </tr>
 

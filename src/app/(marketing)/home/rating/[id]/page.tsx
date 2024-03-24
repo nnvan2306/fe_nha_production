@@ -67,7 +67,10 @@ const PageTableRating = ({ params: { id } }: { params: { id: number } }) => {
                         }
                     );
 
-                    setListResult((prev) => [...prev, { arr: arrResult }]);
+                    setListResult((prev: IListResult[] | any[]) => [
+                        ...prev,
+                        { arr: arrResult },
+                    ]);
                 });
                 setListRating(arrSort);
             }
