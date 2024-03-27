@@ -25,8 +25,8 @@ const PageTableRating = ({ children }: { children: React.ReactNode }) => {
                         };
                     })
                 );
-                setSeasonId(res.data[0].id);
-                handleChangeSeason(res.data[0].id);
+                setSeasonId(res?.data[0]?.id);
+                handleChangeSeason(res?.data[0]?.id);
             }
         };
         fetch();

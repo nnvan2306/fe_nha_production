@@ -30,10 +30,10 @@ export default function PageStatistic() {
                     let idSeacon = b.id;
                     return idSeacon - idFirst;
                 });
-                setSeasonId(listSort[0].id);
+                setSeasonId(listSort[0]?.id);
                 setListSeasons(listSort);
 
-                await handleChangeSeason(listSort[1].id);
+                await handleChangeSeason(listSort[1]?.id);
             }
         };
 
