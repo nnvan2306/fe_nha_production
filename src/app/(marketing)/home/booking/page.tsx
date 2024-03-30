@@ -60,8 +60,6 @@ export default function PageBooking() {
         setLoadings(false);
     };
 
-    console.log(listCalendar);
-
     return (
         <div className="w-[60%] h-[100%] ml-[50%] translate-x-[-50%] ">
             <div className=" w-[100%] h-[80px] flex justify-around mt-[10px]">
@@ -108,6 +106,14 @@ export default function PageBooking() {
                         Tìm kiếm
                     </Button>
                 </div>
+            </div>
+
+            <div className="">
+                {listCalendar &&
+                    listCalendar.length > 0 &&
+                    listCalendar.map((item: ICalendar, index: number) => {
+                        return <div className="" key={index}></div>;
+                    })}
             </div>
         </div>
     );
