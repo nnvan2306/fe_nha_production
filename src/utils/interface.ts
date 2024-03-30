@@ -187,6 +187,10 @@ export interface IScored{
     teamId:number,
 }
 
+export interface IStadium {
+    id:number,
+    name:string ,
+}
 
 export interface ICalendar{
     id:number,
@@ -195,4 +199,6 @@ export interface ICalendar{
     date:string ,
     hour:string,
     stadiumId:number,
+    Teams:ITeam[],
+    Stadium:IStadium,
 }

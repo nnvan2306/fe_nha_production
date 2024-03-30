@@ -3,7 +3,7 @@
 import { getCalendarAction } from "@/action/calendarAction";
 import { getAllTeamAction } from "@/action/teamAction";
 import { ICalendar, ITeam } from "@/utils/interface";
-import { Button } from "antd";
+import { Button, Col, Row } from "antd";
 import { useEffect, useState } from "react";
 
 export default function PageBooking() {
@@ -112,7 +112,34 @@ export default function PageBooking() {
                 {listCalendar &&
                     listCalendar.length > 0 &&
                     listCalendar.map((item: ICalendar, index: number) => {
-                        return <div className="" key={index}></div>;
+                        return (
+                            <div className="w-[100]" key={index}>
+                                <Row>
+                                    <Col span={2}></Col>
+                                    <Col span={18}>
+                                        <p className="text-[20px] font-[500]">
+                                            {item.hostId === item.Teams[0].id
+                                                ? item.Teams[0].name
+                                                : item.Teams[1].name}{" "}
+                                            FC
+                                            {"  "}
+                                            <span className="text-[green]">
+                                                Vs
+                                            </span>{" "}
+                                            {item.guestId === item.Teams[0].id
+                                                ? item.Teams[0].name
+                                                : item.Teams[1].name}{" "}
+                                            FC
+                                        </p>
+                                        <p>
+                                            {item.hour} -{" "}
+                                            <span>{item.Stadium.name}</span>
+                                        </p>
+                                    </Col>
+                                    <Col span={4}></Col>
+                                </Row>
+                            </div>
+                        );
                     })}
             </div>
         </div>
