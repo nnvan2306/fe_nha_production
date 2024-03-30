@@ -1,5 +1,6 @@
 "use client";
 
+import { getCalendarAction } from "@/action/calendarAction";
 import { getAllTeamAction } from "@/action/teamAction";
 import { ICalendar, ITeam } from "@/utils/interface";
 import { Button } from "antd";
@@ -27,7 +28,39 @@ export default function PageBooking() {
         }
     }, []);
 
-    const handleGetCalendar = () => {};
+    const handleValidate = (): boolean => {
+        if (!hostId && !guestId) {
+            return false;
+        }
+        return true;
+    };
+
+    const handleGetCalendar = async () => {
+        setLoadings(true);
+        let check = handleValidate();
+        if (!check) {
+            setLoadings(false);
+            return;
+        }
+
+        let dataBuider = {
+            hostId: hostId,
+            guestId: guestId,
+        };
+
+        try {
+            const res = await getCalendarAction({ dataBuider });
+            if (res.errorCode === 0) {
+                setListCalendar(res.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        setLoadings(false);
+    };
+
+    console.log(listCalendar);
 
     return (
         <div className="w-[60%] h-[100%] ml-[50%] translate-x-[-50%] ">
