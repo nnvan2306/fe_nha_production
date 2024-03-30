@@ -186,3 +186,13 @@ export interface IScored{
     matchId:number,
     teamId:number,
 }
+
+
+export interface ICalendar{
+    id:number,
+    hostId:number,
+    guestId:number,
+    date:string ,
+    hour:string,
+    stadiumId:number,
+}
