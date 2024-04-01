@@ -2,8 +2,11 @@
 
 import { getCalendarAction } from "@/action/calendarAction";
 import { getAllTeamAction } from "@/action/teamAction";
+import { routes } from "@/helpers/menuRouterHeader";
 import { ICalendar, ITeam } from "@/utils/interface";
-import { Button, Col, Row } from "antd";
+import { Button, Col, Divider, Row } from "antd";
+import moment from "moment";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function PageBooking() {
@@ -12,6 +15,8 @@ export default function PageBooking() {
     const [listCalendar, setListCalendar] = useState<ICalendar[]>([]);
     const [hostId, setHostId] = useState<number>(0);
     const [guestId, setGuestId] = useState<number>(0);
+
+    const router = useRouter();
 
     useEffect(() => {
         try {
@@ -58,6 +63,10 @@ export default function PageBooking() {
         }
 
         setLoadings(false);
+    };
+
+    const handleToTicket = (id: number) => {
+        router.push(`${routes.booking.url}/${id}`);
     };
 
     return (
@@ -114,16 +123,30 @@ export default function PageBooking() {
                     listCalendar.map((item: ICalendar, index: number) => {
                         return (
                             <div className="w-[100]" key={index}>
-                                <Row>
-                                    <Col span={2}></Col>
-                                    <Col span={18}>
-                                        <p className="text-[20px] font-[500]">
+                                <Row className="mb-[20px]">
+                                    <Col span={4}>
+                                        <p className="text-center font-[500]">
+                                            {moment(item.date).format("MMMM")}
+                                        </p>
+                                        <p className="text-center text-[30px] font-[500]">
+                                            {" "}
+                                            {moment(item.date).format("D")}
+                                        </p>
+                                        <p className="text-center">
+                                            {" "}
+                                            {moment(item.date).format("Y")}
+                                        </p>
+                                        {/* {item.date} */}
+                                    </Col>
+                                    <Col span={16}>
+                                        <p>ENGLISH PREMIER LEAGUE</p>
+                                        <p className="text-[20px] font-[500] hover:text-[red]">
                                             {item.hostId === item.Teams[0].id
                                                 ? item.Teams[0].name
                                                 : item.Teams[1].name}{" "}
                                             FC
                                             {"  "}
-                                            <span className="text-[green]">
+                                            <span className="text-[red]">
                                                 Vs
                                             </span>{" "}
                                             {item.guestId === item.Teams[0].id
@@ -131,13 +154,26 @@ export default function PageBooking() {
                                                 : item.Teams[1].name}{" "}
                                             FC
                                         </p>
-                                        <p>
+                                        <p className="font-[600]">
                                             {item.hour} -{" "}
-                                            <span>{item.Stadium.name}</span>
+                                            <span className="font-[400]">
+                                                {item.Stadium.name}
+                                            </span>
                                         </p>
                                     </Col>
-                                    <Col span={4}></Col>
+                                    <Col span={4} className="flex items-center">
+                                        <button
+                                            className="w-[100%] p-[8px] border-none rounded-[10px] text-[#fff] bg-[#3db900] hover:opacity-[0.6]"
+                                            onClick={() =>
+                                                handleToTicket(item.id)
+                                            }
+                                        >
+                                            View Ticket
+                                        </button>
+                                    </Col>
                                 </Row>
+
+                                <Divider />
                             </div>
                         );
                     })}

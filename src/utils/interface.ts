@@ -202,3 +202,16 @@ export interface ICalendar{
     Teams:ITeam[],
     Stadium:IStadium,
 }
+
+export interface ITicket {
+    id:number,
+    name:string,
+    price:number,
+    isVip:boolean,
+    isBooking:boolean,
+    calendarId:number,
+}
+
+export interface IListTicketSort<T>{
+    listTicket :T[],
+}
