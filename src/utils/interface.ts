@@ -190,6 +190,7 @@ export interface IScored{
 export interface IStadium {
     id:number,
     name:string ,
+    location:string,
 }
 
 export interface ICalendar{
@@ -201,17 +202,18 @@ export interface ICalendar{
     stadiumId:number,
     Teams:ITeam[],
     Stadium:IStadium,
+
 }
 
 export interface ITicket {
     id:number,
     name:string,
     price:number,
+    totalTicket:number,
     isVip:boolean,
     isBooking:boolean,
     calendarId:number,
+    Calendar:ICalendar,
+    Teams:ITeam[],
 }
 
-export interface IListTicketSort<T>{
-    listTicket :T[],
-}

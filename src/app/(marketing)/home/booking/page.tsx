@@ -70,7 +70,7 @@ export default function PageBooking() {
     };
 
     return (
-        <div className="w-[60%] h-[100%] ml-[50%] translate-x-[-50%] ">
+        <div className="w-[100%] h-[100%]  ">
             <div className=" w-[100%] h-[80px] flex justify-around mt-[10px]">
                 <select
                     className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm "
@@ -122,20 +122,27 @@ export default function PageBooking() {
                     listCalendar.length > 0 &&
                     listCalendar.map((item: ICalendar, index: number) => {
                         return (
-                            <div className="w-[100]" key={index}>
-                                <Row className="mb-[20px]">
+                            <div className="w-[100%]" key={index}>
+                                <Row
+                                    className="mb-[20px] hover:cursor-pointer"
+                                    onClick={() => handleToTicket(item.id)}
+                                >
                                     <Col span={4}>
-                                        <p className="text-center font-[500]">
-                                            {moment(item.date).format("MMMM")}
-                                        </p>
-                                        <p className="text-center text-[30px] font-[500]">
-                                            {" "}
-                                            {moment(item.date).format("D")}
-                                        </p>
-                                        <p className="text-center">
-                                            {" "}
-                                            {moment(item.date).format("Y")}
-                                        </p>
+                                        <div className="w-[50%] h-[100%] p-[5px] ml-[50%] translate-x-[-50%] bg-[#fafafa] rounded-[5px] hover:bg-[#fff]">
+                                            <p className="text-center font-[500] ">
+                                                {moment(item.date).format(
+                                                    "MMMM"
+                                                )}
+                                            </p>
+                                            <p className="text-center text-[30px] font-[500]">
+                                                {" "}
+                                                {moment(item.date).format("D")}
+                                            </p>
+                                            <p className="text-center">
+                                                {" "}
+                                                {moment(item.date).format("Y")}
+                                            </p>
+                                        </div>
                                         {/* {item.date} */}
                                     </Col>
                                     <Col span={16}>
@@ -157,17 +164,13 @@ export default function PageBooking() {
                                         <p className="font-[600]">
                                             {item.hour} -{" "}
                                             <span className="font-[400]">
-                                                {item.Stadium.name}
+                                                {item.Stadium.name} ,{" "}
+                                                {item.Stadium.location}
                                             </span>
                                         </p>
                                     </Col>
                                     <Col span={4} className="flex items-center">
-                                        <button
-                                            className="w-[100%] p-[8px] border-none rounded-[10px] text-[#fff] bg-[#3db900] hover:opacity-[0.6]"
-                                            onClick={() =>
-                                                handleToTicket(item.id)
-                                            }
-                                        >
+                                        <button className="w-[100%] p-[8px] border-none rounded-[10px] text-[#fff] bg-[#3db900] hover:opacity-[0.6]">
                                             View Ticket
                                         </button>
                                     </Col>

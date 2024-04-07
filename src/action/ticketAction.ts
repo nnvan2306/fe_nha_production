@@ -3,7 +3,7 @@
 import { IRes, ITicket } from "@/utils/interface"
 
 export const getAllTicket =async (calendarId:number):Promise<IRes<ITicket[]>>=>{
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-ticket-not-booking?calendarId=${calendarId}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-ticket?calendarId=${calendarId}`,{
         cache: "no-store",
     })
     const data = await res.json();
