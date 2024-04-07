@@ -191,6 +191,7 @@ export interface IStadium {
     id:number,
     name:string ,
     location:string,
+    stadiumImage_url:string,
 }
 
 export interface ICalendar{
