@@ -71,7 +71,7 @@ export default function PageBooking() {
     };
 
     return (
-        <div className="w-[80%] ml-[50%] translate-x-[-50%] flex justify-center ">
+        <div className="w-[80%] h-[100vh] ml-[50%] translate-x-[-50%] flex justify-center ">
             <div className="w-[75%] h-[100%]">
                 <div className=" w-[100%] h-[80px] flex justify-around mt-[10px]">
                     <select

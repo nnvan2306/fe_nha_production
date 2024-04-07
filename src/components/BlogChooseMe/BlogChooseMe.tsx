@@ -38,36 +38,38 @@ export default function BlogChooseMe() {
                 <p className="flex items-center">
                     <i className="bi bi-check text-[#3db900] text-[24px] "></i>
                     <span className="text-[16px]">
-                        150% money-back guarantee
+                        150% money-back guarantee ...
                     </span>
                 </p>
 
                 <p className="flex items-center">
                     <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                    <span className="text-[16px]">Real-time inventory</span>
+                    <span className="text-[16px]">Real-time inventory ...</span>
                 </p>
 
                 <p className="flex items-center">
                     <i className="bi bi-check text-[#3db900] text-[24px] "></i>
                     <span className="text-[16px]">
-                        Friendly customer service
+                        Friendly customer service ...
                     </span>
                 </p>
 
                 <p className="flex items-center">
                     <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                    <span className="text-[16px]">Secure payment</span>
-                </p>
-
-                <p className="flex items-center">
-                    <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                    <span className="text-[16px]">Last minute bookings</span>
+                    <span className="text-[16px]">Secure payment ...</span>
                 </p>
 
                 <p className="flex items-center">
                     <i className="bi bi-check text-[#3db900] text-[24px] "></i>
                     <span className="text-[16px]">
-                        16 years online serving fans
+                        Last minute bookings ...
+                    </span>
+                </p>
+
+                <p className="flex items-center">
+                    <i className="bi bi-check text-[#3db900] text-[24px] "></i>
+                    <span className="text-[16px]">
+                        16 years online serving fans ...
                     </span>
                 </p>
 

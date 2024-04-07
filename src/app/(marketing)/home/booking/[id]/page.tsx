@@ -7,6 +7,7 @@ import moment from "moment";
 import BlogChooseMe from "@/components/BlogChooseMe/BlogChooseMe";
 import Image from "next/image";
 import mobile from "../../../../../../public/mobile.png";
+import { useRouter } from "next/router";
 
 export default function PageTicket({
     params: { id },
@@ -15,6 +16,8 @@ export default function PageTicket({
 }) {
     const [listTicket, setListTicket] = useState<ITicket[]>([]);
     const [minPrice, setMinPrice] = useState<number>(0);
+
+    const router = useRouter();
 
     useEffect(() => {
         const fetch = async () => {
@@ -29,7 +32,9 @@ export default function PageTicket({
         fetch();
     }, [id]);
 
-    console.log(listTicket);
+    const handleBuyTicket = (infoTicket: ITicket) => {
+        console.log(infoTicket);
+    };
 
     return (
         <div className="w-[100%] h-[100%]">
@@ -163,17 +168,16 @@ export default function PageTicket({
                     <div className="my-[10px] w-[100%] h-[1px] bg-[#ccc]"></div>
 
                     <div className="h-[100vh] overflow-auto">
-                        {listTicket &&
-                            listTicket.length > 0 &&
+                        {listTicket && listTicket.length > 0 ? (
                             listTicket.map((item, index) => {
                                 return (
                                     <div className="" key={index}>
-                                        <div className="w-[100%] flex justify-between bg-[#fff] hover:bg-[#ddd] rounded-[10px] p-[10px]">
+                                        <div className="w-[100%] flex justify-between bg-[#fff] hover:bg-[#eaeaea] rounded-[10px] p-[10px]">
                                             <div className="">
                                                 <p className="text-[20px] font-[500] text-[#3db900] ml-[10px] mb-[10px]">
                                                     {item.name}
                                                 </p>
-                                                <p>tickets</p>
+                                                <p>gtickets</p>
                                                 <div className="flex justify-center items-center">
                                                     <div className="w-[50px] h-[40px] bg-[#EAEAEA] rounded-[10px] mr-[10px]">
                                                         <p className="text-center leading-[40px] font-[500]">
@@ -199,7 +203,12 @@ export default function PageTicket({
                                                     </span>
                                                 </p>
 
-                                                <button className="uppercase bg-[#3db900] px-[16px] py-[8px] border-none text-[#fff] rounded-[10px]">
+                                                <button
+                                                    className="uppercase bg-[#3db900] px-[16px] py-[8px] border-none text-[#fff] rounded-[10px]"
+                                                    onClick={() =>
+                                                        handleBuyTicket(item)
+                                                    }
+                                                >
                                                     buy
                                                 </button>
                                             </div>
@@ -208,7 +217,10 @@ export default function PageTicket({
                                         <div className="w-[100%] h-[0.5px] bg-[#ccc] my-[10px]"></div>
                                     </div>
                                 );
-                            })}
+                            })
+                        ) : (
+                            <p>No Tickets Found</p>
+                        )}
                     </div>
                 </div>
             </div>
