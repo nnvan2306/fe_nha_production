@@ -17,7 +17,7 @@ export default function PageTicket({
     const [listTicket, setListTicket] = useState<ITicket[]>([]);
     const [minPrice, setMinPrice] = useState<number>(0);
 
-    const router = useRouter();
+    // const router = useRouter();
 
     useEffect(() => {
         const fetch = async () => {
@@ -177,7 +177,7 @@ export default function PageTicket({
                                                 <p className="text-[20px] font-[500] text-[#3db900] ml-[10px] mb-[10px]">
                                                     {item.name}
                                                 </p>
-                                                <p>gtickets</p>
+                                                <p>tickets</p>
                                                 <div className="flex justify-center items-center">
                                                     <div className="w-[50px] h-[40px] bg-[#EAEAEA] rounded-[10px] mr-[10px]">
                                                         <p className="text-center leading-[40px] font-[500]">

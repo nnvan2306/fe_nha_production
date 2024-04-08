@@ -7,3 +7,9 @@ export const getCalendarAction = async({dataBuider : {hostId , guestId}}:{dataBu
     const data = await res.json();
     return data;
 }
+
+export const getNearestCalendarAction = async():Promise<IRes<ICalendar[]>>=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-nearest-calendar`);
+    const data = await res.json();
+    return data; 
+}

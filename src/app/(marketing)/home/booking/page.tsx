@@ -1,6 +1,9 @@
 "use client";
 
-import { getCalendarAction } from "@/action/calendarAction";
+import {
+    getCalendarAction,
+    getNearestCalendarAction,
+} from "@/action/calendarAction";
 import { getAllTeamAction } from "@/action/teamAction";
 import BlogChooseMe from "@/components/BlogChooseMe/BlogChooseMe";
 import { routes } from "@/helpers/menuRouterHeader";
@@ -24,8 +27,10 @@ export default function PageBooking() {
         try {
             const fetch = async () => {
                 const res = await getAllTeamAction();
+                const resCalendarDefault = await getNearestCalendarAction();
                 if (res.errorCode === 0) {
                     setListTeam(res.data);
+                    setListCalendar(resCalendarDefault.data);
                 }
             };
             fetch();
@@ -163,7 +168,7 @@ export default function PageBooking() {
                                                     Vs
                                                 </span>{" "}
                                                 {item.guestId ===
-                                                item.Teams[0].id
+                                                item.Teams[0]?.id
                                                     ? item.Teams[0].name
                                                     : item.Teams[1].name}{" "}
                                                 FC
