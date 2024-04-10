@@ -7,7 +7,10 @@ import moment from "moment";
 import BlogChooseMe from "@/components/BlogChooseMe/BlogChooseMe";
 import Image from "next/image";
 import mobile from "../../../../../../public/mobile.png";
-import { useRouter } from "next/router";
+import Swal from "sweetalert2";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { routes } from "@/helpers/menuRouterHeader";
 
 export default function PageTicket({
     params: { id },
@@ -17,7 +20,7 @@ export default function PageTicket({
     const [listTicket, setListTicket] = useState<ITicket[]>([]);
     const [minPrice, setMinPrice] = useState<number>(0);
 
-    // const router = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         const fetch = async () => {
@@ -33,7 +36,17 @@ export default function PageTicket({
     }, [id]);
 
     const handleBuyTicket = (infoTicket: ITicket) => {
-        console.log(infoTicket);
+        if (infoTicket.totalTicket === 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "tickets have been sold out ! ",
+            });
+            return;
+        }
+
+        router.push(
+            `${routes.booking.url}/${id}/buyTicket?id=${infoTicket.id}`
+        );
     };
 
     return (
@@ -188,6 +201,7 @@ export default function PageTicket({
                                                     <Image
                                                         src={mobile}
                                                         alt="mobile"
+                                                        objectFit="cover"
                                                     />
                                                 </div>
                                             </div>
@@ -203,6 +217,16 @@ export default function PageTicket({
                                                     </span>
                                                 </p>
 
+                                                {/* <Link
+                                                    href={{
+                                                        pathname: `${routes.booking.url}/${id}/buyTicket`,
+                                                        query: {
+                                                            name:item.name,
+                                                            id:item.id,
+                                                        },
+                                                    }}
+                                                >
+                                                </Link> */}
                                                 <button
                                                     className="uppercase bg-[#3db900] px-[16px] py-[8px] border-none text-[#fff] rounded-[10px]"
                                                     onClick={() =>
