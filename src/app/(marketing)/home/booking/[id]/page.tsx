@@ -44,6 +44,7 @@ export default function PageTicket({
             return;
         }
 
+        console.log(infoTicket);
         router.push(
             `${routes.booking.url}/${id}/buyTicket?id=${infoTicket.id}`
         );
