@@ -18,24 +18,34 @@ export default function PageInfoBuyTicket({
     const [reEmail, setReEmail] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<number>(0);
     const [isPersonal, setIsPersonal] = useState<boolean>(true);
+    const [company, setCompany] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
-    const [address, setAddress] = useState<String>("");
+    const [address, setAddress] = useState<string>("");
     const [city, setCity] = useState<string>("");
-    const [Country, setCountry] = useState<string>("");
+    const [country, setCountry] = useState<string>("");
     const [isTerms, setIsTerms] = useState<string>("");
+    const [totalTicketBuy, setTotalTicketBuy] = useState<number>(1);
+    const [totalPrice, setTotalPrice] = useState<number>(0);
+    const [price, setPrice] = useState<number>(0);
 
     useEffect(() => {
         const fetch = async () => {
             const res = await handleGetOneTicket(searchParams.id);
             if (res.errorCode === 0) {
                 setInfoTicket(res.data);
+                setTotalPrice(res.data.price);
+                setPrice(res.data.price);
             }
         };
 
         fetch();
     }, [searchParams.id]);
 
+    const handleChooseTotalTicket = (ticketNumber: number) => {
+        setTotalTicketBuy(ticketNumber);
+        setTotalPrice(ticketNumber * price);
+    };
     console.log(infoTicket);
 
     return (
@@ -74,6 +84,8 @@ export default function PageInfoBuyTicket({
                                     type="email"
                                     id="email"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="w-[100%]  mt-[30px]">
@@ -86,6 +98,10 @@ export default function PageInfoBuyTicket({
                                     id="phoneNumber"
                                     type="tel"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                    value={phoneNumber}
+                                    onChange={(e) =>
+                                        setPhoneNumber(+e.target.value)
+                                    }
                                 />
                             </div>
                         </Col>
@@ -100,6 +116,8 @@ export default function PageInfoBuyTicket({
                                     id="reEmail"
                                     type="email"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                    value={reEmail}
+                                    onChange={(e) => setReEmail(e.target.value)}
                                 />
                             </div>
                         </Col>
@@ -138,6 +156,8 @@ export default function PageInfoBuyTicket({
                                     id="company"
                                     type="text"
                                     className="w-[100%] p-[10px] border-solid border-[1px] border-[#ccc] rounded-[10px] mb-[20px]"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
                                 />
                             </Col>
                         )}
@@ -154,6 +174,10 @@ export default function PageInfoBuyTicket({
                                     type="text"
                                     id="firstName"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                    value={firstName}
+                                    onChange={(e) =>
+                                        setFirstName(e.target.value)
+                                    }
                                 />
                             </div>
                             <div className="w-[100%] ">
@@ -167,6 +191,8 @@ export default function PageInfoBuyTicket({
                                     type="text"
                                     id="address"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
                                 />
                             </div>
 
@@ -181,6 +207,8 @@ export default function PageInfoBuyTicket({
                                     type="text"
                                     id="country"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                    value={country}
+                                    onChange={(e) => setCountry(e.target.value)}
                                 />
                             </div>
                         </Col>
@@ -197,6 +225,10 @@ export default function PageInfoBuyTicket({
                                     type="text"
                                     id="lastName"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                    value={lastName}
+                                    onChange={(e) =>
+                                        setLastName(e.target.value)
+                                    }
                                 />
                             </div>
 
@@ -211,6 +243,8 @@ export default function PageInfoBuyTicket({
                                     type="text"
                                     id="city"
                                     className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
                                 />
                             </div>
                         </Col>
@@ -222,6 +256,8 @@ export default function PageInfoBuyTicket({
                             name=""
                             id=""
                             className="mr-[20px] p-[10px]"
+                            value={isTerms}
+                            onChange={(e) => setIsTerms(e.target.value)}
                         />
                         <p>
                             I have read and agree to the Terms and Conditions &
@@ -234,7 +270,7 @@ export default function PageInfoBuyTicket({
                     </button>
                 </Col>
 
-                <Col span={10}>
+                <Col span={10} className="pl-[20px]">
                     <div className="w-[100%] shadow-md rounded-[10px] overflow-hidden">
                         <Image
                             src={buyTicket}
@@ -314,6 +350,10 @@ export default function PageInfoBuyTicket({
                                 <input
                                     type="number"
                                     className="p-[10px] w-[40%] rounded-[10px] border-solid border-[1px] border-[#ccc] mt-[10px]"
+                                    value={totalTicketBuy}
+                                    onChange={(e) =>
+                                        handleChooseTotalTicket(+e.target.value)
+                                    }
                                 />
                             </div>
 
@@ -329,7 +369,7 @@ export default function PageInfoBuyTicket({
                         <div className="mx-[15px] flex justify-between items-center mb-[30px]">
                             <h5>Total</h5>
 
-                            <h5>£ {infoTicket?.price}.00</h5>
+                            <h5>£ {totalPrice}.00</h5>
                         </div>
                     </div>
                 </Col>
