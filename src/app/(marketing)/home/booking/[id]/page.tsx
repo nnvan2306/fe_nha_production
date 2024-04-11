@@ -11,6 +11,8 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { routes } from "@/helpers/menuRouterHeader";
+import NoteBooking from "@/components/NoteBooking/NoteBooking";
+import BuyingGuide from "@/components/BuyingGuide/BuyingGuide";
 
 export default function PageTicket({
     params: { id },
@@ -103,24 +105,7 @@ export default function PageTicket({
                         <span className="text-[20px]">£ {minPrice}.00</span>
                     </p>
 
-                    <p className="text-[13px] mb-[10px]">
-                        Find your seats, select the number of tickets, then
-                        click <span className="uppercase font-[600]">buy</span>{" "}
-                        to proceed.
-                    </p>
-
-                    <p className="font-[600] text-[12px] ">
-                        Whose tickets are listed below?
-                    </p>
-                    <p className="text-[13px]">
-                        All the tickets are listed and priced by approved ticket
-                        specialists.
-                    </p>
-                    <p className="text-[13px]">
-                        Each ticket specialist competes with one another to
-                        provide you the lowest prices & the largest selection on
-                        the internet.
-                    </p>
+                    <BuyingGuide />
                 </div>
 
                 <div className="w-[25%] ml-[20px]">
@@ -146,32 +131,7 @@ export default function PageTicket({
                         />
                     </div>
 
-                    <div className=" mt-[20px] bg-[#fff] p-[20px] rounded-[10px]">
-                        <p className="mb-[10px] font-[600]">
-                            What you need to know...
-                        </p>
-                        <p className="mb-[10px]">
-                            <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                            <span className="text-[16px]">
-                                Event times are subject to change - so please
-                                check with the venue for start times and/or age
-                                restrictions.
-                            </span>
-                        </p>
-                        <p className="mb-[10px]">
-                            <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                            <span className="text-[16px]">
-                                Your total includes local sales tax and a
-                                service fee. Friendly customer service
-                            </span>
-                        </p>
-                        <p className="">
-                            <i className="bi bi-check text-[#3db900] text-[24px] "></i>
-                            <span className="text-[16px]">
-                                Sales are final.
-                            </span>
-                        </p>
-                    </div>
+                    <NoteBooking />
                 </div>
 
                 <div className="w-[60%] bg-[#fff] rounded-[10px] p-[20px]">
@@ -218,16 +178,6 @@ export default function PageTicket({
                                                     </span>
                                                 </p>
 
-                                                {/* <Link
-                                                    href={{
-                                                        pathname: `${routes.booking.url}/${id}/buyTicket`,
-                                                        query: {
-                                                            name:item.name,
-                                                            id:item.id,
-                                                        },
-                                                    }}
-                                                >
-                                                </Link> */}
                                                 <button
                                                     className="uppercase bg-[#3db900] px-[16px] py-[8px] border-none text-[#fff] rounded-[10px]"
                                                     onClick={() =>

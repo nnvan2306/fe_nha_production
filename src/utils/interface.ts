@@ -127,7 +127,7 @@ export interface IPlayer {
     nationality:string,
     height:number,
     weight:number,
-    birthday:Date,
+    birthday:string,
     teamId:number,
     description:string,
     des_text:string,

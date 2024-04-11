@@ -5,6 +5,7 @@ import { handleGetStatisticPlayer } from "@/action/statisticAction";
 import { routes } from "@/helpers/menuRouterHeader";
 import { IPlayer, IStatistic } from "@/utils/interface";
 import { Col, Divider, Row } from "antd";
+import moment from "moment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { memo, useEffect, useState } from "react";
@@ -14,7 +15,7 @@ const PlayerDetail = ({
 }: {
     params: { playerId: number };
 }) => {
-    const [info, setInfo] = useState<IPlayer>();
+    const [infoPlayer, setInfoPlayer] = useState<IPlayer>();
     const [listStatistic, setListStatistic] = useState<IStatistic[]>([]);
 
     const router = useRouter();
@@ -24,7 +25,7 @@ const PlayerDetail = ({
             const res = await getOnePlayerAction(playerId);
             const resStatistic = await handleGetStatisticPlayer(playerId);
             if (res.errorCode === 0 && resStatistic.errorCode === 0) {
-                setInfo(res.data);
+                setInfoPlayer(res.data);
 
                 let listSort = resStatistic.data.sort(
                     (a: IStatistic, b: IStatistic) => {
@@ -57,13 +58,15 @@ const PlayerDetail = ({
                 <div className="flex items-center">
                     <Image
                         className="border-[1px] border-[#ccc] border-solid rounded-[10px] overflow-hidden object-contain"
-                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${info?.avatar_url}`}
+                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${infoPlayer?.avatar_url}`}
                         alt="avatar"
                         width={100}
                         height={100}
                     />
                     <div className="ml-[20px]">
-                        <p className="text-[30px] font-[400]">{info?.name}</p>
+                        <p className="text-[30px] font-[400]">
+                            {infoPlayer?.name}
+                        </p>
                         <p>Cầu thủ bóng đá</p>
                     </div>
                 </div>
@@ -143,7 +146,7 @@ const PlayerDetail = ({
                             <p className="text-[20px]">Giới thiệu</p>
                             <div
                                 dangerouslySetInnerHTML={{
-                                    __html: info?.description,
+                                    __html: infoPlayer?.description,
                                 }}
                             ></div>
 
@@ -155,7 +158,7 @@ const PlayerDetail = ({
                                 Quốc tịch :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.nationality}
+                                    {infoPlayer?.nationality}
                                 </span>
                             </p>
 
@@ -163,7 +166,9 @@ const PlayerDetail = ({
                                 Sinh nhật :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.Team.name}
+                                    {moment(infoPlayer?.birthday).format(
+                                        "D MMMM YYYY"
+                                    )}
                                 </span>
                             </p>
 
@@ -171,7 +176,7 @@ const PlayerDetail = ({
                                 Đội hiện tại :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.Team.name}
+                                    {infoPlayer?.Team.name}
                                 </span>
                             </p>
 
@@ -179,13 +184,13 @@ const PlayerDetail = ({
                                 Vị trí :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.location === "1"
+                                    {infoPlayer?.location === "1"
                                         ? "Thủ môn"
-                                        : info?.location === "2"
+                                        : infoPlayer?.location === "2"
                                         ? "Trung vệ"
-                                        : info?.location === "3"
+                                        : infoPlayer?.location === "3"
                                         ? "Hậu vệ"
-                                        : info?.location === "4"
+                                        : infoPlayer?.location === "4"
                                         ? "Tiền vệ"
                                         : "Tiền đạo"}
                                 </span>
@@ -195,7 +200,7 @@ const PlayerDetail = ({
                                 Chiều cao :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.height} m
+                                    {infoPlayer?.height} m
                                 </span>{" "}
                             </p>
 
@@ -203,7 +208,7 @@ const PlayerDetail = ({
                                 Cân nặng :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {info?.weight} kg
+                                    {infoPlayer?.weight} kg
                                 </span>{" "}
                             </p>
                         </Col>

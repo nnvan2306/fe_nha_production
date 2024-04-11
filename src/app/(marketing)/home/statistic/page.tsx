@@ -28,12 +28,12 @@ export default function PageStatistic() {
                 let listSort = res.data.sort((a: ISeason, b: ISeason) => {
                     let idFirst = a.id;
                     let idSeacon = b.id;
-                    return idSeacon - idFirst;
+                    return idFirst - idSeacon;
                 });
                 setSeasonId(listSort[0]?.id);
                 setListSeasons(listSort);
 
-                await handleChangeSeason(listSort[1]?.id);
+                await handleChangeSeason(listSort[0]?.id);
             }
         };
 
