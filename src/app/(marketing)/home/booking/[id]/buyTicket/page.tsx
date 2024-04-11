@@ -8,6 +8,7 @@ import buyTicket from "../../../../../../../public/buyTicket.png";
 import Image from "next/image";
 import moment from "moment";
 import NoteTicket from "@/components/NoteTicket/NoteTicket";
+import Swal from "sweetalert2";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -25,10 +26,11 @@ export default function PageInfoBuyTicket({
     const [address, setAddress] = useState<string>("");
     const [city, setCity] = useState<string>("");
     const [country, setCountry] = useState<string>("");
-    const [isTerms, setIsTerms] = useState<string>("");
+    const [isTerms, setIsTerms] = useState<boolean>(false);
     const [totalTicketBuy, setTotalTicketBuy] = useState<number>(1);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
+    const [isPayment, setIsPayment] = useState<boolean>(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -43,23 +45,91 @@ export default function PageInfoBuyTicket({
         fetch();
     }, [searchParams.id]);
 
+    const handleONChange = (value: number) => {
+        if (value) {
+            setIsPersonal(true);
+            return;
+        }
+
+        setIsPersonal(false);
+    };
+
+    const handleCheckTerms = () => {
+        setIsTerms(!isTerms);
+    };
+
+    const handleValidateContinute = (): boolean => {
+        if (
+            !email ||
+            !reEmail ||
+            !phoneNumber ||
+            !firstName ||
+            !lastName ||
+            !address ||
+            !city ||
+            !country ||
+            !isTerms ||
+            (!isPersonal && !company)
+        ) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter infomation !",
+            });
+            return false;
+        }
+        return true;
+    };
+
+    const handleContinue = () => {
+        let check = handleValidateContinute();
+        if (!check) {
+            return;
+        }
+
+        setIsPayment(true);
+    };
+
     const handleChooseTotalTicket = (ticketNumber: number) => {
         setTotalTicketBuy(ticketNumber);
         setTotalPrice(ticketNumber * price);
     };
-    console.log(infoTicket);
 
     return (
         <div className="h-[100%] pt-[30px] w-[80%] ml-[50%] translate-x-[-50%] ">
             <Row className="w-[100%] ">
                 <Col span={14} className="pr-[20px]">
                     <div className="flex justify-center items-center w-[100%]">
-                        <div className="w-[30px] h-[30px] border-[1px] border-solid border-[#000] rounded-full">
-                            <p className="text-center leading-[30px]">1</p>
+                        <div
+                            className={`w-[30px] h-[30px] border-[2px] border-solid   rounded-full flex justify-center items-center ${
+                                isPayment
+                                    ? "bg-[green] border-[green]"
+                                    : "border-[#000]"
+                            }`}
+                        >
+                            {isPayment ? (
+                                <i className="bi bi-check text-[#fff] text-[20px] "></i>
+                            ) : (
+                                <p className="font-[500]">1</p>
+                            )}
                         </div>
-                        <div className="w-[70%] h-[3px] bg-[#ccc]"></div>
-                        <div className="w-[30px] h-[30px] border-[1px] border-solid border-[#000] rounded-full">
-                            <p className="text-center leading-[30px]">2</p>
+                        <div
+                            className={`w-[70%] h-[3px] bg-[#ccc] ${
+                                isPayment ? "bg-[#000]" : "bg-[#ccc]"
+                            }`}
+                        ></div>
+
+                        <div
+                            className={`w-[30px] h-[30px] border-[2px] border-solid flex justify-center items-center ${
+                                isPayment ? "border-[#000]" : "border-[#ccc]"
+                            }  rounded-full`}
+                        >
+                            <p
+                                className={`font-[500] ${
+                                    isPayment ? "" : "opacity-[0.5]"
+                                }`}
+                            >
+                                2
+                            </p>
                         </div>
                     </div>
 
@@ -69,206 +139,260 @@ export default function PageInfoBuyTicket({
                         <p className="">Payment</p>
                     </div>
 
-                    <p className="mt-[50px] mb-[30px] text-[20px]">
-                        Your Deatil
-                    </p>
+                    {!isPayment ? (
+                        <>
+                            <p className="mt-[50px] mb-[30px] text-[20px]">
+                                Your Deatil
+                            </p>
 
-                    <Row>
-                        <Col span={12} className="pr-[20px]">
-                            <div className="w-[100%] ">
-                                <label htmlFor="email">
-                                    Email Address{" "}
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    type="email"
-                                    id="email"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                            <div className="w-[100%]  mt-[30px]">
-                                <label htmlFor="phoneNumber">
-                                    Mobile Phone{" "}
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    id="phoneNumber"
-                                    type="tel"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
-                                    value={phoneNumber}
-                                    onChange={(e) =>
-                                        setPhoneNumber(+e.target.value)
-                                    }
-                                />
-                            </div>
-                        </Col>
-                        <Col span={12} className="pl-[20px]">
-                            <div className="w-[100%] ">
-                                <label htmlFor="reEmail">
-                                    Confirm Email Address{" "}
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-                                <input
-                                    id="reEmail"
-                                    type="email"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
-                                    value={reEmail}
-                                    onChange={(e) => setReEmail(e.target.value)}
-                                />
-                            </div>
-                        </Col>
-                    </Row>
+                            <Row>
+                                <Col span={12} className="pr-[20px]">
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="email">
+                                            Email Address{" "}
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+                                        <input
+                                            type="email"
+                                            id="email"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                            value={email}
+                                            onChange={(e) =>
+                                                setEmail(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="w-[100%]  mt-[30px]">
+                                        <label htmlFor="phoneNumber">
+                                            Mobile Phone{" "}
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+                                        <input
+                                            id="phoneNumber"
+                                            type="tel"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                            value={phoneNumber}
+                                            onChange={(e) =>
+                                                setPhoneNumber(+e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </Col>
+                                <Col span={12} className="pl-[20px]">
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="reEmail">
+                                            Confirm Email Address{" "}
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+                                        <input
+                                            id="reEmail"
+                                            type="email"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                            value={reEmail}
+                                            onChange={(e) =>
+                                                setReEmail(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </Col>
+                            </Row>
 
-                    <p className="mt-[50px] mb-[30px] text-[20px]">
-                        Billing Address
-                    </p>
+                            <p className="mt-[50px] mb-[30px] text-[20px]">
+                                Billing Address
+                            </p>
 
-                    <Row>
-                        <div className="flex">
-                            <div className="flex mr-[20px]">
-                                <input
-                                    type="radio"
-                                    className="mr-[10px] p-[10px]"
-                                />
-                                <p>Personal</p>
-                            </div>
+                            <Row>
+                                <div className="flex w-[100%] mb-[20px]">
+                                    <div className="flex mr-[20px]">
+                                        <input
+                                            defaultChecked
+                                            name="isPerson"
+                                            type="radio"
+                                            className="mr-[10px] p-[10px]"
+                                            value={1}
+                                            onChange={(e) =>
+                                                handleONChange(+e.target.value)
+                                            }
+                                        />
+                                        <p>Personal</p>
+                                    </div>
+
+                                    <div className="flex">
+                                        <input
+                                            name="isPerson"
+                                            type="radio"
+                                            className="mr-[10px]"
+                                            value={0}
+                                            onChange={(e) =>
+                                                handleONChange(+e.target.value)
+                                            }
+                                        />
+                                        <p>Business</p>
+                                    </div>
+                                </div>
+                                {isPersonal ? (
+                                    <></>
+                                ) : (
+                                    <Col span={24} className="">
+                                        <label
+                                            htmlFor="company"
+                                            className="mb-[10px]"
+                                        >
+                                            Company{" "}
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            id="company"
+                                            type="text"
+                                            className="w-[100%] p-[10px] border-solid border-[1px] border-[#ccc] rounded-[10px] mb-[20px]"
+                                            value={company}
+                                            onChange={(e) =>
+                                                setCompany(e.target.value)
+                                            }
+                                        />
+                                    </Col>
+                                )}
+
+                                <Col span={12} className="pr-[20px]">
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="firstName">
+                                            First Name
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="firstName"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={firstName}
+                                            onChange={(e) =>
+                                                setFirstName(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="address">
+                                            Address
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={address}
+                                            onChange={(e) =>
+                                                setAddress(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="country">
+                                            Country
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="country"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={country}
+                                            onChange={(e) =>
+                                                setCountry(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </Col>
+
+                                <Col span={12} className="pl-[20px]">
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="lastName">
+                                            Last Name
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="lastName"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={lastName}
+                                            onChange={(e) =>
+                                                setLastName(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="city">
+                                            City
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="city"
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={city}
+                                            onChange={(e) =>
+                                                setCity(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </Col>
+                            </Row>
 
                             <div className="flex">
-                                <input type="radio" className="mr-[10px]" />
-                                <p>Business</p>
-                            </div>
-                        </div>
-                        {!isPersonal ? (
-                            <></>
-                        ) : (
-                            <Col span={24} className="mt-[20px]">
-                                <label htmlFor="company" className="mb-[10px]">
-                                    Company{" "}
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
                                 <input
-                                    id="company"
-                                    type="text"
-                                    className="w-[100%] p-[10px] border-solid border-[1px] border-[#ccc] rounded-[10px] mb-[20px]"
-                                    value={company}
-                                    onChange={(e) => setCompany(e.target.value)}
+                                    type="checkbox"
+                                    name="checkbox"
+                                    className="mr-[20px] p-[10px]"
+                                    onChange={() => handleCheckTerms()}
                                 />
-                            </Col>
-                        )}
-
-                        <Col span={12} className="pr-[20px]">
-                            <div className="w-[100%] ">
-                                <label htmlFor="firstName">
-                                    First Name
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
-                                <input
-                                    type="text"
-                                    id="firstName"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                    value={firstName}
-                                    onChange={(e) =>
-                                        setFirstName(e.target.value)
-                                    }
-                                />
-                            </div>
-                            <div className="w-[100%] ">
-                                <label htmlFor="address">
-                                    Address
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
-                                <input
-                                    type="text"
-                                    id="address"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                    value={address}
-                                    onChange={(e) => setAddress(e.target.value)}
-                                />
+                                <p>
+                                    I have read and agree to the Terms and
+                                    Conditions & Privacy Policy
+                                </p>
                             </div>
 
-                            <div className="w-[100%] ">
-                                <label htmlFor="country">
-                                    Country
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
-                                <input
-                                    type="text"
-                                    id="country"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                    value={country}
-                                    onChange={(e) => setCountry(e.target.value)}
-                                />
-                            </div>
-                        </Col>
-
-                        <Col span={12} className="pl-[20px]">
-                            <div className="w-[100%] ">
-                                <label htmlFor="lastName">
-                                    Last Name
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
-                                <input
-                                    type="text"
-                                    id="lastName"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                    value={lastName}
-                                    onChange={(e) =>
-                                        setLastName(e.target.value)
-                                    }
-                                />
-                            </div>
-
-                            <div className="w-[100%] ">
-                                <label htmlFor="city">
-                                    City
-                                    <span className="text-[red]">*</span>
-                                </label>
-                                <br />
-
-                                <input
-                                    type="text"
-                                    id="city"
-                                    className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                    value={city}
-                                    onChange={(e) => setCity(e.target.value)}
-                                />
-                            </div>
-                        </Col>
-                    </Row>
-
-                    <div className="flex">
-                        <input
-                            type="checkbox"
-                            name=""
-                            id=""
-                            className="mr-[20px] p-[10px]"
-                            value={isTerms}
-                            onChange={(e) => setIsTerms(e.target.value)}
-                        />
-                        <p>
-                            I have read and agree to the Terms and Conditions &
-                            Privacy Policy
-                        </p>
-                    </div>
-
-                    <button className="mt-[30px] w-[40%] py-[8px] px-[32px] bg-[green] text-[#fff] rounded-full border-none ">
-                        Continue
-                    </button>
+                            <button
+                                className="mt-[30px] w-[40%] py-[8px] px-[32px] bg-[green] text-[#fff] rounded-full border-none "
+                                onClick={() => handleContinue()}
+                            >
+                                Continue
+                            </button>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </Col>
 
                 <Col span={10} className="pl-[20px]">
