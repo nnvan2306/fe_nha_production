@@ -391,7 +391,15 @@ export default function PageInfoBuyTicket({
                             </button>
                         </>
                     ) : (
-                        <></>
+                        <>
+                            <button
+                                className="py-[8px] px-[20px] border-none rounded-full mt-[10px] text-[#fff] bg-[green]"
+                                onClick={() => setIsPayment(!isPayment)}
+                            >
+                                <i className="bi bi-chevron-left"></i>
+                                Back
+                            </button>
+                        </>
                     )}
                 </Col>
 
