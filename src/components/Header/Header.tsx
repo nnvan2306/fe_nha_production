@@ -35,7 +35,7 @@ const menu: MenuProps["items"] = [
 
 const Header: React.FC = () => {
     return (
-        <div className="w-[100%] h-[100%] bg-[#3F1052]">
+        <div className="w-[100%]  bg-[#3F1052]">
             <Row>
                 <Col
                     span={5}
