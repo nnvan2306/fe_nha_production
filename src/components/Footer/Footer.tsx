@@ -10,28 +10,32 @@ export default function Footer() {
                     </li>
                     <li className="mt-[10px] text-[#fff]">JavaScript</li>
                     <li>TypeScript</li>
-                    <li>Java</li>
+                    <li>SQL</li>
                     <li>C++</li>
-                    <li>Html</li>
-                    <li>Css</li>
                 </ul>
 
                 <ul className="text-[#fff]">
                     <li className="text-[20px] font-[700] text-[#fff]">
-                        Framework
+                        Technology
                     </li>
-                    <li className="mt-[10px] text-[#fff]">ReactJs</li>
+                    <li className="mt-[10px] text-[#fff]">React</li>
                     <li>NextJs</li>
                     <li>NodeJs</li>
-                    <li>ExpressJs</li>
+                    <li>Express</li>
                 </ul>
 
                 <ul className="text-[#fff]">
-                    <li className="text-[20px] font-[700] text-[#fff]">More</li>
-                    <li className="mt-[10px] text-[#fff]">Ant Design</li>
-                    <li>TailwindCss</li>
-                    <li>Bootstrap 5</li>
+                    <li className="text-[20px] font-[700] text-[#fff]">
+                        Other
+                    </li>
+                    <li className="mt-[10px] text-[#fff]">Html</li>
+                    <li>Css</li>
                     <li>Redux</li>
+                    <li>Ant Design</li>
+                    <li>TailwindCss</li>
+                    <li>Sass</li>
+                    <li>Bootstrap 5</li>
+                    <li>Git</li>
                 </ul>
             </div>
         </div>
