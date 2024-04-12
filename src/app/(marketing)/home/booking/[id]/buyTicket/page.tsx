@@ -69,6 +69,8 @@ export default function PageInfoBuyTicket({
             !city ||
             !country ||
             !isTerms ||
+            !totalTicketBuy ||
+            !totalPrice ||
             (!isPersonal && !company)
         ) {
             Swal.fire({
@@ -371,12 +373,23 @@ export default function PageInfoBuyTicket({
                             </Row>
 
                             <div className="flex">
-                                <input
-                                    type="checkbox"
-                                    name="checkbox"
-                                    className="mr-[20px] p-[10px]"
-                                    onChange={() => handleCheckTerms()}
-                                />
+                                {isTerms ? (
+                                    <input
+                                        checked
+                                        type="checkbox"
+                                        name="checkbox"
+                                        className="mr-[20px] p-[10px]"
+                                        onChange={() => handleCheckTerms()}
+                                    />
+                                ) : (
+                                    <input
+                                        type="checkbox"
+                                        name="checkbox"
+                                        className="mr-[20px] p-[10px]"
+                                        onChange={() => handleCheckTerms()}
+                                    />
+                                )}
+
                                 <p>
                                     I have read and agree to the Terms and
                                     Conditions & Privacy Policy
@@ -399,6 +412,16 @@ export default function PageInfoBuyTicket({
                                 <i className="bi bi-chevron-left"></i>
                                 Back
                             </button>
+
+                            <div className="">
+                                <Image
+                                    width={500}
+                                    height={500}
+                                    className="ml-[50%] translate-x-[-50%]"
+                                    src={`${process.env.NEXT_PUBLIC_QR__URL}${process.env.NEXT_PUBLIC_BANK_ID}-${process.env.NEXT_PUBLIC_BANK_ACCOUNT_NO}-${process.env.NEXT_PUBLIC_BANK_TEMPLATE}.png?amount=${totalPrice}&addInfo=${infoTicket?.name}`}
+                                    alt="QR"
+                                />
+                            </div>
                         </>
                     )}
                 </Col>
@@ -442,14 +465,24 @@ export default function PageInfoBuyTicket({
                             <div className="">
                                 <label htmlFor="">Total Ticket buy</label>
                                 <br />
-                                <input
-                                    type="number"
-                                    className="p-[10px] w-[40%] rounded-[10px] border-solid border-[1px] border-[#ccc] mt-[10px]"
-                                    value={totalTicketBuy}
-                                    onChange={(e) =>
-                                        handleChooseTotalTicket(+e.target.value)
-                                    }
-                                />
+                                {isPayment ? (
+                                    <div className="p-[10px] w-[50%] border-solid boredr-[1px] border-[#ccc] rounded-[10px]">
+                                        <p className="text-center">
+                                            {totalTicketBuy}
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <input
+                                        type="number"
+                                        className="p-[10px] w-[40%] rounded-[10px] border-solid border-[1px] border-[#ccc] mt-[10px]"
+                                        value={totalTicketBuy}
+                                        onChange={(e) =>
+                                            handleChooseTotalTicket(
+                                                +e.target.value
+                                            )
+                                        }
+                                    />
+                                )}
                             </div>
 
                             <div className="">
