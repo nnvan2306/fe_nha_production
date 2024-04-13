@@ -9,6 +9,8 @@ import Image from "next/image";
 import moment from "moment";
 import NoteTicket from "@/components/NoteTicket/NoteTicket";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
+import { CreateBillAction, deleteBillAction } from "@/action/billAction";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -31,6 +33,7 @@ export default function PageInfoBuyTicket({
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const [price, setPrice] = useState<number>(0);
     const [isPayment, setIsPayment] = useState<boolean>(false);
+    const [uuid, setUuid] = useState<string>("");
 
     useEffect(() => {
         const fetch = async () => {
@@ -82,18 +85,40 @@ export default function PageInfoBuyTicket({
         return true;
     };
 
-    const handleContinue = () => {
+    const handleChooseTotalTicket = (ticketNumber: number) => {
+        setTotalTicketBuy(ticketNumber);
+        setTotalPrice(ticketNumber * price);
+    };
+
+    const handleContinue = async () => {
         let check = handleValidateContinute();
+        let uuid = uuidv4();
         if (!check) {
             return;
         }
 
+        let dataBuider = {
+            price: totalPrice,
+            uuid: uuid,
+        };
+
+        let res = await CreateBillAction(dataBuider);
+
+        if (res.errorCode !== 0) {
+            Swal.fire({
+                icon: "warning",
+                title: "err from server please try again !",
+            });
+            return;
+        }
         setIsPayment(true);
+        setUuid(uuid);
     };
 
-    const handleChooseTotalTicket = (ticketNumber: number) => {
-        setTotalTicketBuy(ticketNumber);
-        setTotalPrice(ticketNumber * price);
+    const handleBack = async () => {
+        setIsPayment(false);
+        await deleteBillAction(uuid);
+        setUuid("");
     };
 
     return (
@@ -407,7 +432,7 @@ export default function PageInfoBuyTicket({
                         <>
                             <button
                                 className="py-[8px] px-[20px] border-none rounded-full mt-[10px] text-[#fff] bg-[green]"
-                                onClick={() => setIsPayment(!isPayment)}
+                                onClick={() => handleBack()}
                             >
                                 <i className="bi bi-chevron-left"></i>
                                 Back

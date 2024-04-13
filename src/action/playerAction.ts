@@ -20,7 +20,7 @@ export const getOnePlayerAction = async(id:number):Promise<IRes<IPlayer>>=>{
 
 
 export const searchPlayerAction = async(textSearch:string):Promise<IRes<IPlayer>>=>{
-    const res = fetch(`${process.env.NEXT_PUBLIC_BASE_URL}//search-player`,{
+    const res = fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/search-player`,{
         cache: "no-store",
     });
 
