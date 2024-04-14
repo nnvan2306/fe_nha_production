@@ -163,10 +163,10 @@ export default function PageInfoBuyTicket({
             if (result.isConfirmed) {
                 const _fetch = async () => {
                     setIsPayment(false);
-                    await deleteBillAction(uuid);
                     setUuid("");
                     setIsCountdown(false);
                     setCountdown(10);
+                    await deleteBillAction(uuid);
                 };
                 _fetch();
             }
@@ -493,8 +493,8 @@ export default function PageInfoBuyTicket({
                             <div className="w-[100%] my-[20px] h-[50px] bg-[#ddd] border-solid border-[1px] border-[#ccc] rounded-[10px] flex justify-center items-center">
                                 <p>
                                     The tickets are reserved for you.{" "}
-                                    <span className="font-[700] mx-[5px]">
-                                        {countdown}
+                                    <span className="font-[700] mx-[5px] text-[red]">
+                                        {countdown} s
                                     </span>
                                     remaining to finish your order.
                                 </p>
