@@ -34,6 +34,8 @@ export default function PageInfoBuyTicket({
     const [price, setPrice] = useState<number>(0);
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [uuid, setUuid] = useState<string>("");
+    const [countdown, setCountdown] = useState<number>(10);
+    const [isCountdown, setIsCountdown] = useState<boolean>(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -98,8 +100,16 @@ export default function PageInfoBuyTicket({
         }
 
         let dataBuider = {
-            price: totalPrice,
             uuid: uuid,
+            ticketId: infoTicket?.id,
+            totalTicket: totalTicketBuy,
+            email: email,
+            phoneNumber: phoneNumber,
+            firstName: firstName,
+            lastName: lastName,
+            address: address,
+            city: city,
+            country: country,
         };
 
         let res = await CreateBillAction(dataBuider);
@@ -113,12 +123,54 @@ export default function PageInfoBuyTicket({
         }
         setIsPayment(true);
         setUuid(uuid);
+        setIsCountdown(true);
     };
 
+    useEffect(() => {
+        if (isCountdown) {
+            let intervalId: NodeJS.Timeout;
+
+            const handleCountdown = async () => {
+                if (countdown > 0) {
+                    setCountdown((prevCount) => prevCount - 1);
+                    //call api check banking
+                } else {
+                    clearInterval(intervalId);
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Time up",
+                    });
+                    setIsPayment(false);
+                    await deleteBillAction(uuid);
+                    setUuid("");
+                    setIsCountdown(false);
+                    setCountdown(10);
+                }
+            };
+
+            intervalId = setInterval(handleCountdown, 1000);
+
+            return () => clearInterval(intervalId);
+        }
+    }, [isCountdown, countdown]);
+
     const handleBack = async () => {
-        setIsPayment(false);
-        await deleteBillAction(uuid);
-        setUuid("");
+        Swal.fire({
+            title: `If you BACK , the transaction will be canceled CANCELED and NO REFUND WILL BE ISSUED ?`,
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const _fetch = async () => {
+                    setIsPayment(false);
+                    await deleteBillAction(uuid);
+                    setUuid("");
+                    setIsCountdown(false);
+                    setCountdown(10);
+                };
+                _fetch();
+            }
+        });
     };
 
     return (
@@ -437,6 +489,16 @@ export default function PageInfoBuyTicket({
                                 <i className="bi bi-chevron-left"></i>
                                 Back
                             </button>
+
+                            <div className="w-[100%] my-[20px] h-[50px] bg-[#ddd] border-solid border-[1px] border-[#ccc] rounded-[10px] flex justify-center items-center">
+                                <p>
+                                    The tickets are reserved for you.{" "}
+                                    <span className="font-[700] mx-[5px]">
+                                        {countdown}
+                                    </span>
+                                    remaining to finish your order.
+                                </p>
+                            </div>
 
                             <div className="">
                                 <Image
