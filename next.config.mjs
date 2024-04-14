@@ -12,7 +12,11 @@ const nextConfig = {
             {
                 protocol: "https",
                 hostname: "img.vietqr.io",
-                // port: "8080",
+                pathname: "/**",
+            },
+            {
+                protocol: "https",
+                hostname: "script.googleusercontent.com",
                 pathname: "/**",
             },
         ],

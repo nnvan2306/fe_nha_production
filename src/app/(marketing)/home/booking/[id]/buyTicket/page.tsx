@@ -11,6 +11,7 @@ import NoteTicket from "@/components/NoteTicket/NoteTicket";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import { CreateBillAction, deleteBillAction } from "@/action/billAction";
+import { checkBankingAction } from "@/action/apiBanking";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -34,7 +35,7 @@ export default function PageInfoBuyTicket({
     const [price, setPrice] = useState<number>(0);
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [uuid, setUuid] = useState<string>("");
-    const [countdown, setCountdown] = useState<number>(10);
+    const [countdown, setCountdown] = useState<number>(600);
     const [isCountdown, setIsCountdown] = useState<boolean>(false);
 
     useEffect(() => {
@@ -63,6 +64,20 @@ export default function PageInfoBuyTicket({
         setIsTerms(!isTerms);
     };
 
+    const handleRevalue = () => {
+        setEmail("");
+        setReEmail("");
+        setPhoneNumber(0);
+        setFirstName("");
+        setLastName("");
+        setAddress("");
+        setCity("");
+        setCountry("");
+        setIsTerms(false);
+        setTotalTicketBuy(1);
+        setTotalPrice(0);
+    };
+
     const handleValidateContinute = (): boolean => {
         if (
             !email ||
@@ -81,6 +96,14 @@ export default function PageInfoBuyTicket({
             Swal.fire({
                 icon: "warning",
                 title: "Please enter infomation !",
+            });
+            return false;
+        }
+
+        if (email !== reEmail) {
+            Swal.fire({
+                icon: "warning",
+                title: "email and reEmail must be the same",
             });
             return false;
         }
@@ -133,7 +156,33 @@ export default function PageInfoBuyTicket({
             const handleCountdown = async () => {
                 if (countdown > 0) {
                     setCountdown((prevCount) => prevCount - 1);
+
                     //call api check banking
+                    const res = await checkBankingAction();
+                    console.log(res);
+
+                    if (res.data && res.data.length > 0) {
+                        res.data.forEach((item: any, index: number) => {
+                            console.log("mo ta ", item["Mô tả"]);
+                            console.log("gia tri>>>", item["Giá trị"]);
+                            console.log("total price ", totalPrice);
+                            if (
+                                item["Mô tả"].includes(uuid) &&
+                                item["Giá trị"] === totalPrice
+                            ) {
+                                clearInterval(intervalId);
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "Payment success",
+                                });
+                                setIsPayment(false);
+                                handleRevalue();
+                                setUuid("");
+                                setIsCountdown(false);
+                                setCountdown(600);
+                            }
+                        });
+                    }
                 } else {
                     clearInterval(intervalId);
                     Swal.fire({
@@ -144,7 +193,7 @@ export default function PageInfoBuyTicket({
                     await deleteBillAction(uuid);
                     setUuid("");
                     setIsCountdown(false);
-                    setCountdown(10);
+                    setCountdown(600);
                 }
             };
 
@@ -153,6 +202,21 @@ export default function PageInfoBuyTicket({
             return () => clearInterval(intervalId);
         }
     }, [isCountdown, countdown]);
+
+    let handleGetBanking = async () => {
+        const res = await checkBankingAction();
+
+        if (res.data && res.data.length > 0) {
+            res.data.forEach((item: any, index: number) => {
+                if (
+                    item["Mô tả"].includes("8c4e2ba518de4e1cbb681c8f0a0e7e2e")
+                ) {
+                    return true;
+                }
+            });
+        }
+        return true;
+    };
 
     const handleBack = async () => {
         Swal.fire({
@@ -165,7 +229,7 @@ export default function PageInfoBuyTicket({
                     setIsPayment(false);
                     setUuid("");
                     setIsCountdown(false);
-                    setCountdown(10);
+                    setCountdown(600);
                     await deleteBillAction(uuid);
                 };
                 _fetch();
@@ -505,7 +569,7 @@ export default function PageInfoBuyTicket({
                                     width={500}
                                     height={500}
                                     className="ml-[50%] translate-x-[-50%]"
-                                    src={`${process.env.NEXT_PUBLIC_QR__URL}${process.env.NEXT_PUBLIC_BANK_ID}-${process.env.NEXT_PUBLIC_BANK_ACCOUNT_NO}-${process.env.NEXT_PUBLIC_BANK_TEMPLATE}.png?amount=${totalPrice}&addInfo=${infoTicket?.name}`}
+                                    src={`${process.env.NEXT_PUBLIC_QR__URL}${process.env.NEXT_PUBLIC_BANK_ID}-${process.env.NEXT_PUBLIC_BANK_ACCOUNT_NO}-${process.env.NEXT_PUBLIC_BANK_TEMPLATE}.png?amount=${totalPrice}&addInfo=${uuid}`}
                                     alt="QR"
                                 />
                             </div>

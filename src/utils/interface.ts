@@ -46,6 +46,11 @@ export interface IDataRegister {
     rePassword:string,
 }
 
+export interface IResBanking {
+    data:any,
+    error:string,
+}
+
 export interface IRes<T> {
     message:string,
     errorCode:number,

@@ -67,7 +67,7 @@ export default function PageTicket({
                                 {listTicket[0]?.Calendar.Teams[0].name}
                             </span>
                             VS
-                            <span className="capitalize ml-[10px] text-[24px] font-[600]">
+                            <span className=" ml-[10px] text-[24px] font-[600] capitalize">
                                 {listTicket[0]?.Calendar.Teams[1].name}
                             </span>
                         </p>
