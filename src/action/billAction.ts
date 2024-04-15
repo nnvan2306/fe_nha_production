@@ -4,6 +4,7 @@ import { IRes } from "@/utils/interface";
 
 
 export const CreateBillAction = async({  uuid , ticketId , totalTicket,email,phoneNumber,firstName , lastName , address , city , country }: { uuid : string , ticketId : number | undefined , totalTicket : number, email:string , phoneNumber:number , firstName:string , lastName:string , address:string , city:string , country:string}):Promise<IRes<[]>>=>{
+    console.log('fetch')
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/create-bill` , {
         method: 'POST',
         headers: {

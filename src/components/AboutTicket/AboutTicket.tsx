@@ -113,95 +113,99 @@ export default function AboutTicket() {
             </p>
 
             <table>
-                <tr>
-                    <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Team
-                    </th>
-                    <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        No.titles
-                    </th>
-                    <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Year(e) of title
-                    </th>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Manchester United
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        13
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1993, 1994, 1996, 1999, 2000, 2001, 2003, 2006, 2008,
-                        2009, 2011 and 2013
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Manchester City{" "}
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        6
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        2012, 2014, 2018, 2019, 2021, 2022 and 2023
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Chelsea
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        5
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        2005, 2006, 2010, 2015 and 2017
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Arsenal
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        3
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1998, 2002 and 2004
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Blackburn Rovers{" "}
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1995
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        Leicester City{" "}
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        2016
-                    </td>
-                </tr>
-                <tr>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        2020{" "}
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        1
-                    </td>
-                    <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
-                        2020
-                    </td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Team
+                        </th>
+                        <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            No.titles
+                        </th>
+                        <th className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Year(e) of title
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Manchester United
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            13
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1993, 1994, 1996, 1999, 2000, 2001, 2003, 2006,
+                            2008, 2009, 2011 and 2013
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Manchester City{" "}
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            6
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            2012, 2014, 2018, 2019, 2021, 2022 and 2023
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Chelsea
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            5
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            2005, 2006, 2010, 2015 and 2017
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Arsenal
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            3
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1998, 2002 and 2004
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Blackburn Rovers{" "}
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1995
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            Leicester City{" "}
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            2016
+                        </td>
+                    </tr>
+                    <tr>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            2020{" "}
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            1
+                        </td>
+                        <td className="text-[14px] border-solid border-[1px] border-[#000] p-[10px]">
+                            2020
+                        </td>
+                    </tr>
+                </tbody>
             </table>
 
             <h6 className="font-[600] my-[10px]">

@@ -36,7 +36,6 @@ export default function PageInfoBuyTicket({
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [uuid, setUuid] = useState<string>("");
     const [countdown, setCountdown] = useState<number>(600);
-    const [isCountdown, setIsCountdown] = useState<boolean>(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -75,7 +74,8 @@ export default function PageInfoBuyTicket({
         setCountry("");
         setIsTerms(false);
         setTotalTicketBuy(1);
-        setTotalPrice(0);
+        setTotalPrice(price * 1);
+        setCountdown(600);
     };
 
     const handleValidateContinute = (): boolean => {
@@ -118,6 +118,7 @@ export default function PageInfoBuyTicket({
     const handleContinue = async () => {
         let check = handleValidateContinute();
         let uuid = uuidv4();
+
         if (!check) {
             return;
         }
@@ -146,43 +147,15 @@ export default function PageInfoBuyTicket({
         }
         setIsPayment(true);
         setUuid(uuid);
-        setIsCountdown(true);
     };
 
     useEffect(() => {
-        if (isCountdown) {
+        if (isPayment) {
             let intervalId: NodeJS.Timeout;
 
             const handleCountdown = async () => {
                 if (countdown > 0) {
                     setCountdown((prevCount) => prevCount - 1);
-
-                    //call api check banking
-                    const res = await checkBankingAction();
-                    console.log(res);
-
-                    if (res.data && res.data.length > 0) {
-                        res.data.forEach((item: any, index: number) => {
-                            console.log("mo ta ", item["Mô tả"]);
-                            console.log("gia tri>>>", item["Giá trị"]);
-                            console.log("total price ", totalPrice);
-                            if (
-                                item["Mô tả"].includes(uuid) &&
-                                item["Giá trị"] === totalPrice
-                            ) {
-                                clearInterval(intervalId);
-                                Swal.fire({
-                                    icon: "success",
-                                    title: "Payment success",
-                                });
-                                setIsPayment(false);
-                                handleRevalue();
-                                setUuid("");
-                                setIsCountdown(false);
-                                setCountdown(600);
-                            }
-                        });
-                    }
                 } else {
                     clearInterval(intervalId);
                     Swal.fire({
@@ -192,7 +165,6 @@ export default function PageInfoBuyTicket({
                     setIsPayment(false);
                     await deleteBillAction(uuid);
                     setUuid("");
-                    setIsCountdown(false);
                     setCountdown(600);
                 }
             };
@@ -201,22 +173,42 @@ export default function PageInfoBuyTicket({
 
             return () => clearInterval(intervalId);
         }
-    }, [isCountdown, countdown]);
+    }, [isPayment]);
 
-    let handleGetBanking = async () => {
-        const res = await checkBankingAction();
+    useEffect(() => {
+        if (isPayment) {
+            let intervalBankId: NodeJS.Timeout;
 
-        if (res.data && res.data.length > 0) {
-            res.data.forEach((item: any, index: number) => {
-                if (
-                    item["Mô tả"].includes("8c4e2ba518de4e1cbb681c8f0a0e7e2e")
-                ) {
-                    return true;
+            const handleGetBank = async () => {
+                const res = await checkBankingAction();
+
+                console.log(res.data);
+
+                if (res.data && res.data.length > 0) {
+                    res.data.forEach((item: any, index: number) => {
+                        if (
+                            item["Mô tả"].includes(uuid.replace(/-/g, "")) &&
+                            item["Giá trị"] === totalPrice
+                        ) {
+                            clearInterval(intervalBankId);
+                            Swal.fire({
+                                icon: "success",
+                                title: "Payment success",
+                            });
+                            setIsPayment(false);
+                            handleRevalue();
+                            setUuid("");
+                            setCountdown(600);
+                        }
+                    });
                 }
-            });
+            };
+
+            intervalBankId = setInterval(handleGetBank, 7000);
+
+            return () => clearInterval(intervalBankId);
         }
-        return true;
-    };
+    }, [isPayment]);
 
     const handleBack = async () => {
         Swal.fire({
@@ -228,7 +220,6 @@ export default function PageInfoBuyTicket({
                 const _fetch = async () => {
                     setIsPayment(false);
                     setUuid("");
-                    setIsCountdown(false);
                     setCountdown(600);
                     await deleteBillAction(uuid);
                 };
