@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import { CreateBillAction, deleteBillAction } from "@/action/billAction";
 import { checkBankingAction } from "@/action/apiBanking";
+import { isValidEmail } from "@/helpers/handleCheckTypeEmail";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -100,6 +101,14 @@ export default function PageInfoBuyTicket({
             return false;
         }
 
+        if (!isValidEmail(email) || !isValidEmail(reEmail)) {
+            Swal.fire({
+                icon: "warning",
+                title: "Email or reEmail invalidate (...@gmail.com)",
+            });
+            return false;
+        }
+
         if (email !== reEmail) {
             Swal.fire({
                 icon: "warning",
@@ -173,6 +182,7 @@ export default function PageInfoBuyTicket({
 
             return () => clearInterval(intervalId);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPayment]);
 
     useEffect(() => {
@@ -208,6 +218,7 @@ export default function PageInfoBuyTicket({
 
             return () => clearInterval(intervalBankId);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isPayment]);
 
     const handleBack = async () => {
@@ -292,6 +303,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="email"
                                             id="email"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
                                             value={email}
                                             onChange={(e) =>
@@ -310,6 +322,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             id="phoneNumber"
                                             type="tel"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
                                             value={phoneNumber}
                                             onChange={(e) =>
@@ -330,6 +343,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             id="reEmail"
                                             type="email"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
                                             value={reEmail}
                                             onChange={(e) =>
@@ -413,6 +427,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="text"
                                             id="firstName"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
                                             value={firstName}
                                             onChange={(e) =>
@@ -432,6 +447,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="text"
                                             id="address"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
                                             value={address}
                                             onChange={(e) =>
@@ -452,6 +468,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="text"
                                             id="country"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
                                             value={country}
                                             onChange={(e) =>
@@ -474,6 +491,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="text"
                                             id="lastName"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
                                             value={lastName}
                                             onChange={(e) =>
@@ -494,6 +512,7 @@ export default function PageInfoBuyTicket({
                                         <input
                                             type="text"
                                             id="city"
+                                            required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
                                             value={city}
                                             onChange={(e) =>
