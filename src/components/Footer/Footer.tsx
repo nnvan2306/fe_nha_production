@@ -33,8 +33,8 @@ export default function Footer() {
                     <li>Redux</li>
                     <li>Ant Design</li>
                     <li>TailwindCss</li>
+                    <li>Bootstrap</li>
                     <li>Sass</li>
-                    <li>Bootstrap 5</li>
                     <li>Git</li>
                 </ul>
             </div>

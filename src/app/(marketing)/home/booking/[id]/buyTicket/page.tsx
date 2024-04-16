@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { CreateBillAction, deleteBillAction } from "@/action/billAction";
 import { checkBankingAction } from "@/action/apiBanking";
 import { isValidEmail } from "@/helpers/handleCheckTypeEmail";
+import PhoneInput from "react-phone-number-input/input";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -22,7 +23,7 @@ export default function PageInfoBuyTicket({
     const [infoTicket, setInfoTicket] = useState<ITicket | null>(null);
     const [email, setEmail] = useState<string>("");
     const [reEmail, setReEmail] = useState<string>("");
-    const [phoneNumber, setPhoneNumber] = useState<number>(0);
+    const [phoneNumber, setPhoneNumber] = useState<any>("");
     const [isPersonal, setIsPersonal] = useState<boolean>(true);
     const [company, setCompany] = useState<string>("");
     const [firstName, setFirstName] = useState<string>("");
@@ -67,7 +68,7 @@ export default function PageInfoBuyTicket({
     const handleRevalue = () => {
         setEmail("");
         setReEmail("");
-        setPhoneNumber(0);
+        setPhoneNumber("");
         setFirstName("");
         setLastName("");
         setAddress("");
@@ -126,14 +127,14 @@ export default function PageInfoBuyTicket({
 
     const handleContinue = async () => {
         let check = handleValidateContinute();
-        let uuid = uuidv4();
+        let createUuid = uuidv4();
 
         if (!check) {
             return;
         }
 
         let dataBuider = {
-            uuid: uuid,
+            uuid: createUuid,
             ticketId: infoTicket?.id,
             totalTicket: totalTicketBuy,
             email: email,
@@ -155,7 +156,7 @@ export default function PageInfoBuyTicket({
             return;
         }
         setIsPayment(true);
-        setUuid(uuid);
+        setUuid(createUuid);
     };
 
     useEffect(() => {
@@ -192,8 +193,6 @@ export default function PageInfoBuyTicket({
             const handleGetBank = async () => {
                 const res = await checkBankingAction();
 
-                console.log(res.data);
-
                 if (res.data && res.data.length > 0) {
                     res.data.forEach((item: any, index: number) => {
                         if (
@@ -205,6 +204,7 @@ export default function PageInfoBuyTicket({
                                 icon: "success",
                                 title: "Payment success",
                             });
+
                             setIsPayment(false);
                             handleRevalue();
                             setUuid("");
@@ -229,10 +229,10 @@ export default function PageInfoBuyTicket({
         }).then((result) => {
             if (result.isConfirmed) {
                 const _fetch = async () => {
+                    await deleteBillAction(uuid);
                     setIsPayment(false);
                     setUuid("");
                     setCountdown(600);
-                    await deleteBillAction(uuid);
                 };
                 _fetch();
             }
@@ -319,15 +319,23 @@ export default function PageInfoBuyTicket({
                                             </span>
                                         </label>
                                         <br />
-                                        <input
+                                        {/* <input
                                             id="phoneNumber"
                                             type="tel"
+                                            pattern="[0-9]{10}"
                                             required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
                                             value={phoneNumber}
                                             onChange={(e) =>
-                                                setPhoneNumber(+e.target.value)
+                                                setPhoneNumber(e.target.value)
                                             }
+                                        /> */}
+                                        <PhoneInput
+                                            required
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                            country="VN"
+                                            value={phoneNumber}
+                                            onChange={setPhoneNumber}
                                         />
                                     </div>
                                 </Col>
