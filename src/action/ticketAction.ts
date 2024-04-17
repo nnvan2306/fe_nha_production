@@ -17,7 +17,7 @@ export const getAllTicket =async (calendarId:number):Promise<IRes<ITicket[]>>=>{
 
 export const handleGetOneTicket =async (id:number):Promise<IRes<ITicket>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-one-ticket?id=${id}`,{
-        cache: "no-store",
+        next : {tags :['getAgainInfoTicket']}
     })
     const data = await res.json();
 
@@ -28,7 +28,7 @@ export const handleGetOneTicket =async (id:number):Promise<IRes<ITicket>>=>{
 
 
 
-export const bookingTicketAction = async (id:number , totalTicketBooking:number):Promise<IRes<[]>>=>{
+export const bookingTicketAction = async ({id , totalTicketBooking} : {id:number | undefined, totalTicketBooking:number }):Promise<IRes<[]>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/update-booking-ticket` ,{
         method: 'PATCH',
         headers: {
@@ -38,10 +38,10 @@ export const bookingTicketAction = async (id:number , totalTicketBooking:number)
         cache:"no-store"        
     })
 
-    const data = await res.json();
+    const data   = await res.json();
 
-    if(data.errorCode === 0){
-        revalidateTag('getAgainTicket');
-    }
+    // revalidateTag('getAgainTicket');
+    // revalidateTag('getAgainInfoTicket');
+
     return data;
 }

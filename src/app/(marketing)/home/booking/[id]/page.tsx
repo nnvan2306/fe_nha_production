@@ -43,7 +43,7 @@ export default function PageTicket({
         if (infoTicket.totalTicket === 0) {
             Swal.fire({
                 icon: "warning",
-                title: "tickets have been sold out ! ",
+                title: "sorry , tickets have been sold out ! ",
             });
             return;
         }
@@ -161,7 +161,13 @@ export default function PageTicket({
                                                                     Total Ticket
                                                                     :{" "}
                                                                 </span>
-                                                                <span className="text-[20px] font-[600]">
+                                                                <span
+                                                                    className={`${
+                                                                        item.totalTicket
+                                                                            ? ""
+                                                                            : "text-[red]"
+                                                                    } text-[20px] font-[600] `}
+                                                                >
                                                                     {
                                                                         item.totalTicket
                                                                     }

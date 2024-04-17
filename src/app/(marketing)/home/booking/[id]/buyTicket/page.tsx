@@ -1,6 +1,6 @@
 "use client";
 
-import { handleGetOneTicket } from "@/action/ticketAction";
+import { bookingTicketAction, handleGetOneTicket } from "@/action/ticketAction";
 import { ITicket } from "@/utils/interface";
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
@@ -203,6 +203,11 @@ export default function PageInfoBuyTicket({
                             let data = {
                                 email: email,
                             };
+                            let dataUpdateTicket = {
+                                id: infoTicket?.id,
+                                totalTicketBooking: totalTicketBuy,
+                            };
+
                             clearInterval(intervalBankId);
                             Swal.fire({
                                 icon: "success",
@@ -214,6 +219,7 @@ export default function PageInfoBuyTicket({
                             setUuid("");
                             setCountdown(600);
                             await handleSendEmailAction(data);
+                            await bookingTicketAction(dataUpdateTicket);
                         }
                     });
                 }
@@ -246,6 +252,7 @@ export default function PageInfoBuyTicket({
 
     return (
         <div className="h-[100%] pt-[30px] w-[80%] ml-[50%] translate-x-[-50%] ">
+            <p>{infoTicket?.totalTicket}</p>
             <Row className="w-[100%] ">
                 <Col span={14} className="pr-[20px]">
                     <div className="flex justify-center items-center w-[100%]">
