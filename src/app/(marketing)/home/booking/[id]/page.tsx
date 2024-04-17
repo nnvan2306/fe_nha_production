@@ -53,6 +53,8 @@ export default function PageTicket({
         );
     };
 
+    console.log(listTicket);
+
     return (
         <div className="w-[100%] ">
             <div className="w-[80%] ml-[50%] translate-x-[-50%]">
@@ -66,8 +68,10 @@ export default function PageTicket({
                             <span className="capitalize mr-[10px] text-[24px] font-[600]">
                                 {listTicket[0]?.Calendar.Teams[0].name}
                             </span>
-                            VS
-                            <span className=" ml-[10px] text-[24px] font-[600] capitalize">
+
+                            <span>Vs</span>
+
+                            <span className="capitalize ml-[10px] text-[24px] font-[600]">
                                 {listTicket[0]?.Calendar.Teams[1].name}
                             </span>
                         </p>
@@ -142,12 +146,25 @@ export default function PageTicket({
                                                         className="w-[100%] shadow-md rounded-[10px] flex my-[20px] border-solid border-[1px] border-[#ddd]"
                                                         key={index}
                                                     >
-                                                        <div className="w-[70%] p-[20px]">
+                                                        <div className="w-[65%] p-[20px]">
                                                             <p className="mb-[10px]">
                                                                 <i className="bi bi-flag mr-[10px] text-[20px] opacity-[0.7]"></i>
                                                                 <span className="font-[600] text-[20px] opacity-[0.7]">
                                                                     Section :{" "}
                                                                     {item.name}
+                                                                </span>
+                                                            </p>
+
+                                                            <p className="mb-[10px]">
+                                                                <i className="bi bi-ticket mr-[10px] text-[14px] opacity-[0.7]"></i>
+                                                                <span className="text-[14px] opacity-[0.7]">
+                                                                    Total Ticket
+                                                                    :{" "}
+                                                                </span>
+                                                                <span className="text-[20px] font-[600]">
+                                                                    {
+                                                                        item.totalTicket
+                                                                    }
                                                                 </span>
                                                             </p>
 
@@ -176,7 +193,7 @@ export default function PageTicket({
                                                             </p>
                                                         </div>
 
-                                                        <div className="w-[30%] border-dashed border-[1px] border-l-[#000] border-t-[#fff] border-r-[#fff] border-b-[#fff] p-[20px]">
+                                                        <div className="w-[35%] border-dashed border-[1px] border-l-[#000] border-t-[#fff] border-r-[#fff] border-b-[#fff] p-[20px]">
                                                             <h6 className="font-[700] text-end">
                                                                 £{item.price}
                                                             </h6>

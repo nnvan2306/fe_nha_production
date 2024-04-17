@@ -14,6 +14,7 @@ import { CreateBillAction, deleteBillAction } from "@/action/billAction";
 import { checkBankingAction } from "@/action/apiBanking";
 import { isValidEmail } from "@/helpers/handleCheckTypeEmail";
 import PhoneInput from "react-phone-number-input/input";
+import { handleSendEmailAction } from "@/action/mailAction";
 
 export default function PageInfoBuyTicket({
     searchParams,
@@ -194,11 +195,14 @@ export default function PageInfoBuyTicket({
                 const res = await checkBankingAction();
 
                 if (res.data && res.data.length > 0) {
-                    res.data.forEach((item: any, index: number) => {
+                    res.data.forEach(async (item: any, index: number) => {
                         if (
                             item["Mô tả"].includes(uuid.replace(/-/g, "")) &&
                             item["Giá trị"] === totalPrice
                         ) {
+                            let data = {
+                                email: email,
+                            };
                             clearInterval(intervalBankId);
                             Swal.fire({
                                 icon: "success",
@@ -209,6 +213,7 @@ export default function PageInfoBuyTicket({
                             handleRevalue();
                             setUuid("");
                             setCountdown(600);
+                            await handleSendEmailAction(data);
                         }
                     });
                 }
@@ -319,17 +324,7 @@ export default function PageInfoBuyTicket({
                                             </span>
                                         </label>
                                         <br />
-                                        {/* <input
-                                            id="phoneNumber"
-                                            type="tel"
-                                            pattern="[0-9]{10}"
-                                            required
-                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
-                                            value={phoneNumber}
-                                            onChange={(e) =>
-                                                setPhoneNumber(e.target.value)
-                                            }
-                                        /> */}
+
                                         <PhoneInput
                                             required
                                             className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"

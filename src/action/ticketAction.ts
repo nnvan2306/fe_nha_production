@@ -1,10 +1,12 @@
 "use server"
 
 import { IRes, ITicket } from "@/utils/interface"
+import { revalidateTag } from "next/cache";
 
 export const getAllTicket =async (calendarId:number):Promise<IRes<ITicket[]>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-ticket?calendarId=${calendarId}`,{
-        cache: "no-store",
+        // cache: "no-store",
+        next : {tags :['getAgainTicket']}
     })
     const data = await res.json();
 
@@ -26,11 +28,20 @@ export const handleGetOneTicket =async (id:number):Promise<IRes<ITicket>>=>{
 
 
 
-// export const bookingTicketAction = async (id:number):Promise<IRes<[]>>=>{
-//     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/update-booking-ticket` ,{id:id},{
-//         cache: "no-store",
-//     })
-//     const data = await res.json();
+export const bookingTicketAction = async (id:number , totalTicketBooking:number):Promise<IRes<[]>>=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/update-booking-ticket` ,{
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        body: JSON.stringify({id:id,totalTicketBooking:totalTicketBooking}),
+        cache:"no-store"        
+    })
 
-//     return data;
-// }
+    const data = await res.json();
+
+    if(data.errorCode === 0){
+        revalidateTag('getAgainTicket');
+    }
+    return data;
+}

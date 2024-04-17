@@ -56,7 +56,7 @@ const PageMatchDetail = ({
             </div>
             <div className="w-[60%] h-[100%] ml-[50%] translate-x-[-50%] ">
                 <div className="w-[100%] flex pt-[20px]">
-                    <div className="w-[45%] h-[100px] flex justify-end">
+                    <div className="w-[45%] flex justify-end">
                         <div className=" text-center">
                             <Image
                                 className="mr-[20px]"
@@ -69,7 +69,7 @@ const PageMatchDetail = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[400] mr-[20px] mb-[10px]">
+                            <p className="text-[25px] font-[500] mr-[20px] mb-[10px] capitalize">
                                 {infoMatch?.hostId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
@@ -128,7 +128,7 @@ const PageMatchDetail = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[500] mb-[10px]">
+                            <p className="text-[25px] font-[500] mb-[10px] capitalize">
                                 {infoMatch?.guestId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
