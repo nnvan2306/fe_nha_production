@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./css/globals.css";
 import "./css/styles.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
+import { StoreProvider } from "@/store/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                {children}
-                {/* <AntdRegistry>{children}</AntdRegistry> */}
-            </body>
-        </html>
+        <StoreProvider>
+            <html lang="en">
+                <body className={inter.className}>
+                    {children}
+                    {/* <AntdRegistry>{children}</AntdRegistry> */}
+                </body>
+            </html>
+        </StoreProvider>
     );
 }

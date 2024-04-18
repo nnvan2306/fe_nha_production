@@ -223,3 +223,11 @@ export interface ITicket {
     Teams:ITeam[],
 }
 
+
+export interface ICounterState {
+    value: number
+}
+
+export interface IAuthSlice {
+    isLogin : boolean
+}
