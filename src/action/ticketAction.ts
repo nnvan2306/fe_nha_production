@@ -14,7 +14,6 @@ export const getAllTicket =async (calendarId:number):Promise<IRes<ITicket[]>>=>{
 }
 
 
-
 export const handleGetOneTicket =async (id:number):Promise<IRes<ITicket>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-one-ticket?id=${id}`,{
         next : {tags :['getAgainInfoTicket']}
@@ -23,9 +22,6 @@ export const handleGetOneTicket =async (id:number):Promise<IRes<ITicket>>=>{
 
     return data;
 }
-
-
-
 
 
 export const bookingTicketAction = async ({id , totalTicketBooking} : {id:number | undefined, totalTicketBooking:number }):Promise<IRes<[]>>=>{
@@ -40,7 +36,7 @@ export const bookingTicketAction = async ({id , totalTicketBooking} : {id:number
 
     const data   = await res.json();
 
-    // revalidateTag('getAgainTicket');
+    // revalidateTag('getAgainTicket'); 
     // revalidateTag('getAgainInfoTicket');
 
     return data;

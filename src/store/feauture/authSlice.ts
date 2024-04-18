@@ -4,7 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 
 const initialState : IAuthSlice = {
-    isLogin : false
+    isLogin : false,
+    name :''
 }
 
 export const authSlice = createSlice({
@@ -12,12 +13,23 @@ export const authSlice = createSlice({
   initialState,
 
   reducers: {
-    loginSuccess : (state)=>{
-        state.isLogin = true;
+    loginSuccess : (state, action: PayloadAction<IAuthSlice>)=>{
+      
+      let stateNew = {...state};
+
+      stateNew.isLogin = true;
+      stateNew.name = action.payload.name;
+
+      return stateNew;
     },
 
     logout:(state)=>{
-        state.isLogin = true;
+      let stateNew = {...state};
+
+      stateNew.isLogin = false;
+      stateNew.name = '';
+      
+      return stateNew;
     },
 
     increment: (state) => {      
@@ -29,6 +41,6 @@ export const authSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, incrementByAmount } = authSlice.actions
+export const { increment, incrementByAmount , loginSuccess , logout} = authSlice.actions
 
 export default authSlice.reducer

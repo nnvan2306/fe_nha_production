@@ -20,11 +20,12 @@ export default function RootLayout({
     return (
         <StoreProvider>
             <html lang="en">
-                <body className={inter.className}>
-                    {children}
-                    {/* <AntdRegistry>{children}</AntdRegistry> */}
-                </body>
+                <body className={inter.className}>{children}</body>
             </html>
         </StoreProvider>
     );
+}
+
+{
+    /* <AntdRegistry>{children}</AntdRegistry> */
 }

@@ -14,12 +14,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Empty } from "antd";
 
-import {
-    decrement,
-    increment,
-    incrementByAmount,
-} from "@/store/feauture/slice";
-
 export default function PageBooking() {
     const [loadings, setLoadings] = useState<boolean>(false);
     const [listTeam, setListTeam] = useState<ITeam[]>([]);

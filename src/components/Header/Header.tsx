@@ -5,6 +5,7 @@ import logo from "../../../public/logo_header.png";
 import { memo } from "react";
 import Link from "next/link";
 import { routes } from "@/helpers/menuRouterHeader";
+import ControlAuth from "../ControlAuth/ControlAuth";
 
 const menu: MenuProps["items"] = [
     {
@@ -64,19 +65,7 @@ const Header: React.FC = () => {
                     </div>
                 </Col>
                 <Col span={5}>
-                    <div className=" flex justify-center items-center">
-                        <Link href={routes.login.url}>
-                            <button className="bg-[#3F1052] w-[100px] h-[40px] mt-[20px] p-[10px] text-[#fff] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
-                                Đăng Nhập
-                            </button>
-                        </Link>
-
-                        <Link href={routes.register.url}>
-                            <button className=" bg-[#3F1052] w-[100px] h-[40px] mt-[20px] p-[10px] text-[#fff] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
-                                Đăng Ký
-                            </button>
-                        </Link>
-                    </div>
+                    <ControlAuth />
                 </Col>
             </Row>
         </div>

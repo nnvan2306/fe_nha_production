@@ -19,6 +19,11 @@ const nextConfig = {
                 hostname: "script.googleusercontent.com",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "png.pngtree.com",
+                pathname: "/**",
+            },
         ],
     },
 };

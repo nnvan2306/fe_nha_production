@@ -229,5 +229,12 @@ export interface ICounterState {
 }
 
 export interface IAuthSlice {
-    isLogin : boolean
+    isLogin : boolean,
+    name : string,
+}
+
+export interface IUser {
+    access_token: string,
+    refresh_token: string,
+    name: string ,
 }

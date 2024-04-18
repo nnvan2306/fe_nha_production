@@ -1,4 +1,5 @@
 "use client";
+
 import className from "classnames/bind";
 import styles from "./Login.module.scss";
 import { routes } from "@/helpers/menuRouterHeader";
@@ -6,6 +7,9 @@ import Link from "next/link";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { handleLoginAction, handleRegisterAction } from "@/action/authAction";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "@/store/feauture/authSlice";
+import { useRouter } from "next/navigation";
 
 const cx: Function = className.bind(styles);
 
@@ -19,6 +23,10 @@ export default function PageLogin({
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [rePassword, setRePassword] = useState("");
+
+    const dispatch = useDispatch();
+
+    const router = useRouter();
 
     const handleValidate = (): boolean => {
         if (
@@ -48,7 +56,7 @@ export default function PageLogin({
             password: password,
         };
 
-        if (slug === routes.login.label) {
+        if (slug !== routes.login.label) {
             dataBuider.name = name;
             dataBuider.rePassword = rePassword;
         }
@@ -58,6 +66,29 @@ export default function PageLogin({
                 slug === routes.login.label
                     ? await handleLoginAction(dataBuider)
                     : await handleRegisterAction(dataBuider);
+
+            if (res.errorCode === 0) {
+                Swal.fire({
+                    icon: "success",
+                    title: `${
+                        slug === routes.login.label
+                            ? "Login successfully"
+                            : "Account successfully created"
+                    }`,
+                });
+
+                if (slug === routes.login.label) {
+                    dispatch(
+                        loginSuccess({ isLogin: true, name: res.data.name })
+                    );
+                    router.push("/home");
+                }
+
+                setEmail("");
+                setName("");
+                setPassword("");
+                setRePassword("");
+            }
         } catch (err) {
             console.log(err);
             Swal.fire({
@@ -152,7 +183,7 @@ export default function PageLogin({
             </p>
 
             <div className="mt-[40px] w-[100%]">
-                {!isLoading ? (
+                {isLoading ? (
                     <button
                         disabled
                         className="w-[80%] py-[8px] ml-[50%] translate-x-[-50%] bg-[#ccc] rounded-full  hover:opacity-[0.6] bg-gradient-to-r from-[#74ebd5] to-[#9face6] border-none text-[#fff]"
@@ -193,8 +224,8 @@ export default function PageLogin({
                     }
                 >
                     {slug === routes.login.label
-                        ? "You have an account ?"
-                        : "You haven't an account ?"}
+                        ? "You haven't an account ?"
+                        : "You have an account ?"}
                 </Link>
             </div>
         </div>

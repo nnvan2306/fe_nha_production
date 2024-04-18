@@ -1,6 +1,6 @@
 "use server"
 
-import { IRes } from "@/utils/interface"
+import { IRes, IUser } from "@/utils/interface"
 
 export const  handleRegisterAction = async({email , name , password , rePassword} : {email : string , name : string , password : string , rePassword : string}) : Promise<IRes<[]>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/register`,{
@@ -17,7 +17,7 @@ export const  handleRegisterAction = async({email , name , password , rePassword
 }
 
 
-export const  handleLoginAction = async({email  , password } : {email : string , password : string }) : Promise<IRes<[]>>=>{
+export const  handleLoginAction = async({email  , password } : {email : string , password : string }) : Promise<IRes<IUser>>=>{
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`,{
         method: 'POST',
         headers: {
