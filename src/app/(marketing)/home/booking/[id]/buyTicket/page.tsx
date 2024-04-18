@@ -39,6 +39,7 @@ export default function PageInfoBuyTicket({
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [uuid, setUuid] = useState<string>("");
     const [countdown, setCountdown] = useState<number>(600);
+    const [revalueInfoTicket, setRevalueInfoTicket] = useState(false);
 
     useEffect(() => {
         const fetch = async () => {
@@ -51,7 +52,7 @@ export default function PageInfoBuyTicket({
         };
 
         fetch();
-    }, [searchParams.id]);
+    }, [searchParams.id, revalueInfoTicket]);
 
     const handleONChange = (value: number) => {
         if (value) {
@@ -60,10 +61,6 @@ export default function PageInfoBuyTicket({
         }
 
         setIsPersonal(false);
-    };
-
-    const handleCheckTerms = () => {
-        setIsTerms(!isTerms);
     };
 
     const handleRevalue = () => {
@@ -79,6 +76,11 @@ export default function PageInfoBuyTicket({
         setTotalTicketBuy(1);
         setTotalPrice(price * 1);
         setCountdown(600);
+    };
+
+    const handleChooseTotalTicket = (ticketNumber: number) => {
+        setTotalTicketBuy(ticketNumber);
+        setTotalPrice(ticketNumber * price);
     };
 
     const handleValidateContinute = (): boolean => {
@@ -118,12 +120,18 @@ export default function PageInfoBuyTicket({
             });
             return false;
         }
-        return true;
-    };
 
-    const handleChooseTotalTicket = (ticketNumber: number) => {
-        setTotalTicketBuy(ticketNumber);
-        setTotalPrice(ticketNumber * price);
+        if (
+            infoTicket?.totalTicket &&
+            totalTicketBuy > infoTicket?.totalTicket
+        ) {
+            Swal.fire({
+                icon: "warning",
+                title: `This row of seats only has ${infoTicket.totalTicket} tickets left`,
+            });
+            return false;
+        }
+        return true;
     };
 
     const handleContinue = async () => {
@@ -220,6 +228,7 @@ export default function PageInfoBuyTicket({
                             setCountdown(600);
                             await handleSendEmailAction(data);
                             await bookingTicketAction(dataUpdateTicket);
+                            setRevalueInfoTicket(!revalueInfoTicket);
                         }
                     });
                 }
@@ -241,6 +250,7 @@ export default function PageInfoBuyTicket({
             if (result.isConfirmed) {
                 const _fetch = async () => {
                     await deleteBillAction(uuid);
+                    setIsTerms(false);
                     setIsPayment(false);
                     setUuid("");
                     setCountdown(600);
@@ -252,7 +262,6 @@ export default function PageInfoBuyTicket({
 
     return (
         <div className="h-[100%] pt-[30px] w-[80%] ml-[50%] translate-x-[-50%] ">
-            <p>{infoTicket?.totalTicket}</p>
             <Row className="w-[100%] ">
                 <Col span={14} className="pr-[20px]">
                     <div className="flex justify-center items-center w-[100%]">
@@ -294,6 +303,19 @@ export default function PageInfoBuyTicket({
                         <p className="">your detail</p>
                         <div className="w-[65%] h-[3px] "></div>
                         <p className="">Payment</p>
+                    </div>
+
+                    <div className="my-[20px]">
+                        <p className="my-[0px]">
+                            remaining tickets :{" "}
+                            <span
+                                className={`${
+                                    infoTicket?.totalTicket ? "text-[red]" : ""
+                                } text-[20px] font-[600]`}
+                            >
+                                {infoTicket?.totalTicket}
+                            </span>
+                        </p>
                     </div>
 
                     {!isPayment ? (
@@ -534,22 +556,12 @@ export default function PageInfoBuyTicket({
                             </Row>
 
                             <div className="flex">
-                                {isTerms ? (
-                                    <input
-                                        checked
-                                        type="checkbox"
-                                        name="checkbox"
-                                        className="mr-[20px] p-[10px]"
-                                        onChange={() => handleCheckTerms()}
-                                    />
-                                ) : (
-                                    <input
-                                        type="checkbox"
-                                        name="checkbox"
-                                        className="mr-[20px] p-[10px]"
-                                        onChange={() => handleCheckTerms()}
-                                    />
-                                )}
+                                <input
+                                    type="checkbox"
+                                    name="checkbox"
+                                    className="mr-[20px] p-[10px]"
+                                    onChange={() => setIsTerms(!isTerms)}
+                                />
 
                                 <p>
                                     I have read and agree to the Terms and
