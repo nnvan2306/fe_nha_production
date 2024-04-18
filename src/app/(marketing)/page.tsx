@@ -61,7 +61,7 @@ export default function Page() {
                                 <Link href={"/home"}>
                                     <button
                                         className={cx(
-                                            " mx-[20px] px-[10px] w-[200px] h-[60px] border-none bg-[#2575fc] rounded-[10px] text-[#fff] text-[20px] font-[500]"
+                                            " mx-[20px] px-[10px] w-[200px] h-[60px] border-none bg-[#2575fc] rounded-[10px] text-[#fff] text-[20px] font-[500] "
                                         )}
                                     >
                                         Get Started

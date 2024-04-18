@@ -305,12 +305,14 @@ export default function PageInfoBuyTicket({
                         <p className="">Payment</p>
                     </div>
 
-                    <div className="my-[20px]">
-                        <p className="my-[0px]">
+                    <div className="my-[20px] p-[10px] border-solid border-[1px] border-[#ccc] rounded-[10px] pl-[20px] shadow-sm">
+                        <p className="my-[0px] text-[16px] uppercase">
                             remaining tickets :{" "}
                             <span
                                 className={`${
-                                    infoTicket?.totalTicket ? "text-[red]" : ""
+                                    infoTicket?.totalTicket
+                                        ? "text-[green]"
+                                        : "text-[red]"
                                 } text-[20px] font-[600]`}
                             >
                                 {infoTicket?.totalTicket}
