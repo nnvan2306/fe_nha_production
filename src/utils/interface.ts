@@ -231,10 +231,27 @@ export interface ICounterState {
 export interface IAuthSlice {
     isLogin : boolean,
     name : string,
+    color:number 
 }
 
 export interface IUser {
     access_token: string,
     refresh_token: string,
     name: string ,
+}
+
+export interface IComment {
+    id:number,
+    content:number,
+    like:number,
+    disLike:number,
+    matchId:number,
+    userId:number,
+    User : IUser
+    createAt:string,
+}
+
+export interface IUser {
+    id:number ,
+    name: string
 }

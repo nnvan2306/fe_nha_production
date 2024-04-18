@@ -56,7 +56,10 @@ export default function PageLogin({
             password: password,
         };
 
+        let color = Math.floor(Math.random() * 10);
+
         if (slug !== routes.login.label) {
+            color = Math.floor(Math.random() * 10);
             dataBuider.name = name;
             dataBuider.rePassword = rePassword;
         }
@@ -79,7 +82,11 @@ export default function PageLogin({
 
                 if (slug === routes.login.label) {
                     dispatch(
-                        loginSuccess({ isLogin: true, name: res.data.name })
+                        loginSuccess({
+                            isLogin: true,
+                            name: res.data.name,
+                            color: color,
+                        })
                     );
                     router.push("/home");
                 }
@@ -89,11 +96,11 @@ export default function PageLogin({
                 setPassword("");
                 setRePassword("");
             }
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
             Swal.fire({
                 icon: "error",
-                title: "error from server , please try again",
+                title: err.response.data.message,
             });
         }
 

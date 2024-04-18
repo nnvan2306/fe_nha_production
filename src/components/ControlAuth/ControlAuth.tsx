@@ -7,10 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Button, Tooltip } from "antd";
 
 export default function ControlAuth() {
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
     const nameUser = useSelector((state: RootState) => state.auth.name);
+    const color = useSelector((state: RootState) => state.auth.color);
 
     const dispatch = useDispatch();
 
@@ -18,26 +20,44 @@ export default function ControlAuth() {
         dispatch(logout());
     };
 
-    console.log(nameUser);
-
     return (
-        <div className=" flex justify-center items-center">
+        <div className=" flex justify-center items-center h-[100%] w-[100%]">
             {isLogin ? (
                 <>
-                    <div className="flex justify-center items-center">
-                        <Image
-                            className="rounded-full"
-                            src={`https://png.pngtree.com/png-vector/20190909/ourmid/pngtree-outline-user-icon-png-image_1727916.jpg`}
-                            alt="user"
-                            width={50}
-                            height={50}
-                        />
+                    <div className="flex justify-end items-center w-[100%]">
+                        <Tooltip
+                            className="bg-[#fff] p-[0]"
+                            trigger="click"
+                            title={
+                                <div className="h-[100px] w-[100px] bg-[#fff] p-[5px]">
+                                    <button
+                                        className="w-[100%] h-[30px] border-none mt-[10px]"
+                                        onClick={handleLogout}
+                                    >
+                                        <i className="bi bi-box-arrow-left mr-[5px]"></i>{" "}
+                                        Logout
+                                    </button>
+                                </div>
+                            }
+                        >
+                            <div
+                                className={`${
+                                    color < 3
+                                        ? "bg-[pink]"
+                                        : color < 6
+                                        ? "bg-[green]"
+                                        : "bg-[orange]"
+                                }  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                            >
+                                <p className="text-[20px] font-[500]">
+                                    {nameUser.slice(0, 1).toUpperCase()}
+                                </p>
+                            </div>
+                        </Tooltip>
 
-                        <p className="text-[20px] ml-[20px] text-[#fff]">
+                        <p className="text-[20px] ml-[20px] text-[#fff] mr-[40px]">
                             {nameUser}
                         </p>
-
-                        <button onClick={handleLogout}>logout</button>
                     </div>
                 </>
             ) : (

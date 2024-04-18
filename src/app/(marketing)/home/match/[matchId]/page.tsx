@@ -1,13 +1,21 @@
 "use client";
 
+import {
+    handleGetCommentAction,
+    handleLikeAction,
+} from "@/action/commentAction";
 import { getMatchDetailAction } from "@/action/matchAction";
 import { getScoredAction } from "@/action/scoredAction";
 import { routes } from "@/helpers/menuRouterHeader";
-import { IMatch, IScored } from "@/utils/interface";
+import { RootState } from "@/store/store";
+import { IComment, IMatch, IScored } from "@/utils/interface";
+import { Tooltip } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { comment } from "postcss";
 import { memo, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const PageMatchDetail = ({
     params: { matchId },
@@ -16,6 +24,12 @@ const PageMatchDetail = ({
 }) => {
     const [infoMatch, setInfoMatch] = useState<IMatch | null>(null);
     const [listScored, setListScored] = useState<IScored[]>([]);
+    const [listComment, setListComment] = useState<IComment[]>([]);
+    const [isFirstActionLike, setIsFirstActionLike] = useState<boolean>(false);
+
+    const isLogin = useSelector((state: RootState) => state.auth.isLogin);
+    const nameUser = useSelector((state: RootState) => state.auth.name);
+    const color = useSelector((state: RootState) => state.auth.color);
 
     const router = useRouter();
 
@@ -23,9 +37,15 @@ const PageMatchDetail = ({
         const fetch = async () => {
             const res = await getMatchDetailAction(matchId);
             const scored = await getScoredAction(matchId);
-            if (res.errorCode === 0 && scored.errorCode === 0) {
+            const comment = await handleGetCommentAction();
+            if (
+                res.errorCode === 0 &&
+                scored.errorCode === 0 &&
+                comment.errorCode === 0
+            ) {
                 setInfoMatch(res.data);
                 setListScored(scored.data);
+                setListComment(comment.data);
             }
         };
         fetch();
@@ -35,7 +55,7 @@ const PageMatchDetail = ({
         router.push(`${routes.match.url}`);
     };
 
-    console.log(listScored);
+    const handleActionLike = (isLike: boolean) => {};
 
     return (
         <div className=" w-[100%] relative pb-[50px]">
@@ -328,6 +348,130 @@ const PageMatchDetail = ({
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                {/*  */}
+                {/* write comment */}
+
+                <div className="mt-[40px] w-[100%]  flex justify-center ">
+                    <div
+                        className={`${
+                            color < 3
+                                ? "bg-[pink]"
+                                : color < 6
+                                ? "bg-[green]"
+                                : "bg-[orange]"
+                        }  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                    >
+                        <p className="text-[20px] font-[500]">
+                            {nameUser.slice(0, 1).toUpperCase()}
+                        </p>
+                    </div>
+                    <div className="w-[95%] pl-[10px]">
+                        <input
+                            type="text"
+                            placeholder=" Viết bình luận ..."
+                            className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px] focus:border-solid focus:border-[1px] focus:border-[#fff] focus:border-b-[#ccc] "
+                        />
+                        <div className="flex justify-end items-center mt-[10px]">
+                            <button className="border-none rounded-full py-[10px] px-[25px] mr-[10px] bg-[#fff] hover:bg-[#ddd] font-[600]">
+                                Hủy
+                            </button>
+                            <button className="border-none rounded-full p-[10px] opacity-[0.7]">
+                                Bình luận
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/*  */}
+                {/* list comment */}
+                <div className="">
+                    {listComment &&
+                        listComment.length > 0 &&
+                        listComment.map((item: IComment, index: number) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="flex  justify-center"
+                                >
+                                    <div
+                                        className={`${
+                                            color < 3
+                                                ? "bg-[pink]"
+                                                : color < 6
+                                                ? "bg-[green]"
+                                                : "bg-[orange]"
+                                        }  w-[35px] h-[35px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                                    >
+                                        <p className="text-[16px] font-[500]">
+                                            {nameUser.slice(0, 1).toUpperCase()}
+                                        </p>
+                                    </div>
+                                    <div className="w-[95%] pl-[10px]">
+                                        <p className="text-[14px] font-[600]">
+                                            {item.User.name}
+                                        </p>
+                                        <p className="text-[16px] my-[10px]">
+                                            {item.content}
+                                        </p>
+                                        <div className="flex justify-start items-center">
+                                            <div className="">
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    className=" w-[100px]"
+                                                    title={
+                                                        <div className="w-[50px] flex justify-center items-center">
+                                                            <p>Thích</p>
+                                                        </div>
+                                                    }
+                                                >
+                                                    <i
+                                                        className="bi bi-hand-thumbs-up hover:opacity-[0.5] cursor-pointer"
+                                                        onClick={() =>
+                                                            handleActionLike(
+                                                                true
+                                                            )
+                                                        }
+                                                    ></i>
+                                                </Tooltip>
+                                                <span className="ml-[10px]">
+                                                    {item.like}
+                                                </span>
+                                            </div>
+
+                                            <div className="mx-[20px]">
+                                                <Tooltip
+                                                    placement="bottom"
+                                                    className=" w-[100px]"
+                                                    title={
+                                                        <div className="w-[50px] flex justify-center items-center">
+                                                            <p>Thích</p>
+                                                        </div>
+                                                    }
+                                                >
+                                                    <i
+                                                        className="bi bi-hand-thumbs-down hover:opacity-[0.5] cursor-pointer"
+                                                        onClick={() =>
+                                                            handleActionLike(
+                                                                false
+                                                            )
+                                                        }
+                                                    ></i>
+                                                </Tooltip>
+                                                <span className="ml-[10px]">
+                                                    {item.disLike}
+                                                </span>
+                                            </div>
+
+                                            <button className="border-none rounded-full p-[10px] bg-[#fff] hover:bg-[#ddd]">
+                                                Phản hồi
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
                 </div>
             </div>
         </div>
