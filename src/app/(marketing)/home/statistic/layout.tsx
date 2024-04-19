@@ -1,34 +1,31 @@
 import { getAllSeasonAction } from "@/action/seasonAction";
-import NoteRating from "@/components/NoteRating/NoteRating";
-import PageSelectSeason from "@/components/Rating/PageSelectSeason";
+import Statistic from "@/components/Statistic/Statistic";
+import { ISeason } from "@/utils/interface";
 import { Suspense } from "react";
 
 export async function HandleData({ detail }: { detail: React.ReactNode }) {
     const res = await getAllSeasonAction();
 
     if (res.errorCode === 0) {
-        let listSeasonAwap = res?.data.map((item) => {
-            return {
-                value: item?.id,
-                label: item?.name,
-            };
+        let listSort = res.data.sort((a: ISeason, b: ISeason) => {
+            let idFirst = a.id;
+            let idSeacon = b.id;
+            return idFirst - idSeacon;
         });
+
         return (
-            <div className="w-[70%] ml-[50%] translate-x-[-50%]">
-                <PageSelectSeason
-                    listSeason={listSeasonAwap}
-                    seasonId={res?.data[0]?.id}
+            <div className="">
+                <Statistic
+                    listseason={listSort}
+                    seasonCurrent={listSort[0]?.id}
                 />
-
                 <div className="">{detail}</div>
-
-                <NoteRating />
             </div>
         );
     }
 }
 
-export default async function PageSelect({
+export default async function PageStatistic({
     children,
 }: {
     children: React.ReactNode;

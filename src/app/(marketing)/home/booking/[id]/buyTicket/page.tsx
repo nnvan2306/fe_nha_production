@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import buyTicket from "../../../../../../../public/buyTicket.png";
 import Image from "next/image";
 import moment from "moment";
-import NoteTicket from "@/components/NoteTicket/NoteTicket";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 import { CreateBillAction, deleteBillAction } from "@/action/billAction";
@@ -15,6 +14,7 @@ import { checkBankingAction } from "@/action/apiBanking";
 import { isValidEmail } from "@/helpers/handleCheckTypeEmail";
 import PhoneInput from "react-phone-number-input/input";
 import { handleSendEmailAction } from "@/action/mailAction";
+import NoteTicket from "@/components/Booking/NoteTicket";
 
 export default function PageInfoBuyTicket({
     searchParams,

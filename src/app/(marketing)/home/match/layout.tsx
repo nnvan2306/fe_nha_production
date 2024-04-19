@@ -1,13 +1,48 @@
-"use client";
-import className from "classnames/bind";
-import styles from "./Match.module.scss";
+import { getAllSeasonAction } from "@/action/seasonAction";
+import { getAllTeamAction } from "@/action/teamAction";
+import PageSelectMatch from "@/components/Match/PageSelectMatch";
+import { Suspense } from "react";
 
-const cx: Function = className.bind(styles);
+export async function HandleData({ detail }: { detail: React.ReactNode }) {
+    let resSeasons = await getAllSeasonAction();
+    let resTeam = await getAllTeamAction();
 
-export default function LayoutMatch({
+    if (resTeam.errorCode === 0 && resSeasons.errorCode === 0) {
+        let listSeason = resSeasons.data.map((item) => {
+            return {
+                value: item?.id,
+                label: item?.name,
+            };
+        });
+
+        let listTeam = resTeam.data.map((item) => {
+            return {
+                value: item?.id,
+                label: item?.name,
+            };
+        });
+
+        return (
+            <div className="w-[70%] ml-[50%] translate-x-[-50%]">
+                <PageSelectMatch listSeason={listSeason} listTeam={listTeam} />
+                <div className="">{detail}</div>
+            </div>
+        );
+    }
+}
+
+export default async function LayoutMatch({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    return <div className="">{children}</div>;
+    return (
+        <div>
+            <Suspense fallback={<div>Loading.....</div>}>
+                <div>
+                    <HandleData detail={children} />
+                </div>
+            </Suspense>
+        </div>
+    );
 }

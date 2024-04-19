@@ -2,14 +2,15 @@
 
 import { ITicket } from "@/utils/interface";
 import moment from "moment";
-import React, { useState } from "react";
-import BuyingGuide from "../BuyingGuide/BuyingGuide";
+import React from "react";
 import BlogChooseMe from "../BlogChooseMe/BlogChooseMe";
 import { Col, Divider, Row } from "antd";
 import Image from "next/image";
 import Swal from "sweetalert2";
 import { routes } from "@/helpers/menuRouterHeader";
 import { useRouter } from "next/navigation";
+import BuyingGuide from "./BuyingGuide";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 export default function PageListTicket({
     listTicket,
@@ -20,7 +21,7 @@ export default function PageListTicket({
     minPrice: number;
     idCalendar: number;
 }) {
-    const router = useRouter();
+    const router: AppRouterInstance = useRouter();
 
     const handleBuyTicket = (infoTicket: ITicket) => {
         if (infoTicket.totalTicket === 0) {
