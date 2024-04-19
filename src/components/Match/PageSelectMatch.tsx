@@ -1,7 +1,11 @@
 "use client";
 
+import PageTest from "@/app/(marketing)/home/match/listMatch/page";
+import { routes } from "@/helpers/menuRouterHeader";
 import { IList } from "@/utils/interface";
 import { Button } from "antd";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function PageSelectMatch({
@@ -11,10 +15,28 @@ export default function PageSelectMatch({
     listSeason: IList[];
     listTeam: IList[];
 }) {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [seasonId, setSeasonId] = useState<number>(0);
     const [hostId, setHostId] = useState<number>(0);
     const [guestId, setGuestId] = useState<number>(0);
+
+    const router: AppRouterInstance = useRouter();
+
+    const handleViewListMatch = () => {
+        let arrValidate = [seasonId, hostId, guestId];
+        let count = 0;
+        for (let i = 0; i < arrValidate.length; i++) {
+            if (!arrValidate[i]) {
+                count++;
+            }
+        }
+        if (count === arrValidate.length) {
+            return;
+        }
+
+        router.push(
+            `${routes.match.url}/listMatch?seasonId=${seasonId}&hostId=${hostId}&guestId=${guestId}`
+        );
+    };
 
     return (
         <div className=" w-[100%] h-[80px] flex justify-around mt-[10px]">
@@ -78,8 +100,7 @@ export default function PageSelectMatch({
             <div className="w-[20%] h-[60%]">
                 <Button
                     className=" w-[100%] h-[100%] rounded-[10px] border-[1px] border-[#ccc] shadow-sm disabled"
-                    loading={isLoading}
-                    // onClick={() => handleGetmatch()}
+                    onClick={() => handleViewListMatch()}
                 >
                     Tìm kiếm
                 </Button>
