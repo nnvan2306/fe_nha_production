@@ -3,11 +3,10 @@
 import { routes } from "@/helpers/menuRouterHeader";
 import { logout } from "@/store/feauture/authSlice";
 import { RootState } from "@/store/store";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
 
 export default function ControlAuth() {
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
@@ -31,11 +30,16 @@ export default function ControlAuth() {
                             title={
                                 <div className="h-[100px] w-[100px] bg-[#fff] p-[5px]">
                                     <button
-                                        className="w-[100%] h-[30px] border-none mt-[10px]"
+                                        className="w-[100%] h-[30px] border-none mt-[10px] rounded-[5px]"
                                         onClick={handleLogout}
                                     >
                                         <i className="bi bi-box-arrow-left mr-[5px]"></i>{" "}
                                         Logout
+                                    </button>
+
+                                    <button className="w-[100%] h-[30px] border-none mt-[10px] rounded-[5px]">
+                                        <i className="bi bi-gear mr-[5px]"></i>
+                                        settings
                                     </button>
                                 </div>
                             }

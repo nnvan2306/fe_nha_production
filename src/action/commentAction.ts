@@ -2,8 +2,8 @@
 
 import {  IComment, IRes } from "@/utils/interface";
 
-export const handleGetCommentAction = async():Promise<IRes<IComment[]>>=>{
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-comment?page=1&pageSize=10` , {
+export const handleGetCommentAction = async({page , pageSize , matchId} : {page:number , pageSize : number , matchId: number}):Promise<IRes<IComment[]>>=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/get-comment?page=${page}&pageSize=${pageSize}&matchId=${matchId}` , {
         cache:"no-store",
     });
     const data = await res.json();
