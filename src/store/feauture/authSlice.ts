@@ -6,7 +6,9 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 const initialState : IAuthSlice = {
     isLogin : false,
     name :'',
+    userId:0,
     color:0,
+    
 }
 
 export const authSlice = createSlice({
@@ -20,6 +22,7 @@ export const authSlice = createSlice({
 
       stateNew.isLogin = true;
       stateNew.name = action.payload.name;
+      stateNew.userId = action.payload.userId;
       stateNew.color = action.payload.color;
 
       return stateNew;
@@ -30,6 +33,7 @@ export const authSlice = createSlice({
 
       stateNew.isLogin = false;
       stateNew.name = '';
+      stateNew.userId =0;
       stateNew.color=0;
       
       return stateNew;

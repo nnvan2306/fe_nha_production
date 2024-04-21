@@ -231,6 +231,7 @@ export interface ICounterState {
 export interface IAuthSlice {
     isLogin : boolean,
     name : string,
+    userId:number,
     color:number 
 }
 
@@ -248,10 +249,32 @@ export interface IComment {
     matchId:number,
     userId:number,
     User : IUser
+    Feedbacks:IFeedback[],
     createAt:string,
+    isViewFeedback:boolean
+}
+
+export interface IFeedback {
+    id:number,
+    content:string,
+    like : number ,
+    disLike:number,
+    commentId:number,
+    userId:number,
+    createdAt:string,
+    User:IUser,
 }
 
 export interface IUser {
     id:number ,
     name: string
+}
+
+export interface IListLimit<T> {
+    items :T[],
+    meta:{
+        currentPage:number,
+        totalIteams:number,
+        totalPages:number,
+    }
 }

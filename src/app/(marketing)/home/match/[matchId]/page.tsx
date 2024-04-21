@@ -5,7 +5,7 @@ import { getMatchDetailAction } from "@/action/matchAction";
 import { getScoredAction } from "@/action/scoredAction";
 import PageComment from "@/components/Match/PageComment";
 import PageDetailMatch from "@/components/Match/PageDetailMatch";
-import { IComment, IMatch, IRes, IScored } from "@/utils/interface";
+import { IComment, IListLimit, IMatch, IRes, IScored } from "@/utils/interface";
 import { Suspense } from "react";
 
 interface IParams {
@@ -17,11 +17,13 @@ interface IParams {
 export async function HandleData({ matchId }: { matchId: number }) {
     const resMatch: IRes<IMatch> = await getMatchDetailAction(matchId);
     const resScored: IRes<IScored[]> = await getScoredAction(matchId);
-    const resComment: IRes<IComment[]> = await handleGetCommentAction({
-        page: 1,
-        pageSize: 10,
-        matchId: matchId,
-    });
+    const resComment: IRes<IListLimit<IComment>> = await handleGetCommentAction(
+        {
+            page: 1,
+            pageSize: 10,
+            matchId: matchId,
+        }
+    );
 
     if (
         resMatch.errorCode === 0 &&
@@ -38,7 +40,10 @@ export async function HandleData({ matchId }: { matchId: number }) {
                 </div>
 
                 <div className="w-[80%] ml-[50%] translate-x-[-50%]">
-                    <PageComment listComment={resComment.data} />
+                    <PageComment
+                        listComment={resComment.data}
+                        matchId={matchId}
+                    />
                 </div>
             </div>
         );

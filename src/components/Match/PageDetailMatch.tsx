@@ -1,14 +1,12 @@
 "use client";
 
 import { routes } from "@/helpers/menuRouterHeader";
-import { RootState } from "@/store/store";
-import { IComment, IMatch, IScored } from "@/utils/interface";
-import { Tooltip } from "antd";
+import { IMatch, IScored } from "@/utils/interface";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { memo } from "react";
-import { useSelector } from "react-redux";
 
 const PageDetailMatch = ({
     infoMatch,
@@ -17,7 +15,7 @@ const PageDetailMatch = ({
     infoMatch: IMatch;
     listScored: IScored[];
 }) => {
-    const router = useRouter();
+    const router: AppRouterInstance = useRouter();
 
     const handleBack = () => {
         router.push(`${routes.match.url}`);

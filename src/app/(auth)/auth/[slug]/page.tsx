@@ -85,6 +85,7 @@ export default function PageLogin({
                         loginSuccess({
                             isLogin: true,
                             name: res.data.name,
+                            userId: res.data.id,
                             color: color,
                         })
                     );
