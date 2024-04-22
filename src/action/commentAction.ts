@@ -12,14 +12,15 @@ export const handleGetCommentAction = async({page , pageSize , matchId} : {page:
 }
 
 
-export const  handleLikeAction = async({commentId   , isIncrease } : {commentId : number  , isIncrease:number }) : Promise<IRes<[]>>=>{
+export const  handleLikeAction = async({commentId ,userId   } : {commentId : number ,userId:number  }) : Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-comment`,{
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json',
         },
         
-        body: JSON.stringify({commentId:commentId   ,isIncrease:isIncrease }),
+        body: JSON.stringify({commentId:commentId , userId:userId   }),
         cache:"no-store",
     });
     const data =await res.json();
@@ -27,14 +28,15 @@ export const  handleLikeAction = async({commentId   , isIncrease } : {commentId 
 }
 
 
-export const  handleDislikeAction = async({commentId   , isIncrease } : {commentId : number  , isIncrease:number }) : Promise<IRes<[]>>=>{
+export const  handleDislikeAction = async({commentId , userId   } : {commentId : number , userId:number  }) : Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dislike-comment`,{
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json',
         },
         
-        body: JSON.stringify({commentId:commentId ,isIncrease:isIncrease }),
+        body: JSON.stringify({commentId:commentId , userId:userId   }),
         cache:"no-store",
     });
     const data =await res.json();
