@@ -7,6 +7,7 @@ import Link from "next/link";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "antd";
+import { handlebackground } from "@/helpers/HandleBackground";
 
 export default function ControlAuth() {
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
@@ -28,7 +29,7 @@ export default function ControlAuth() {
                             className="bg-[#fff] p-[0]"
                             trigger="click"
                             title={
-                                <div className="h-[100px] w-[100px] bg-[#fff] p-[5px]">
+                                <div className="h-[100px] w-[100px] bg-[#fff] p-[5px] rounded-[5px]">
                                     <button
                                         className="w-[100%] h-[30px] border-none mt-[10px] rounded-[5px]"
                                         onClick={handleLogout}
@@ -45,15 +46,11 @@ export default function ControlAuth() {
                             }
                         >
                             <div
-                                className={`${
-                                    color < 3
-                                        ? "bg-[pink]"
-                                        : color < 6
-                                        ? "bg-[green]"
-                                        : "bg-[orange]"
-                                }  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                                className={`${handlebackground(
+                                    color
+                                )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                             >
-                                <p className="text-[20px] font-[500]">
+                                <p className="text-[20px] font-[500] text-[#fff]">
                                     {nameUser.slice(0, 1).toUpperCase()}
                                 </p>
                             </div>

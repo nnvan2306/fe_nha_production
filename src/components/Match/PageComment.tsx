@@ -1,9 +1,16 @@
 "use client";
 
 import { handleCreateComment } from "@/action/commentAction";
+import { handlebackground } from "@/helpers/HandleBackground";
 import { routes } from "@/helpers/menuRouterHeader";
 import { RootState } from "@/store/store";
-import { IComment, IFeedback, IListLimit } from "@/utils/interface";
+import {
+    IComment,
+    IDislikeComment,
+    IFeedback,
+    ILikeComment,
+    IListLimit,
+} from "@/utils/interface";
 import { Tooltip } from "antd";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -18,10 +25,24 @@ const PageComment = ({
     listComment: IListLimit<IComment>;
     matchId: number;
 }) => {
+    console.log(listComment);
     const [textComment, setTextComment] = useState<string>("");
     const [listCommentNew, setListCommentNew] = useState<IComment[]>(
         listComment.items.map((item: IComment) => {
-            return { ...item, isViewFeedback: false };
+            return {
+                ...item,
+                isViewFeedback: false,
+                listUserLike: item.LikeComments.map(
+                    (itemChild: ILikeComment) => {
+                        return itemChild.userId;
+                    }
+                ),
+                listUserDislike: item.DislikeComments.map(
+                    (itemChild: IDislikeComment) => {
+                        return itemChild.userId;
+                    }
+                ),
+            };
         })
     );
 
@@ -73,15 +94,11 @@ const PageComment = ({
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
             <div className="mt-[40px] w-[100%]  flex justify-center ">
                 <div
-                    className={`${
-                        color < 3
-                            ? "bg-[pink]"
-                            : color < 6
-                            ? "bg-[green]"
-                            : "bg-[orange]"
-                    }  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                    className={`${handlebackground(
+                        color
+                    )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                 >
-                    <p className="text-[20px] font-[500]">
+                    <p className="text-[20px] font-[500] text-[#fff]">
                         {nameUser.slice(0, 1).toUpperCase()}
                     </p>
                 </div>
@@ -119,16 +136,16 @@ const PageComment = ({
                         return (
                             <div key={index} className="flex justify-center">
                                 <div
-                                    className={`${
-                                        color < 3
-                                            ? "bg-[pink]"
-                                            : color < 6
-                                            ? "bg-[green]"
-                                            : "bg-[orange]"
-                                    }  w-[35px] h-[35px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                                    className={`${handlebackground(
+                                        item.User.id === userId
+                                            ? color
+                                            : Math.floor(Math.random() * 10)
+                                    )}  w-[35px] h-[35px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                                 >
-                                    <p className="text-[16px] font-[500]">
-                                        {nameUser.slice(0, 1).toUpperCase()}
+                                    <p className="text-[16px] font-[500] text-[#fff]">
+                                        {item.User.name
+                                            .slice(0, 1)
+                                            .toUpperCase()}
                                     </p>
                                 </div>
                                 <div className="w-[95%] pl-[10px]">
@@ -150,7 +167,13 @@ const PageComment = ({
                                                 }
                                             >
                                                 <i
-                                                    className="bi bi-hand-thumbs-up hover:opacity-[0.5] cursor-pointer"
+                                                    className={`bi ${
+                                                        item.listUserLike.includes(
+                                                            userId
+                                                        )
+                                                            ? "bi-hand-thumbs-up-fill"
+                                                            : "bi-hand-thumbs-up"
+                                                    } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionLike(true)
                                                     }
@@ -172,7 +195,13 @@ const PageComment = ({
                                                 }
                                             >
                                                 <i
-                                                    className="bi bi-hand-thumbs-down hover:opacity-[0.5] cursor-pointer"
+                                                    className={`bi ${
+                                                        item.listUserDislike.includes(
+                                                            userId
+                                                        )
+                                                            ? "bi-hand-thumbs-down-fill"
+                                                            : "bi-hand-thumbs-down"
+                                                    } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionLike(false)
                                                     }
@@ -234,17 +263,19 @@ const PageComment = ({
                                                                         }
                                                                     >
                                                                         <div
-                                                                            className={`${
-                                                                                color <
-                                                                                3
-                                                                                    ? "bg-[pink]"
-                                                                                    : color <
-                                                                                      6
-                                                                                    ? "bg-[green]"
-                                                                                    : "bg-[orange]"
-                                                                            }  w-[30px] h-[30px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mr-[10px]`}
+                                                                            className={`${handlebackground(
+                                                                                itemFeed
+                                                                                    .User
+                                                                                    .id ===
+                                                                                    userId
+                                                                                    ? color
+                                                                                    : Math.floor(
+                                                                                          Math.random() *
+                                                                                              10
+                                                                                      )
+                                                                            )}  w-[30px] h-[30px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mr-[10px]`}
                                                                         >
-                                                                            <p className="text-[16px] font-[500]">
+                                                                            <p className="text-[16px] font-[500] text-[#fff]">
                                                                                 {itemFeed.User.name
                                                                                     .slice(
                                                                                         0,

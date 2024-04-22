@@ -249,9 +249,13 @@ export interface IComment {
     matchId:number,
     userId:number,
     User : IUser
-    Feedbacks:IFeedback[],
     createAt:string,
     isViewFeedback:boolean
+    Feedbacks:IFeedback[],
+    LikeComments:ILikeComment[]  ,
+    listUserLike:number[]
+    DislikeComments:IDislikeComment[],
+    listUserDislike :number[],
 }
 
 export interface IFeedback {
@@ -277,4 +281,28 @@ export interface IListLimit<T> {
         totalIteams:number,
         totalPages:number,
     }
+}
+
+export interface ILikeComment{
+    id:number,
+    commentId : number,
+    userId : number,
+}
+
+export interface IDislikeComment{
+    id:number,
+    commentId : number,
+    userId:number,
+}
+
+export interface ILikeFeedback {
+    id:number ,
+    feedbackId : number,
+    userId : number,
+}
+
+export interface IDisLikeFeedback {
+    id:number,
+    feedbackId : number ,
+    userId : number,
 }
