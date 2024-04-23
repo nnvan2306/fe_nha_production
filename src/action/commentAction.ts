@@ -91,3 +91,17 @@ export const handleDislikeFeedbackAction = async({feedbackId , userId} : {feedba
     const data =await res.json();
     return data;
 }
+
+export const handleDeleteCommentAction = async ({commentId} : {commentId : number}) :Promise<IRes<[]>>=>{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/delete-comment?commentId=${commentId}`,{
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        
+        // body: JSON.stringify({feedbackId : feedbackId , userId : userId }),
+        cache:"no-store",
+    });
+    const data =await res.json();
+    return data;   
+}

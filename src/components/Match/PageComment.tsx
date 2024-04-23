@@ -2,6 +2,7 @@
 
 import {
     handleCreateComment,
+    handleDeleteCommentAction,
     handleDislikeCommentAction,
     handleDislikeFeedbackAction,
     handleLikeCommentAction,
@@ -331,6 +332,18 @@ const PageComment = ({
         }
     };
 
+    const handleDeleteComment = async (commentId: number) => {
+        let res = await handleDeleteCommentAction({ commentId: commentId });
+
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.filter(
+                    (item: IComment, index: number) => item.id !== commentId
+                )
+            );
+        }
+    };
+
     return (
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
             <div className="mt-[40px] w-[100%]  flex justify-center ">
@@ -389,13 +402,42 @@ const PageComment = ({
                                             .toUpperCase()}
                                     </p>
                                 </div>
+
                                 <div className="w-[95%] pl-[10px]">
-                                    <p className="text-[14px] font-[600]">
-                                        {item.User.name}
-                                    </p>
-                                    <p className="text-[16px] my-[5px]">
-                                        {item.content}
-                                    </p>
+                                    <div className="flex w-[100%]">
+                                        <div className="w-[90%]">
+                                            <p className="text-[14px] font-[600]">
+                                                {item.User.name}
+                                            </p>
+                                            <p className="text-[16px] my-[5px]">
+                                                {item.content}
+                                            </p>
+                                        </div>
+                                        <div className="w-[10%] py-[10px]">
+                                            <Tooltip
+                                                title={
+                                                    <div
+                                                        className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
+                                                        onClick={() =>
+                                                            handleDeleteComment(
+                                                                item.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <p className="text-[#000]">
+                                                            <i className="bi bi-trash mr-[10px]"></i>{" "}
+                                                            Xóa
+                                                        </p>
+                                                    </div>
+                                                }
+                                                placement="bottom"
+                                                trigger="click"
+                                            >
+                                                <i className="bi bi-three-dots-vertical text-[#ccc]"></i>
+                                            </Tooltip>
+                                        </div>
+                                    </div>
+
                                     <div className="flex justify-start items-center">
                                         <div className="">
                                             <Tooltip
@@ -466,7 +508,7 @@ const PageComment = ({
 
                                     <div className="">
                                         {item.isViewFeedback ? (
-                                            <div className="w-[100%]">
+                                            <div className="w-[100%] mb-[10px]">
                                                 <button
                                                     className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff]"
                                                     onClick={() =>
@@ -634,7 +676,7 @@ const PageComment = ({
                                             </div>
                                         ) : (
                                             <button
-                                                className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff]"
+                                                className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff] mb-[10px]"
                                                 onClick={() =>
                                                     setListCommentNew(
                                                         listCommentNew.map(
