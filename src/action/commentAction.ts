@@ -12,15 +12,17 @@ export const handleGetCommentAction = async({page , pageSize , matchId} : {page:
 }
 
 
-export const  handleLikeAction = async({commentId ,userId   } : {commentId : number ,userId:number  }) : Promise<IRes<[]>>=>{
+
+
+export const handleCreateComment = async({content ,matchId, userId } : {content : string , matchId :number , userId:number}):Promise<IRes<[]>>=>{
     revalidateTag('getComment'); 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-comment`,{
-        method: 'PATCH',
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/create-comment`,{
+        method: 'POST',
         headers: {
             'Content-type': 'application/json',
         },
         
-        body: JSON.stringify({commentId:commentId , userId:userId   }),
+        body: JSON.stringify({content : content , matchId : matchId , userId : userId}),
         cache:"no-store",
     });
     const data =await res.json();
@@ -28,7 +30,23 @@ export const  handleLikeAction = async({commentId ,userId   } : {commentId : num
 }
 
 
-export const  handleDislikeAction = async({commentId , userId   } : {commentId : number , userId:number  }) : Promise<IRes<[]>>=>{
+export const  handleLikeCommentAction = async({ commentId , userId   } : {commentId : number ,userId : number  }) : Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-comment`,{
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        
+        body: JSON.stringify({commentId : commentId , userId : userId }),
+        cache:"no-store",
+    });
+    const data =await res.json();
+    return data;
+}
+
+
+export const  handleDislikeCommentAction = async({commentId , userId   } : {commentId : number , userId:number  }) : Promise<IRes<[]>>=>{
     revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dislike-comment`,{
         method: 'PATCH',
@@ -44,15 +62,30 @@ export const  handleDislikeAction = async({commentId , userId   } : {commentId :
 }
 
 
-export const handleCreateComment = async({content ,matchId, userId } : {content : string , matchId :number , userId:number}):Promise<IRes<[]>>=>{
+export const handleLikeFeedbackAction = async({feedbackId , userId} : {feedbackId : number  , userId : number}) : Promise<IRes<[]>>=>{
     revalidateTag('getComment'); 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/create-comment`,{
-        method: 'POST',
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-feedback`,{
+        method: 'PATCH',
         headers: {
             'Content-type': 'application/json',
         },
         
-        body: JSON.stringify({content : content , matchId : matchId , userId : userId}),
+        body: JSON.stringify({feedbackId : feedbackId , userId : userId }),
+        cache:"no-store",
+    });
+    const data =await res.json();
+    return data;
+}
+
+export const handleDislikeFeedbackAction = async({feedbackId , userId} : {feedbackId : number  , userId : number}) : Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dislike-feedback`,{
+        method: 'PATCH',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        
+        body: JSON.stringify({feedbackId : feedbackId , userId : userId }),
         cache:"no-store",
     });
     const data =await res.json();

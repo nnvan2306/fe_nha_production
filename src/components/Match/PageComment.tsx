@@ -1,6 +1,12 @@
 "use client";
 
-import { handleCreateComment } from "@/action/commentAction";
+import {
+    handleCreateComment,
+    handleDislikeCommentAction,
+    handleDislikeFeedbackAction,
+    handleLikeCommentAction,
+    handleLikeFeedbackAction,
+} from "@/action/commentAction";
 import { handlebackground } from "@/helpers/HandleBackground";
 import { routes } from "@/helpers/menuRouterHeader";
 import { RootState } from "@/store/store";
@@ -88,7 +94,61 @@ const PageComment = ({
         }
     };
 
-    const handleActionLike = (isLike: boolean) => {};
+    const handleCheckLogin = (): boolean => {
+        if (!isLogin) {
+            router.push(routes.login.url);
+            return false;
+        }
+        return true;
+    };
+
+    const handleActionLike = async (commentId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        await handleLikeCommentAction({
+            commentId: commentId,
+            userId: userId,
+        });
+    };
+
+    const handleActionDislike = async (commentId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        await handleDislikeCommentAction({
+            commentId: commentId,
+            userId: userId,
+        });
+    };
+
+    const handleActionLikeFeedback = async (feedbackId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        await handleLikeFeedbackAction({
+            feedbackId: feedbackId,
+            userId: userId,
+        });
+    };
+
+    const handleActionDislikeFeedback = async (feedbackId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        await handleDislikeFeedbackAction({
+            feedbackId: feedbackId,
+            userId: userId,
+        });
+    };
 
     return (
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
@@ -175,7 +235,9 @@ const PageComment = ({
                                                             : "bi-hand-thumbs-up"
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
-                                                        handleActionLike(true)
+                                                        handleActionLike(
+                                                            item.id
+                                                        )
                                                     }
                                                 ></i>
                                             </Tooltip>
@@ -203,7 +265,9 @@ const PageComment = ({
                                                             : "bi-hand-thumbs-down"
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
-                                                        handleActionLike(false)
+                                                        handleActionDislike(
+                                                            item.id
+                                                        )
                                                     }
                                                 ></i>
                                             </Tooltip>
@@ -311,11 +375,18 @@ const PageComment = ({
                                                                                             </div>
                                                                                         }
                                                                                     >
-                                                                                        <i className="bi bi-hand-thumbs-up hover:opacity-[0.5] cursor-pointer"></i>
+                                                                                        <i
+                                                                                            className="bi bi-hand-thumbs-up hover:opacity-[0.5] cursor-pointer"
+                                                                                            onClick={() =>
+                                                                                                handleActionLikeFeedback(
+                                                                                                    itemFeed.id
+                                                                                                )
+                                                                                            }
+                                                                                        ></i>
                                                                                     </Tooltip>
                                                                                     <span className="ml-[10px]">
                                                                                         {
-                                                                                            item.like
+                                                                                            itemFeed.like
                                                                                         }
                                                                                     </span>
                                                                                 </div>
@@ -334,11 +405,18 @@ const PageComment = ({
                                                                                             </div>
                                                                                         }
                                                                                     >
-                                                                                        <i className="bi bi-hand-thumbs-down hover:opacity-[0.5] cursor-pointer"></i>
+                                                                                        <i
+                                                                                            className="bi bi-hand-thumbs-down hover:opacity-[0.5] cursor-pointer"
+                                                                                            onClick={() =>
+                                                                                                handleActionDislikeFeedback(
+                                                                                                    itemFeed.id
+                                                                                                )
+                                                                                            }
+                                                                                        ></i>
                                                                                     </Tooltip>
                                                                                     <span className="ml-[10px]">
                                                                                         {
-                                                                                            item.disLike
+                                                                                            itemFeed.disLike
                                                                                         }
                                                                                     </span>
                                                                                 </div>
