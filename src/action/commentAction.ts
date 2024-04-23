@@ -93,6 +93,7 @@ export const handleDislikeFeedbackAction = async({feedbackId , userId} : {feedba
 }
 
 export const handleDeleteCommentAction = async ({commentId} : {commentId : number}) :Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/delete-comment?commentId=${commentId}`,{
         method: 'DELETE',
         headers: {
@@ -100,6 +101,35 @@ export const handleDeleteCommentAction = async ({commentId} : {commentId : numbe
         },
         
         // body: JSON.stringify({feedbackId : feedbackId , userId : userId }),
+        cache:"no-store",
+    });
+    const data =await res.json();
+    return data;   
+}
+
+export const handleCreateFeedbackAction = async ({content , commentId , userId} : {content:string , commentId : number , userId : number}) :Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/create-feedback`,{
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        
+        body: JSON.stringify({content : content , commentId : commentId , userId : userId }),
+        cache:"no-store",
+    });
+    const data =await res.json();
+    return data; 
+}
+
+export const handleDeleteFeedbackAction = async ({feedbackId} : {feedbackId : number}) :Promise<IRes<[]>>=>{
+    revalidateTag('getComment'); 
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/delete-feedback?feedbackId=${feedbackId}`,{
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json',
+        },
+        
         cache:"no-store",
     });
     const data =await res.json();
