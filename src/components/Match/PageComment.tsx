@@ -12,9 +12,11 @@ import { routes } from "@/helpers/menuRouterHeader";
 import { RootState } from "@/store/store";
 import {
     IComment,
+    IDisLikeFeedback,
     IDislikeComment,
     IFeedback,
     ILikeComment,
+    ILikeFeedback,
     IListLimit,
 } from "@/utils/interface";
 import { Tooltip } from "antd";
@@ -46,6 +48,23 @@ const PageComment = ({
                 listUserDislike: item.DislikeComments.map(
                     (itemChild: IDislikeComment) => {
                         return itemChild.userId;
+                    }
+                ),
+                Feedbacks: item.Feedbacks.map(
+                    (itemC: IFeedback, indexC: number) => {
+                        return {
+                            ...itemC,
+                            listUserLike: itemC.LikeFeedbacks.map(
+                                (im: ILikeFeedback) => {
+                                    return im.userId;
+                                }
+                            ),
+                            listUserDislike: itemC.DislikeFeedbacks.map(
+                                (im: IDisLikeFeedback) => {
+                                    return im.userId;
+                                }
+                            ),
+                        };
                     }
                 ),
             };
@@ -102,52 +121,214 @@ const PageComment = ({
         return true;
     };
 
-    const handleActionLike = async (commentId: number) => {
+    const handleActionLike = async (
+        commentId: number,
+        indexComment: number
+    ) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
         }
 
-        await handleLikeCommentAction({
+        let res = await handleLikeCommentAction({
             commentId: commentId,
             userId: userId,
         });
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.map((item: IComment, index: number) => {
+                    if (index === indexComment) {
+                        let isCheck: boolean =
+                            item.listUserLike.includes(userId);
+                        if (isCheck) {
+                            item.listUserLike = item.listUserLike.filter(
+                                (item) => item !== userId
+                            );
+
+                            item.like = item.like - 1;
+                        } else {
+                            item.listUserLike.push(userId);
+                            item.like = item.like + 1;
+                            if (item.listUserDislike.includes(userId)) {
+                                item.listUserDislike =
+                                    item.listUserDislike.filter(
+                                        (item: number) => item !== userId
+                                    );
+                                item.disLike = item.disLike - 1;
+                            }
+                        }
+                    }
+                    return item;
+                })
+            );
+        }
     };
 
-    const handleActionDislike = async (commentId: number) => {
+    const handleActionDislike = async (
+        commentId: number,
+        indexComment: number
+    ) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
         }
 
-        await handleDislikeCommentAction({
+        let res = await handleDislikeCommentAction({
             commentId: commentId,
             userId: userId,
         });
+
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.map((item: IComment, index: number) => {
+                    if (index === indexComment) {
+                        let isCheck: boolean =
+                            item.listUserDislike.includes(userId);
+                        if (isCheck) {
+                            item.listUserDislike = item.listUserDislike.filter(
+                                (item) => item !== userId
+                            );
+
+                            item.disLike = item.disLike - 1;
+                        } else {
+                            item.listUserDislike.push(userId);
+                            item.disLike = item.disLike + 1;
+                            if (item.listUserLike.includes(userId)) {
+                                item.listUserLike = item.listUserLike.filter(
+                                    (item) => item !== userId
+                                );
+                                item.like = item.like - 1;
+                            }
+                        }
+                    }
+                    return item;
+                })
+            );
+        }
     };
 
-    const handleActionLikeFeedback = async (feedbackId: number) => {
+    const handleActionLikeFeedback = async (
+        feedbackId: number,
+        indexComment: number,
+        indexFeedback: number
+    ) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
         }
 
-        await handleLikeFeedbackAction({
+        let res = await handleLikeFeedbackAction({
             feedbackId: feedbackId,
             userId: userId,
         });
+
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.map((item: IComment, index: number) => {
+                    if (index === indexComment) {
+                        item.Feedbacks = item.Feedbacks.map(
+                            (itemChild: IFeedback, indexChild: number) => {
+                                if (indexChild === indexFeedback) {
+                                    if (
+                                        itemChild.listUserLike.includes(userId)
+                                    ) {
+                                        itemChild.listUserLike =
+                                            itemChild.listUserLike.filter(
+                                                (itemDr) => itemDr !== userId
+                                            );
+
+                                        itemChild.like = itemChild.like - 1;
+                                    } else {
+                                        itemChild.listUserLike.push(userId);
+                                        itemChild.like = itemChild.like + 1;
+                                        if (
+                                            itemChild.listUserDislike.includes(
+                                                userId
+                                            )
+                                        ) {
+                                            itemChild.listUserDislike =
+                                                itemChild.listUserDislike.filter(
+                                                    (itemDr: number) =>
+                                                        itemDr !== userId
+                                                );
+                                            itemChild.disLike =
+                                                itemChild.disLike - 1;
+                                        }
+                                    }
+                                }
+                                return itemChild;
+                            }
+                        );
+                        item.isViewFeedback = true;
+                    }
+                    return item;
+                })
+            );
+        }
     };
 
-    const handleActionDislikeFeedback = async (feedbackId: number) => {
+    const handleActionDislikeFeedback = async (
+        feedbackId: number,
+        indexComment: number,
+        indexFeedback: number
+    ) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
         }
 
-        await handleDislikeFeedbackAction({
+        let res = await handleDislikeFeedbackAction({
             feedbackId: feedbackId,
             userId: userId,
         });
+
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.map((item: IComment, index: number) => {
+                    if (index === indexComment) {
+                        item.Feedbacks = item.Feedbacks.map(
+                            (itemChild: IFeedback, indexChild: number) => {
+                                if (indexChild === indexFeedback) {
+                                    if (
+                                        itemChild.listUserDislike.includes(
+                                            userId
+                                        )
+                                    ) {
+                                        itemChild.listUserDislike =
+                                            itemChild.listUserDislike.filter(
+                                                (itemDr) => itemDr !== userId
+                                            );
+
+                                        itemChild.disLike =
+                                            itemChild.disLike - 1;
+                                    } else {
+                                        itemChild.listUserDislike.push(userId);
+                                        itemChild.disLike =
+                                            itemChild.disLike + 1;
+                                        if (
+                                            itemChild.listUserLike.includes(
+                                                userId
+                                            )
+                                        ) {
+                                            itemChild.listUserLike =
+                                                itemChild.listUserLike.filter(
+                                                    (itemDr: number) =>
+                                                        itemDr !== userId
+                                                );
+                                            itemChild.like = itemChild.like - 1;
+                                        }
+                                    }
+                                }
+                                return itemChild;
+                            }
+                        );
+
+                        item.isViewFeedback = true;
+                    }
+                    return item;
+                })
+            );
+        }
     };
 
     return (
@@ -236,7 +417,8 @@ const PageComment = ({
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionLike(
-                                                            item.id
+                                                            item.id,
+                                                            index
                                                         )
                                                     }
                                                 ></i>
@@ -266,7 +448,8 @@ const PageComment = ({
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionDislike(
-                                                            item.id
+                                                            item.id,
+                                                            index
                                                         )
                                                     }
                                                 ></i>
@@ -376,10 +559,18 @@ const PageComment = ({
                                                                                         }
                                                                                     >
                                                                                         <i
-                                                                                            className="bi bi-hand-thumbs-up hover:opacity-[0.5] cursor-pointer"
+                                                                                            className={`bi ${
+                                                                                                itemFeed.listUserLike.includes(
+                                                                                                    userId
+                                                                                                )
+                                                                                                    ? "bi-hand-thumbs-up-fill"
+                                                                                                    : "bi-hand-thumbs-up"
+                                                                                            } hover:opacity-[0.5] cursor-pointer`}
                                                                                             onClick={() =>
                                                                                                 handleActionLikeFeedback(
-                                                                                                    itemFeed.id
+                                                                                                    itemFeed.id,
+                                                                                                    index,
+                                                                                                    indexFeed
                                                                                                 )
                                                                                             }
                                                                                         ></i>
@@ -406,10 +597,18 @@ const PageComment = ({
                                                                                         }
                                                                                     >
                                                                                         <i
-                                                                                            className="bi bi-hand-thumbs-down hover:opacity-[0.5] cursor-pointer"
+                                                                                            className={`bi ${
+                                                                                                itemFeed.listUserDislike.includes(
+                                                                                                    userId
+                                                                                                )
+                                                                                                    ? "bi-hand-thumbs-down-fill"
+                                                                                                    : "bi-hand-thumbs-down"
+                                                                                            } hover:opacity-[0.5] cursor-pointer`}
                                                                                             onClick={() =>
                                                                                                 handleActionDislikeFeedback(
-                                                                                                    itemFeed.id
+                                                                                                    itemFeed.id,
+                                                                                                    index,
+                                                                                                    indexFeed
                                                                                                 )
                                                                                             }
                                                                                         ></i>
@@ -440,17 +639,17 @@ const PageComment = ({
                                                     setListCommentNew(
                                                         listCommentNew.map(
                                                             (
-                                                                itemChild,
-                                                                indexChild
+                                                                itemBtn,
+                                                                indexBtn
                                                             ) => {
                                                                 if (
-                                                                    indexChild ===
+                                                                    indexBtn ===
                                                                     index
                                                                 ) {
-                                                                    itemChild.isViewFeedback =
+                                                                    itemBtn.isViewFeedback =
                                                                         true;
                                                                 }
-                                                                return itemChild;
+                                                                return itemBtn;
                                                             }
                                                         )
                                                     )

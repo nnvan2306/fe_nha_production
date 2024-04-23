@@ -47,7 +47,6 @@ interface IParams {
 }
 
 export async function HandleData({ id }: { id: number }) {
-    console.log(id);
     const res = await handleGetStatisticAction(id);
 
     if (res.errorCode === 0) {

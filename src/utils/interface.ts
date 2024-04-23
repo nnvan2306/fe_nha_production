@@ -239,6 +239,7 @@ export interface IUser {
     access_token: string,
     refresh_token: string,
     name: string ,
+    id:number,
 }
 
 export interface IComment {
@@ -256,6 +257,7 @@ export interface IComment {
     listUserLike:number[]
     DislikeComments:IDislikeComment[],
     listUserDislike :number[],
+    
 }
 
 export interface IFeedback {
@@ -267,6 +269,10 @@ export interface IFeedback {
     userId:number,
     createdAt:string,
     User:IUser,
+    LikeFeedbacks:ILikeFeedback[],
+    DislikeFeedbacks:IDisLikeFeedback[],
+    listUserLike:number[],
+    listUserDislike:number[],
 }
 
 export interface IUser {

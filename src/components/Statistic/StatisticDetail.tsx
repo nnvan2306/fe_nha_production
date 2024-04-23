@@ -20,7 +20,6 @@ export default function StatisticDetail({
     listTopYellowCard: IStatistic[];
     listTopRedCard: IStatistic[];
 }) {
-    console.log(listTopGoal);
     return (
         <div className="w-[60%] ml-[50%] translate-x-[-50%]">
             <p className="my-[20px]">Số bàn thắng</p>

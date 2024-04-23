@@ -31,7 +31,7 @@ export const handleCreateComment = async({content ,matchId, userId } : {content 
 
 
 export const  handleLikeCommentAction = async({ commentId , userId   } : {commentId : number ,userId : number  }) : Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-comment`,{
         method: 'PATCH',
         headers: {
@@ -47,7 +47,7 @@ export const  handleLikeCommentAction = async({ commentId , userId   } : {commen
 
 
 export const  handleDislikeCommentAction = async({commentId , userId   } : {commentId : number , userId:number  }) : Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dislike-comment`,{
         method: 'PATCH',
         headers: {
@@ -63,7 +63,7 @@ export const  handleDislikeCommentAction = async({commentId , userId   } : {comm
 
 
 export const handleLikeFeedbackAction = async({feedbackId , userId} : {feedbackId : number  , userId : number}) : Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/like-feedback`,{
         method: 'PATCH',
         headers: {
@@ -78,7 +78,7 @@ export const handleLikeFeedbackAction = async({feedbackId , userId} : {feedbackI
 }
 
 export const handleDislikeFeedbackAction = async({feedbackId , userId} : {feedbackId : number  , userId : number}) : Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/dislike-feedback`,{
         method: 'PATCH',
         headers: {

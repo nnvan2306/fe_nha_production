@@ -15,7 +15,6 @@ const returnListResult = (prev: IListResult[] | [], arrResult: any): any[] => {
 };
 
 export async function HandleData({ id }: { id: number }) {
-    console.log(id);
     const res = await getRatingAction(id);
 
     let listResult: IListResult[] | [] = [];

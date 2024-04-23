@@ -13,6 +13,5 @@ export const handleSendEmailAction =async({email}: {email:string}) : Promise<IRe
     });
 
     let data=await res.json();
-    console.log()
     return data;
 }
