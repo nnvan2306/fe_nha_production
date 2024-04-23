@@ -1,8 +1,11 @@
 "use client";
 
+import className from "classnames/bind";
+import styles from "./PageComment.module.scss";
 import {
     handleCreateComment,
     handleDeleteCommentAction,
+    handleDeleteFeedbackAction,
     handleDislikeCommentAction,
     handleDislikeFeedbackAction,
     handleLikeCommentAction,
@@ -26,6 +29,8 @@ import { useRouter } from "next/navigation";
 import React, { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+
+const cx: Function = className.bind(styles);
 
 const PageComment = ({
     listComment,
@@ -344,6 +349,26 @@ const PageComment = ({
         }
     };
 
+    const handleDeleteFeedback = async (
+        feedbackId: number,
+        indexComment: number
+    ) => {
+        let res = await handleDeleteFeedbackAction({ feedbackId: feedbackId });
+
+        if (res.errorCode === 0) {
+            setListCommentNew(
+                listCommentNew.map((item: IComment, index: number) => {
+                    if (index === indexComment) {
+                        item.Feedbacks = item.Feedbacks.filter(
+                            (itemChild) => itemChild.id !== feedbackId
+                        );
+                    }
+                    return item;
+                })
+            );
+        }
+    };
+
     return (
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
             <div className="mt-[40px] w-[100%]  flex justify-center ">
@@ -536,7 +561,7 @@ const PageComment = ({
                                                     hồi
                                                 </button>
 
-                                                <div className="w-[100%] ml-[10px] mt-[10px]">
+                                                <div className="w-[100%] pl-[10px] mt-[10px]">
                                                     {item.Feedbacks.length >
                                                         0 &&
                                                         item.Feedbacks.map(
@@ -574,19 +599,49 @@ const PageComment = ({
                                                                             </p>
                                                                         </div>
 
-                                                                        <div className="">
-                                                                            <p className="text-[14px] font-[600]">
-                                                                                {
-                                                                                    itemFeed
-                                                                                        .User
-                                                                                        .name
-                                                                                }
-                                                                            </p>
-                                                                            <p className="text-[16px] ">
-                                                                                {
-                                                                                    itemFeed.content
-                                                                                }
-                                                                            </p>
+                                                                        <div className="w-[100%]">
+                                                                            <div className="w-[100%] flex">
+                                                                                <div className="w-[90%]">
+                                                                                    <p className="text-[14px] font-[600]">
+                                                                                        {
+                                                                                            itemFeed
+                                                                                                .User
+                                                                                                .name
+                                                                                        }
+                                                                                    </p>
+                                                                                    <p className="text-[16px] ">
+                                                                                        {
+                                                                                            itemFeed.content
+                                                                                        }
+                                                                                    </p>
+                                                                                </div>
+
+                                                                                <div className="w-[10%] py-[10px]">
+                                                                                    <Tooltip
+                                                                                        title={
+                                                                                            <div
+                                                                                                className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
+                                                                                                onClick={() =>
+                                                                                                    handleDeleteFeedback(
+                                                                                                        itemFeed.id,
+                                                                                                        index
+                                                                                                    )
+                                                                                                }
+                                                                                            >
+                                                                                                <p className="text-[#000]">
+                                                                                                    <i className="bi bi-trash mr-[10px]"></i>{" "}
+                                                                                                    Xóa
+                                                                                                </p>
+                                                                                            </div>
+                                                                                        }
+                                                                                        placement="bottom"
+                                                                                        trigger="click"
+                                                                                    >
+                                                                                        <i className="bi bi-three-dots-vertical text-[#000] hover:text-[#ccc]"></i>
+                                                                                    </Tooltip>
+                                                                                </div>
+                                                                            </div>
+
                                                                             <div className="flex justify-start items-center">
                                                                                 <div className="">
                                                                                     <Tooltip
@@ -662,10 +717,10 @@ const PageComment = ({
                                                                                     </span>
                                                                                 </div>
 
-                                                                                <button className="border-none rounded-full p-[10px] bg-[#fff] hover:bg-[#ddd]">
+                                                                                {/* <button className="border-none rounded-full p-[10px] bg-[#fff] hover:bg-[#ddd]">
                                                                                     Phản
                                                                                     hồi
-                                                                                </button>
+                                                                                </button> */}
                                                                             </div>
                                                                         </div>
                                                                     </div>

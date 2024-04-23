@@ -93,7 +93,7 @@ export const handleDislikeFeedbackAction = async({feedbackId , userId} : {feedba
 }
 
 export const handleDeleteCommentAction = async ({commentId} : {commentId : number}) :Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/delete-comment?commentId=${commentId}`,{
         method: 'DELETE',
         headers: {
@@ -123,7 +123,7 @@ export const handleCreateFeedbackAction = async ({content , commentId , userId} 
 }
 
 export const handleDeleteFeedbackAction = async ({feedbackId} : {feedbackId : number}) :Promise<IRes<[]>>=>{
-    revalidateTag('getComment'); 
+    // revalidateTag('getComment'); 
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/delete-feedback?feedbackId=${feedbackId}`,{
         method: 'DELETE',
         headers: {
