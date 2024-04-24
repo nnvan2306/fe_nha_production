@@ -3,7 +3,7 @@
 import { ISeason } from "@/utils/interface";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function Statistic({
     listseason,
@@ -20,6 +20,13 @@ export default function Statistic({
         setSeasonId(id);
         router.push(`/home/statistic/${id}`);
     };
+
+    useEffect(() => {
+        if (seasonCurrent) {
+            router.push(`/home/statistic/${seasonCurrent}`);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="w-[60%] ml-[50%] translate-x-[-50%]">

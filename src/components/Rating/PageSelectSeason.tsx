@@ -3,7 +3,7 @@
 import { IList } from "@/utils/interface";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function PageSelectSeason({
     listSeason,
@@ -20,6 +20,13 @@ export default function PageSelectSeason({
         setSeasonIdCurrent(id);
         router.push(`/home/rating/${id}`);
     };
+
+    useEffect(() => {
+        if (seasonId) {
+            router.push(`/home/rating/${seasonId}`);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className="w-[100%] mt-[20px]">
