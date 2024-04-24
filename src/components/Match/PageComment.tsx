@@ -4,6 +4,7 @@ import className from "classnames/bind";
 import styles from "./PageComment.module.scss";
 import {
     handleCreateComment,
+    handleCreateFeedbackAction,
     handleDeleteCommentAction,
     handleDeleteFeedbackAction,
     handleDislikeCommentAction,
@@ -39,8 +40,9 @@ const PageComment = ({
     listComment: IListLimit<IComment>;
     matchId: number;
 }) => {
-    console.log(listComment);
     const [textComment, setTextComment] = useState<string>("");
+    const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
+    const [textFeedback, setTextFeedback] = useState<string>("");
     const [listCommentNew, setListCommentNew] = useState<IComment[]>(
         listComment.items.map((item: IComment) => {
             return {
@@ -339,14 +341,39 @@ const PageComment = ({
 
     const handleDeleteComment = async (commentId: number) => {
         let res = await handleDeleteCommentAction({ commentId: commentId });
-
+        console.log(res);
         if (res.errorCode === 0) {
+            console.log("a");
+
             setListCommentNew(
                 listCommentNew.filter(
                     (item: IComment, index: number) => item.id !== commentId
                 )
             );
         }
+    };
+
+    const handleCreateFeedback = async (commentId: number) => {
+        if (!textFeedback) {
+            Swal.fire({
+                icon: "warning",
+                title: "please enter feedback !",
+            });
+            return;
+        }
+
+        let dataBuider = {
+            content: textFeedback,
+            commentId: commentId,
+            userId: userId,
+        };
+
+        await handleCreateFeedbackAction(dataBuider);
+        // if (res.errorCode === 0) {
+        //     setListCommentNew(listCommentNew.map((item:IComment ,index:number)=>{
+
+        //     }))
+        // }
     };
 
     const handleDeleteFeedback = async (
@@ -371,7 +398,7 @@ const PageComment = ({
 
     return (
         <div className="w-[70%] ml-[50%] translate-x-[-50%]">
-            <div className="mt-[40px] w-[100%]  flex justify-center ">
+            <div className="mt-[40px] w-[100%] flex justify-center ">
                 <div
                     className={`${handlebackground(
                         color
@@ -381,6 +408,7 @@ const PageComment = ({
                         {nameUser.slice(0, 1).toUpperCase()}
                     </p>
                 </div>
+
                 <div className="w-[95%] pl-[10px]">
                     <input
                         type="text"
@@ -526,14 +554,75 @@ const PageComment = ({
                                             </span>
                                         </div>
 
-                                        <button className="border-none rounded-full p-[10px] bg-[#fff] hover:bg-[#ddd]">
+                                        <button
+                                            className="border-none rounded-full p-[10px] bg-[#fff] hover:bg-[#ddd]"
+                                            onClick={() =>
+                                                setIdWriteFeedback(
+                                                    idWriteFeedback
+                                                        ? 0
+                                                        : item.id
+                                                )
+                                            }
+                                        >
                                             Phản hồi
                                         </button>
                                     </div>
 
+                                    {idWriteFeedback === item.id ? (
+                                        <div className=" w-[100%] flex justify-center">
+                                            <div
+                                                className={`${handlebackground(
+                                                    color
+                                                )}  w-[25px] h-[25px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mt-[10px]`}
+                                            >
+                                                <p className="text-[16px] font-[500] text-[#fff]">
+                                                    {nameUser
+                                                        .slice(0, 1)
+                                                        .toUpperCase()}
+                                                </p>
+                                            </div>
+
+                                            <div className="w-[95%] pl-[10px]">
+                                                <input
+                                                    type="text"
+                                                    placeholder=" Viết bình luận ..."
+                                                    className="w-[100%] border-[1px] border-solid border-[#fff] border-b-[#ccc] p-[10px] focus:rounded-[10px] focus:border-solid focus:border-[1px] focus:border-[#fff] focus:border-b-[#ccc] "
+                                                    value={textFeedback}
+                                                    onChange={(e) =>
+                                                        setTextFeedback(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <div className="flex justify-end items-center mt-[5px]">
+                                                    <button
+                                                        className="border-none rounded-full py-[10px] px-[25px] mr-[10px] bg-[#fff] hover:bg-[#ddd] font-[600]"
+                                                        onClick={() =>
+                                                            setTextFeedback("")
+                                                        }
+                                                    >
+                                                        Hủy
+                                                    </button>
+                                                    <button
+                                                        className="border-none rounded-full p-[10px] opacity-[0.7]"
+                                                        onClick={() =>
+                                                            handleCreateFeedback(
+                                                                item.id
+                                                            )
+                                                        }
+                                                    >
+                                                        Bình luận
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+
                                     <div className="">
                                         {item.isViewFeedback ? (
-                                            <div className="w-[100%] mb-[10px]">
+                                            <div className="w-[100%]">
                                                 <button
                                                     className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff]"
                                                     onClick={() =>
