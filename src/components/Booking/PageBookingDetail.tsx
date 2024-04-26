@@ -1,3 +1,5 @@
+"use client";
+
 import { checkBankingAction } from "@/action/apiBanking";
 import { CreateBillAction, deleteBillAction } from "@/action/billAction";
 import { handleSendEmailAction } from "@/action/mailAction";
@@ -14,8 +16,16 @@ import buyTicket from "../../../public/buyTicket.png";
 import NoteTicket from "./NoteTicket";
 import moment from "moment";
 
-export default function PageBookingDetail() {
-    const [infoTicket, setInfoTicket] = useState<ITicket | null>(null);
+export default function PageBookingDetail({
+    infoTicketStart,
+    totalPriceStart,
+    priceStart,
+}: {
+    infoTicketStart: ITicket;
+    totalPriceStart: number;
+    priceStart: number;
+}) {
+    const [infoTicket, setInfoTicket] = useState<ITicket>(infoTicketStart);
     const [email, setEmail] = useState<string>("");
     const [reEmail, setReEmail] = useState<string>("");
     const [phoneNumber, setPhoneNumber] = useState<any>("");
@@ -28,8 +38,8 @@ export default function PageBookingDetail() {
     const [country, setCountry] = useState<string>("");
     const [isTerms, setIsTerms] = useState<boolean>(false);
     const [totalTicketBuy, setTotalTicketBuy] = useState<number>(1);
-    const [totalPrice, setTotalPrice] = useState<number>(0);
-    const [price, setPrice] = useState<number>(0);
+    const [totalPrice, setTotalPrice] = useState<number>(totalPriceStart);
+    const [price, setPrice] = useState<number>(priceStart);
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const [uuid, setUuid] = useState<string>("");
     const [countdown, setCountdown] = useState<number>(600);
