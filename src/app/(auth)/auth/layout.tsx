@@ -1,7 +1,6 @@
 import Image from "next/image";
 import thumbnail from "../../../../public/thumbnail_auth.jpg";
 import Link from "next/link";
-import { routes } from "@/helpers/menuRouterHeader";
 
 export default function LayoutAuth({
     children,

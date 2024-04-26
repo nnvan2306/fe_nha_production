@@ -1,5 +1,7 @@
 "use client";
 
+import className from "classnames/bind";
+import styles from "./PageListTicket.module.scss";
 import { ITicket } from "@/utils/interface";
 import moment from "moment";
 import React from "react";
@@ -11,6 +13,8 @@ import { routes } from "@/helpers/menuRouterHeader";
 import { useRouter } from "next/navigation";
 import BuyingGuide from "./BuyingGuide";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+
+const cx: Function = className.bind(styles);
 
 export default function PageListTicket({
     listTicket,
@@ -118,7 +122,12 @@ export default function PageListTicket({
                     <div className="">
                         <Row>
                             <Col span={10}>
-                                <div className="w-[100] h-[600px] overflow-auto px-[20px]">
+                                <div
+                                    className={cx(
+                                        "form-list-ticket",
+                                        " w-[100] h-[600px] overflow-auto px-[20px]"
+                                    )}
+                                >
                                     {listTicket && listTicket.length > 0 ? (
                                         listTicket.map(
                                             (item: ITicket, index: number) => {
