@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import React, { memo, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { socket } from "../../socket";
 
 const cx: Function = className.bind(styles);
 

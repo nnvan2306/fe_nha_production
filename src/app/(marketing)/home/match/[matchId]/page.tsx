@@ -8,6 +8,9 @@ import PageDetailMatch from "@/components/Match/PageDetailMatch";
 import { IComment, IListLimit, IMatch, IRes, IScored } from "@/utils/interface";
 import { Suspense } from "react";
 
+import { io } from "socket.io-client";
+const socket = io("ws://localhost:8081");
+
 interface IParams {
     params: {
         matchId: number;
@@ -30,6 +33,10 @@ export async function HandleData({ matchId }: { matchId: number }) {
         resScored.errorCode === 0 &&
         resComment.errorCode === 0
     ) {
+        socket.on("revalue", (arg) => {
+            console.log("a");
+            console.log(arg);
+        });
         return (
             <div className="w-[100%]">
                 <div className="w-[80%] ml-[50%] translate-x-[-50%]">
