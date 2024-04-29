@@ -27,10 +27,10 @@ import {
 import { Tooltip } from "antd";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { socket } from "../../socket";
+import socket from "../../socket";
 
 const cx: Function = className.bind(styles);
 
@@ -41,6 +41,21 @@ const PageComment = ({
     listComment: IListLimit<IComment>;
     matchId: number;
 }) => {
+    useEffect(() => {
+        if (socket.connected) {
+            console.log("true");
+        } else {
+            console.log("false");
+        }
+        socket.on("connection", () => {
+            console.log("Connected to socket server");
+        });
+
+        return () => {
+            socket.disconnect();
+        };
+    }, []);
+
     const [textComment, setTextComment] = useState<string>("");
     const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
     const [textFeedback, setTextFeedback] = useState<string>("");
