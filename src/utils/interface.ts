@@ -232,7 +232,8 @@ export interface IAuthSlice {
     isLogin : boolean,
     name : string,
     userId:number,
-    color:number 
+    color:number ,
+    avatar: string
 }
 
 export interface IUser {
@@ -240,6 +241,7 @@ export interface IUser {
     refresh_token: string,
     name: string ,
     id:number,
+    avatar_url:string,
 }
 
 export interface IComment {
@@ -275,10 +277,10 @@ export interface IFeedback {
     listUserDislike:number[],
 }
 
-export interface IUser {
-    id:number ,
-    name: string
-}
+// export interface IUser {
+//     id:number ,
+//     name: string
+// }
 
 export interface IListLimit<T> {
     items :T[],

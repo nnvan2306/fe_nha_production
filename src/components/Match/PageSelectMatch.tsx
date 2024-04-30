@@ -75,7 +75,7 @@ export default function PageSelectMatch({
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm "
+                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
                     value={seasonId}
                     onChange={(e) => setSeasonId(+e.target.value)}
                 >
@@ -94,7 +94,7 @@ export default function PageSelectMatch({
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm "
+                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
                     value={hostId}
                     onChange={(e) => setHostId(+e.target.value)}
                 >
@@ -113,7 +113,7 @@ export default function PageSelectMatch({
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm "
+                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
                     value={guestId}
                     onChange={(e) => setGuestId(+e.target.value)}
                 >

@@ -86,6 +86,7 @@ export default function PageLogin({
                             isLogin: true,
                             name: res.data.name,
                             userId: res.data.id,
+                            avatar: res.data.avatar,
                             color: color,
                         })
                     );

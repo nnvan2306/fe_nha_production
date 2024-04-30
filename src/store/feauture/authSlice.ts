@@ -8,6 +8,7 @@ const initialState : IAuthSlice = {
     name :'',
     userId:0,
     color:0,
+    avatar:''
     
 }
 
@@ -24,6 +25,7 @@ export const authSlice = createSlice({
       stateNew.name = action.payload.name;
       stateNew.userId = action.payload.userId;
       stateNew.color = action.payload.color;
+      stateNew.avatar =action.payload.avatar;
 
       return stateNew;
     },
@@ -35,6 +37,7 @@ export const authSlice = createSlice({
       stateNew.name = '';
       stateNew.userId =0;
       stateNew.color=0;
+      stateNew.avatar ="";
       
       return stateNew;
     },

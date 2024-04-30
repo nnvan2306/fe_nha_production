@@ -31,6 +31,7 @@ import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import socket from "../../socket";
+import Image from "next/image";
 
 const cx: Function = className.bind(styles);
 
@@ -99,6 +100,7 @@ const PageComment = ({
     const nameUser = useSelector((state: RootState) => state.auth.name);
     const userId = useSelector((state: RootState) => state.auth.userId);
     const color = useSelector((state: RootState) => state.auth.color);
+    const avatar = useSelector((state: RootState) => state.auth.avatar);
 
     const router: AppRouterInstance = useRouter();
 
@@ -420,9 +422,19 @@ const PageComment = ({
                         color
                     )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                 >
-                    <p className="text-[20px] font-[500] text-[#fff]">
-                        {nameUser.slice(0, 1).toUpperCase()}
-                    </p>
+                    {avatar ? (
+                        <Image
+                            width={40}
+                            height={40}
+                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${avatar}`}
+                            alt="avatar"
+                            className="rounded-full"
+                        />
+                    ) : (
+                        <p className="text-[20px] font-[500] text-[#fff]">
+                            {nameUser.slice(0, 1).toUpperCase()}
+                        </p>
+                    )}
                 </div>
 
                 <div className="w-[95%] pl-[10px]">
@@ -465,11 +477,21 @@ const PageComment = ({
                                             : Math.floor(Math.random() * 10)
                                     )}  w-[35px] h-[35px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                                 >
-                                    <p className="text-[16px] font-[500] text-[#fff]">
-                                        {item.User.name
-                                            .slice(0, 1)
-                                            .toUpperCase()}
-                                    </p>
+                                    {item.User.avatar_url ? (
+                                        <Image
+                                            width={40}
+                                            height={40}
+                                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.User.avatar_url}`}
+                                            alt="avatar"
+                                            className="rounded-full"
+                                        />
+                                    ) : (
+                                        <p className="text-[16px] font-[500] text-[#fff]">
+                                            {item.User.name
+                                                .slice(0, 1)
+                                                .toUpperCase()}
+                                        </p>
+                                    )}
                                 </div>
 
                                 <div className="w-[95%] pl-[10px]">
@@ -591,11 +613,20 @@ const PageComment = ({
                                                     color
                                                 )}  w-[25px] h-[25px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mt-[10px]`}
                                             >
-                                                <p className="text-[16px] font-[500] text-[#fff]">
-                                                    {nameUser
-                                                        .slice(0, 1)
-                                                        .toUpperCase()}
-                                                </p>
+                                                {avatar ? (
+                                                    <Image
+                                                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${avatar}`}
+                                                        alt="avatar"
+                                                        width={25}
+                                                        height={25}
+                                                    />
+                                                ) : (
+                                                    <p className="text-[16px] font-[500] text-[#fff]">
+                                                        {nameUser
+                                                            .slice(0, 1)
+                                                            .toUpperCase()}
+                                                    </p>
+                                                )}
                                             </div>
 
                                             <div className="w-[95%] pl-[10px]">
@@ -694,14 +725,29 @@ const PageComment = ({
                                                                                       )
                                                                             )}  w-[30px] h-[30px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mr-[10px]`}
                                                                         >
-                                                                            <p className="text-[16px] font-[500] text-[#fff]">
-                                                                                {itemFeed.User.name
-                                                                                    .slice(
-                                                                                        0,
-                                                                                        1
-                                                                                    )
-                                                                                    .toUpperCase()}
-                                                                            </p>
+                                                                            {itemFeed
+                                                                                .User
+                                                                                .avatar_url ? (
+                                                                                <Image
+                                                                                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${itemFeed.User.avatar_url}`}
+                                                                                    alt="avatar"
+                                                                                    width={
+                                                                                        30
+                                                                                    }
+                                                                                    height={
+                                                                                        30
+                                                                                    }
+                                                                                />
+                                                                            ) : (
+                                                                                <p className="text-[16px] font-[500] text-[#fff]">
+                                                                                    {itemFeed.User.name
+                                                                                        .slice(
+                                                                                            0,
+                                                                                            1
+                                                                                        )
+                                                                                        .toUpperCase()}
+                                                                                </p>
+                                                                            )}
                                                                         </div>
 
                                                                         <div className="w-[100%]">

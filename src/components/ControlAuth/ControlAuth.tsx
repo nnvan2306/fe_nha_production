@@ -8,11 +8,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "antd";
 import { handlebackground } from "@/helpers/HandleBackground";
+import Image from "next/image";
 
 export default function ControlAuth() {
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
     const nameUser = useSelector((state: RootState) => state.auth.name);
     const color = useSelector((state: RootState) => state.auth.color);
+    const avatar = useSelector((state: RootState) => state.auth.avatar);
 
     const dispatch = useDispatch();
 
@@ -50,9 +52,19 @@ export default function ControlAuth() {
                                     color
                                 )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
                             >
-                                <p className="text-[20px] font-[500] text-[#fff]">
-                                    {nameUser.slice(0, 1).toUpperCase()}
-                                </p>
+                                {avatar ? (
+                                    <Image
+                                        alt="avatar"
+                                        src={`${process.env.NEXT_PUBLIC_BASE_URL}${avatar}`}
+                                        width={40}
+                                        height={40}
+                                        className="rounded-full"
+                                    />
+                                ) : (
+                                    <p className="text-[20px] font-[500] text-[#fff]">
+                                        {nameUser.slice(0, 1).toUpperCase()}
+                                    </p>
+                                )}
                             </div>
                         </Tooltip>
 
