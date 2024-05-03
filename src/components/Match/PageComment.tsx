@@ -30,8 +30,10 @@ import { useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import socket from "../../socket";
+import { io } from "socket.io-client";
 import Image from "next/image";
+import { Socket } from "socket.io";
+import { ioHandlerComment } from "@/helpers/Io";
 
 const cx: Function = className.bind(styles);
 
@@ -42,20 +44,23 @@ const PageComment = ({
     listComment: IListLimit<IComment>;
     matchId: number;
 }) => {
-    useEffect(() => {
-        if (socket.connected) {
-            console.log("true");
-        } else {
-            console.log("false");
-        }
-        socket.on("connection", () => {
-            console.log("Connected to socket server");
-        });
+    const [socket, setSocket] = useState<Socket | null>(null);
 
-        return () => {
-            socket.disconnect();
-        };
+    useEffect(() => {
+        const ws: any = io("http://localhost:8080");
+        ws.on("connect", () => {
+            ws.emit("connected", true);
+            setSocket(ws);
+        });
     }, []);
+
+    useEffect(() => {
+        if (!socket) return;
+
+        socket.on("reply_suc", (data: any) => {
+            console.log(data);
+        });
+    }, [socket]);
 
     const [textComment, setTextComment] = useState<string>("");
     const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
@@ -133,10 +138,12 @@ const PageComment = ({
             userId: userId,
         };
 
-        let res = await handleCreateComment(dataBuider);
-        if (res.errorCode === 0) {
-            setTextComment("");
-        }
+        ioHandlerComment(dataBuider, socket);
+
+        // let res = await handleCreateComment(dataBuider);
+        // if (res.errorCode === 0) {
+        //     setTextComment("");
+        // }
     };
 
     const handleCheckLogin = (): boolean => {
