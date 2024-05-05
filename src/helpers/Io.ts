@@ -10,11 +10,25 @@ export const connected = (
     });
 };
 
-export const ioHandlerComment = (dataBuider: any, socket:any) => {
+export const ioHandlerComment =async (dataBuider: any, socket:any) => {
     if (!socket) return;
-    socket.emit("replycm", dataBuider);
+
+    await socket.emit("replycm", dataBuider);
     
-    socket.on("reply_suc", (data: any   ) => {
-        console.log(data);
-    });
+    // await socket.on("reply_suc", (data: any   ) => {
+    //     return data;
+    // });   
 }
+
+export const ioHandleLikeComment = async (dataBuider : any, socket:any)=>{
+    if (!socket) return;
+
+    await socket.emit("likeComment" , dataBuider);
+}
+
+export const ioHandleDislikeComment = async (dataBuider  : any , socket : any)=>{
+    if (!socket) return;
+
+    await socket.emit("dislikeComment" , dataBuider);
+}
+

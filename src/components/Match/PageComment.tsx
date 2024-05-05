@@ -3,27 +3,16 @@
 import className from "classnames/bind";
 import styles from "./PageComment.module.scss";
 import {
-    handleCreateComment,
     handleCreateFeedbackAction,
     handleDeleteCommentAction,
     handleDeleteFeedbackAction,
-    handleDislikeCommentAction,
     handleDislikeFeedbackAction,
-    handleLikeCommentAction,
     handleLikeFeedbackAction,
 } from "@/action/commentAction";
 import { handlebackground } from "@/helpers/HandleBackground";
 import { routes } from "@/helpers/menuRouterHeader";
 import { RootState } from "@/store/store";
-import {
-    IComment,
-    IDisLikeFeedback,
-    IDislikeComment,
-    IFeedback,
-    ILikeComment,
-    ILikeFeedback,
-    IListLimit,
-} from "@/utils/interface";
+import { IComment, IFeedback, IListLimit } from "@/utils/interface";
 import { Tooltip } from "antd";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
@@ -33,7 +22,13 @@ import Swal from "sweetalert2";
 import { io } from "socket.io-client";
 import Image from "next/image";
 import { Socket } from "socket.io";
-import { ioHandlerComment } from "@/helpers/Io";
+import {
+    connected,
+    ioHandleDislikeComment,
+    ioHandleLikeComment,
+    ioHandlerComment,
+} from "@/helpers/Io";
+import { handleSetListComments } from "@/helpers/handleSetListComment";
 
 const cx: Function = className.bind(styles);
 
@@ -44,62 +39,40 @@ const PageComment = ({
     listComment: IListLimit<IComment>;
     matchId: number;
 }) => {
+    const [textComment, setTextComment] = useState<string>("");
+    const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
+    const [textFeedback, setTextFeedback] = useState<string>("");
+    const [listCommentNew, setListCommentNew] = useState<IComment[]>(
+        handleSetListComments(listComment)
+    );
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        const ws: any = io("http://localhost:8080");
-        ws.on("connect", () => {
-            ws.emit("connected", true);
-            setSocket(ws);
-        });
+        connected(io, "http://localhost:8080", setSocket);
     }, []);
 
     useEffect(() => {
         if (!socket) return;
 
+        // data nhận đc sau khi create comment success
         socket.on("reply_suc", (data: any) => {
             console.log(data);
+            setListCommentNew(handleSetListComments(data.data));
+            setTextComment("");
+        });
+
+        // data nhận được sau khi like comment success
+        socket.on("likeCommentSuccess", (data: any) => {
+            setListCommentNew(handleSetListComments(data.data));
+        });
+
+        //data nhận được sau khi dislike comment success
+        socket.on("dislikeCommentSuccess", (data: any) => {
+            setListCommentNew(handleSetListComments(data.data));
         });
     }, [socket]);
 
-    const [textComment, setTextComment] = useState<string>("");
-    const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
-    const [textFeedback, setTextFeedback] = useState<string>("");
-    const [listCommentNew, setListCommentNew] = useState<IComment[]>(
-        listComment.items.map((item: IComment) => {
-            return {
-                ...item,
-                isViewFeedback: false,
-                listUserLike: item.LikeComments.map(
-                    (itemChild: ILikeComment) => {
-                        return itemChild.userId;
-                    }
-                ),
-                listUserDislike: item.DislikeComments.map(
-                    (itemChild: IDislikeComment) => {
-                        return itemChild.userId;
-                    }
-                ),
-                Feedbacks: item.Feedbacks.map(
-                    (itemC: IFeedback, indexC: number) => {
-                        return {
-                            ...itemC,
-                            listUserLike: itemC.LikeFeedbacks.map(
-                                (im: ILikeFeedback) => {
-                                    return im.userId;
-                                }
-                            ),
-                            listUserDislike: itemC.DislikeFeedbacks.map(
-                                (im: IDisLikeFeedback) => {
-                                    return im.userId;
-                                }
-                            ),
-                        };
-                    }
-                ),
-            };
-        })
-    );
+    console.log(listCommentNew);
 
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
     const nameUser = useSelector((state: RootState) => state.auth.name);
@@ -108,6 +81,8 @@ const PageComment = ({
     const avatar = useSelector((state: RootState) => state.auth.avatar);
 
     const router: AppRouterInstance = useRouter();
+
+    //validate comment
 
     const handleValidateComment = (): boolean => {
         if (!isLogin) {
@@ -126,6 +101,8 @@ const PageComment = ({
         return true;
     };
 
+    // create comment
+
     const handleComment = async () => {
         const check = handleValidateComment();
         if (!check) {
@@ -138,14 +115,10 @@ const PageComment = ({
             userId: userId,
         };
 
-        ioHandlerComment(dataBuider, socket);
-
-        // let res = await handleCreateComment(dataBuider);
-        // if (res.errorCode === 0) {
-        //     setTextComment("");
-        // }
+        await ioHandlerComment(dataBuider, socket);
     };
 
+    // check login before like or dislike
     const handleCheckLogin = (): boolean => {
         if (!isLogin) {
             router.push(routes.login.url);
@@ -163,38 +136,46 @@ const PageComment = ({
             return;
         }
 
-        let res = await handleLikeCommentAction({
+        let dataBuider = {
             commentId: commentId,
             userId: userId,
-        });
-        if (res.errorCode === 0) {
-            setListCommentNew(
-                listCommentNew.map((item: IComment, index: number) => {
-                    if (index === indexComment) {
-                        let isCheck: boolean =
-                            item.listUserLike.includes(userId);
-                        if (isCheck) {
-                            item.listUserLike = item.listUserLike.filter(
-                                (item) => item !== userId
-                            );
+            matchId: matchId,
+        };
 
-                            item.like = item.like - 1;
-                        } else {
-                            item.listUserLike.push(userId);
-                            item.like = item.like + 1;
-                            if (item.listUserDislike.includes(userId)) {
-                                item.listUserDislike =
-                                    item.listUserDislike.filter(
-                                        (item: number) => item !== userId
-                                    );
-                                item.disLike = item.disLike - 1;
-                            }
-                        }
-                    }
-                    return item;
-                })
-            );
-        }
+        await ioHandleLikeComment(dataBuider, socket);
+
+        // let res = await handleLikeCommentAction({
+        //     commentId: commentId,
+        //     userId: userId,
+        // });
+        // if (res.errorCode === 0) {
+        //     setListCommentNew(
+        //         listCommentNew.map((item: IComment, index: number) => {
+        //             if (index === indexComment) {
+        //                 let isCheck: boolean =
+        //                     item.listUserLike.includes(userId);
+        //                 if (isCheck) {
+        //                     item.listUserLike = item.listUserLike.filter(
+        //                         (item) => item !== userId
+        //                     );
+
+        //                     item.like = item.like - 1;
+        //                 } else {
+        //                     item.listUserLike.push(userId);
+        //                     item.like = item.like + 1;
+        //                     if (item.listUserDislike.includes(userId)) {
+        //                         item.listUserDislike =
+        //                             item.listUserDislike.filter(
+        //                                 (item: number) => item !== userId
+        //                             );
+        //                         item.disLike = item.disLike - 1;
+        //                     }
+        //                 }
+        //             }
+        //             return item;
+        //         })
+        //     );
+        // }
     };
 
     const handleActionDislike = async (
@@ -206,38 +187,46 @@ const PageComment = ({
             return;
         }
 
-        let res = await handleDislikeCommentAction({
+        let dataBuider = {
             commentId: commentId,
             userId: userId,
-        });
+            matchId: matchId,
+        };
 
-        if (res.errorCode === 0) {
-            setListCommentNew(
-                listCommentNew.map((item: IComment, index: number) => {
-                    if (index === indexComment) {
-                        let isCheck: boolean =
-                            item.listUserDislike.includes(userId);
-                        if (isCheck) {
-                            item.listUserDislike = item.listUserDislike.filter(
-                                (item) => item !== userId
-                            );
+        await ioHandleDislikeComment(dataBuider, socket);
 
-                            item.disLike = item.disLike - 1;
-                        } else {
-                            item.listUserDislike.push(userId);
-                            item.disLike = item.disLike + 1;
-                            if (item.listUserLike.includes(userId)) {
-                                item.listUserLike = item.listUserLike.filter(
-                                    (item) => item !== userId
-                                );
-                                item.like = item.like - 1;
-                            }
-                        }
-                    }
-                    return item;
-                })
-            );
-        }
+        // let res = await handleDislikeCommentAction({
+        //     commentId: commentId,
+        //     userId: userId,
+        // });
+
+        // if (res.errorCode === 0) {
+        //     setListCommentNew(
+        //         listCommentNew.map((item: IComment, index: number) => {
+        //             if (index === indexComment) {
+        //                 let isCheck: boolean =
+        //                     item.listUserDislike.includes(userId);
+        //                 if (isCheck) {
+        //                     item.listUserDislike = item.listUserDislike.filter(
+        //                         (item) => item !== userId
+        //                     );
+
+        //                     item.disLike = item.disLike - 1;
+        //                 } else {
+        //                     item.listUserDislike.push(userId);
+        //                     item.disLike = item.disLike + 1;
+        //                     if (item.listUserLike.includes(userId)) {
+        //                         item.listUserLike = item.listUserLike.filter(
+        //                             (item) => item !== userId
+        //                         );
+        //                         item.like = item.like - 1;
+        //                     }
+        //                 }
+        //             }
+        //             return item;
+        //         })
+        //     );
+        // }
     };
 
     const handleActionLikeFeedback = async (
