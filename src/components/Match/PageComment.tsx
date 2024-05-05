@@ -24,9 +24,10 @@ import Image from "next/image";
 import { Socket } from "socket.io";
 import {
     connected,
+    ioHandleDeleteComment,
     ioHandleDislikeComment,
     ioHandleLikeComment,
-    ioHandlerComment,
+    ioHandlerCreateComment,
 } from "@/helpers/Io";
 import { handleSetListComments } from "@/helpers/handleSetListComment";
 
@@ -42,8 +43,9 @@ const PageComment = ({
     const [textComment, setTextComment] = useState<string>("");
     const [idWriteFeedback, setIdWriteFeedback] = useState<number>(0);
     const [textFeedback, setTextFeedback] = useState<string>("");
+    const [listViewFeedback, setListViewFeedback] = useState<number[]>([]);
     const [listCommentNew, setListCommentNew] = useState<IComment[]>(
-        handleSetListComments(listComment)
+        handleSetListComments(listComment, listViewFeedback)
     );
     const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -55,24 +57,41 @@ const PageComment = ({
         if (!socket) return;
 
         // data nhận đc sau khi create comment success
+
         socket.on("reply_suc", (data: any) => {
             console.log(data);
-            setListCommentNew(handleSetListComments(data.data));
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
             setTextComment("");
         });
 
         // data nhận được sau khi like comment success
+
         socket.on("likeCommentSuccess", (data: any) => {
-            setListCommentNew(handleSetListComments(data.data));
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
         });
 
         //data nhận được sau khi dislike comment success
-        socket.on("dislikeCommentSuccess", (data: any) => {
-            setListCommentNew(handleSetListComments(data.data));
-        });
-    }, [socket]);
 
-    console.log(listCommentNew);
+        socket.on("dislikeCommentSuccess", (data: any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+        });
+
+        //data nhận được sau khi delete comment success
+
+        socket.on("deleteCommentSuccess", (data, any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socket]);
 
     const isLogin = useSelector((state: RootState) => state.auth.isLogin);
     const nameUser = useSelector((state: RootState) => state.auth.name);
@@ -115,10 +134,28 @@ const PageComment = ({
             userId: userId,
         };
 
-        await ioHandlerComment(dataBuider, socket);
+        await ioHandlerCreateComment(dataBuider, socket);
+    };
+
+    //delete comment
+
+    const handleDeleteComment = async (commentId: number) => {
+        let dataBuider = { commentId: commentId, matchId: matchId };
+
+        await ioHandleDeleteComment(dataBuider, socket);
+
+        // let res = await handleDeleteCommentAction({ commentId: commentId });
+        // if (res.errorCode === 0) {
+        //     setListCommentNew(
+        //         listCommentNew.filter(
+        //             (item: IComment, index: number) => item.id !== commentId
+        //         )
+        //     );
+        // }
     };
 
     // check login before like or dislike
+
     const handleCheckLogin = (): boolean => {
         if (!isLogin) {
             router.push(routes.login.url);
@@ -127,10 +164,7 @@ const PageComment = ({
         return true;
     };
 
-    const handleActionLike = async (
-        commentId: number,
-        indexComment: number
-    ) => {
+    const handleActionLike = async (commentId: number) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
@@ -143,45 +177,9 @@ const PageComment = ({
         };
 
         await ioHandleLikeComment(dataBuider, socket);
-
-        // let res = await handleLikeCommentAction({
-        //     commentId: commentId,
-        //     userId: userId,
-        // });
-        // if (res.errorCode === 0) {
-        //     setListCommentNew(
-        //         listCommentNew.map((item: IComment, index: number) => {
-        //             if (index === indexComment) {
-        //                 let isCheck: boolean =
-        //                     item.listUserLike.includes(userId);
-        //                 if (isCheck) {
-        //                     item.listUserLike = item.listUserLike.filter(
-        //                         (item) => item !== userId
-        //                     );
-
-        //                     item.like = item.like - 1;
-        //                 } else {
-        //                     item.listUserLike.push(userId);
-        //                     item.like = item.like + 1;
-        //                     if (item.listUserDislike.includes(userId)) {
-        //                         item.listUserDislike =
-        //                             item.listUserDislike.filter(
-        //                                 (item: number) => item !== userId
-        //                             );
-        //                         item.disLike = item.disLike - 1;
-        //                     }
-        //                 }
-        //             }
-        //             return item;
-        //         })
-        //     );
-        // }
     };
 
-    const handleActionDislike = async (
-        commentId: number,
-        indexComment: number
-    ) => {
+    const handleActionDislike = async (commentId: number) => {
         const check = handleCheckLogin();
         if (!check) {
             return;
@@ -194,39 +192,6 @@ const PageComment = ({
         };
 
         await ioHandleDislikeComment(dataBuider, socket);
-
-        // let res = await handleDislikeCommentAction({
-        //     commentId: commentId,
-        //     userId: userId,
-        // });
-
-        // if (res.errorCode === 0) {
-        //     setListCommentNew(
-        //         listCommentNew.map((item: IComment, index: number) => {
-        //             if (index === indexComment) {
-        //                 let isCheck: boolean =
-        //                     item.listUserDislike.includes(userId);
-        //                 if (isCheck) {
-        //                     item.listUserDislike = item.listUserDislike.filter(
-        //                         (item) => item !== userId
-        //                     );
-
-        //                     item.disLike = item.disLike - 1;
-        //                 } else {
-        //                     item.listUserDislike.push(userId);
-        //                     item.disLike = item.disLike + 1;
-        //                     if (item.listUserLike.includes(userId)) {
-        //                         item.listUserLike = item.listUserLike.filter(
-        //                             (item) => item !== userId
-        //                         );
-        //                         item.like = item.like - 1;
-        //                     }
-        //                 }
-        //             }
-        //             return item;
-        //         })
-        //     );
-        // }
     };
 
     const handleActionLikeFeedback = async (
@@ -353,20 +318,6 @@ const PageComment = ({
         }
     };
 
-    const handleDeleteComment = async (commentId: number) => {
-        let res = await handleDeleteCommentAction({ commentId: commentId });
-        console.log(res);
-        if (res.errorCode === 0) {
-            console.log("a");
-
-            setListCommentNew(
-                listCommentNew.filter(
-                    (item: IComment, index: number) => item.id !== commentId
-                )
-            );
-        }
-    };
-
     const handleCreateFeedback = async (commentId: number) => {
         if (!textFeedback) {
             Swal.fire({
@@ -408,6 +359,16 @@ const PageComment = ({
                 })
             );
         }
+    };
+
+    const handleSetListViewFeedback = (id: number) => {
+        if (listViewFeedback.includes(id)) {
+            setListViewFeedback(
+                listViewFeedback.filter((item: number) => item !== id)
+            );
+            return;
+        }
+        setListViewFeedback((prev) => [...prev, id]);
     };
 
     return (
@@ -546,8 +507,7 @@ const PageComment = ({
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionLike(
-                                                            item.id,
-                                                            index
+                                                            item.id
                                                         )
                                                     }
                                                 ></i>
@@ -577,8 +537,7 @@ const PageComment = ({
                                                     } hover:opacity-[0.5] cursor-pointer`}
                                                     onClick={() =>
                                                         handleActionDislike(
-                                                            item.id,
-                                                            index
+                                                            item.id
                                                         )
                                                     }
                                                 ></i>
@@ -664,35 +623,28 @@ const PageComment = ({
                                     )}
 
                                     <div className="">
-                                        {item.isViewFeedback ? (
-                                            <div className="w-[100%]">
-                                                <button
-                                                    className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff]"
-                                                    onClick={() =>
-                                                        setListCommentNew(
-                                                            listCommentNew.map(
-                                                                (
-                                                                    itemChild,
-                                                                    indexChild
-                                                                ) => {
-                                                                    if (
-                                                                        indexChild ===
-                                                                        index
-                                                                    ) {
-                                                                        itemChild.isViewFeedback =
-                                                                            false;
-                                                                    }
-                                                                    return itemChild;
-                                                                }
-                                                            )
-                                                        )
-                                                    }
-                                                >
+                                        <div className="w-[100%]">
+                                            <button
+                                                className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff]"
+                                                onClick={() =>
+                                                    handleSetListViewFeedback(
+                                                        item.id
+                                                    )
+                                                }
+                                            >
+                                                {listViewFeedback.includes(
+                                                    item.id
+                                                ) ? (
                                                     <i className="bi bi-caret-up-fill mr-[10px]"></i>
-                                                    {item.Feedbacks.length} phản
-                                                    hồi
-                                                </button>
+                                                ) : (
+                                                    <i className="bi bi-caret-down-fill mr-[10px]"></i>
+                                                )}
+                                                {item.Feedbacks.length} phản hồi
+                                            </button>
 
+                                            {listViewFeedback.includes(
+                                                item.id
+                                            ) ? (
                                                 <div className="w-[100%] pl-[10px] mt-[10px]">
                                                     {item.Feedbacks.length >
                                                         0 &&
@@ -875,34 +827,10 @@ const PageComment = ({
                                                             }
                                                         )}
                                                 </div>
-                                            </div>
-                                        ) : (
-                                            <button
-                                                className="w-[150px] py-[6px] border-none rounded-[100px] bg-[#fff] text-[#065fd4] hover:bg-[#def1ff] mb-[10px]"
-                                                onClick={() =>
-                                                    setListCommentNew(
-                                                        listCommentNew.map(
-                                                            (
-                                                                itemBtn,
-                                                                indexBtn
-                                                            ) => {
-                                                                if (
-                                                                    indexBtn ===
-                                                                    index
-                                                                ) {
-                                                                    itemBtn.isViewFeedback =
-                                                                        true;
-                                                                }
-                                                                return itemBtn;
-                                                            }
-                                                        )
-                                                    )
-                                                }
-                                            >
-                                                <i className="bi bi-caret-down-fill mr-[10px]"></i>
-                                                {item.Feedbacks.length} phản hồi
-                                            </button>
-                                        )}
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
