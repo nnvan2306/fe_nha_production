@@ -4,17 +4,21 @@ export const handleSetListComments = (listComment : IListLimit<IComment> , listV
     return listComment.items.map((item: IComment) => {
         return {
             ...item,
+
             isViewFeedback: listViewFeedback.includes(item.id) ? true : false,
+
             listUserLike: item.LikeComments.map(
                 (itemChild: ILikeComment) => {
                     return itemChild.userId;
                 }
             ),
+
             listUserDislike: item.DislikeComments.map(
                 (itemChild: IDislikeComment) => {
                     return itemChild.userId;
                 }
             ),
+
             Feedbacks: item.Feedbacks.map(
                 (itemC: IFeedback, indexC: number) => {
                     return {
@@ -32,6 +36,7 @@ export const handleSetListComments = (listComment : IListLimit<IComment> , listV
                     };
                 }
             ),
+            
         };
     })
 }

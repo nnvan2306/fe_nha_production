@@ -1,3 +1,5 @@
+import { Socket } from "socket.io";
+
 export const connected = (
     io: any,
     link: string,
@@ -45,6 +47,39 @@ export const ioHandleDislikeComment = async (dataBuider  : any , socket : any)=>
     await socket.emit("dislikeComment" , dataBuider);
 }
 
+//create feedback
+
+export const ioHandleCreateFeedback = async (dataBuider  : any , socket : any)=>{
+    if (!socket) return;
+
+    await socket.emit("createFeedback" , dataBuider);
+}
+
+
+//create delete feedback
+
+export const ioHandleDeleteFeedback = async (dataBuider  : any , socket : any)=>{
+    if (!socket) return;
+
+    await socket.emit("deleteFeedback" , dataBuider);
+}
+
+
+// like feedback
+
+export const ioHandleLikeFeedback = async (dataBuider  : any , socket : any)=>{
+    if (!socket) return;
+
+    await socket.emit("likeFeedback" , dataBuider);
+}
+
+// dislike feedback
+
+export const ioHandleDislikeFeedback = async (dataBuider  : any , socket : any)=>{
+    if (!socket) return;
+
+    await socket.emit("dislikeFeedback" , dataBuider);
+}
 
 
 

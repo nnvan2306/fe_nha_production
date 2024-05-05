@@ -2,13 +2,6 @@
 
 import className from "classnames/bind";
 import styles from "./PageComment.module.scss";
-import {
-    handleCreateFeedbackAction,
-    handleDeleteCommentAction,
-    handleDeleteFeedbackAction,
-    handleDislikeFeedbackAction,
-    handleLikeFeedbackAction,
-} from "@/action/commentAction";
 import { handlebackground } from "@/helpers/HandleBackground";
 import { routes } from "@/helpers/menuRouterHeader";
 import { RootState } from "@/store/store";
@@ -24,9 +17,13 @@ import Image from "next/image";
 import { Socket } from "socket.io";
 import {
     connected,
+    ioHandleCreateFeedback,
     ioHandleDeleteComment,
+    ioHandleDeleteFeedback,
     ioHandleDislikeComment,
+    ioHandleDislikeFeedback,
     ioHandleLikeComment,
+    ioHandleLikeFeedback,
     ioHandlerCreateComment,
 } from "@/helpers/Io";
 import { handleSetListComments } from "@/helpers/handleSetListComment";
@@ -59,7 +56,6 @@ const PageComment = ({
         // data nhận đc sau khi create comment success
 
         socket.on("reply_suc", (data: any) => {
-            console.log(data);
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
@@ -84,7 +80,40 @@ const PageComment = ({
 
         //data nhận được sau khi delete comment success
 
-        socket.on("deleteCommentSuccess", (data, any) => {
+        socket.on("deleteCommentSuccess", (data: any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+        });
+
+        // data nhận được sau khi create feedback success
+
+        socket.on("createFeedbackSuccess", (data: any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+            setTextFeedback("");
+        });
+
+        //data nhận được sau khi delete feedback success
+
+        socket.on("deleteFeedbackSuccess", (data: any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+        });
+
+        // data nhận được sau khi like feedback success
+
+        socket.on("likeFeedbackSuccess", (data: any) => {
+            setListCommentNew(
+                handleSetListComments(data.data, listViewFeedback)
+            );
+        });
+
+        // data nhận được sau khi dislike feedback success
+
+        socket.on("dislikeFeedbackSuccess", (data: any) => {
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
@@ -101,12 +130,22 @@ const PageComment = ({
 
     const router: AppRouterInstance = useRouter();
 
-    //validate comment
+    // validate login
 
-    const handleValidateComment = (): boolean => {
+    const handleCheckLogin = (): boolean => {
         if (!isLogin) {
             router.push(routes.login.url);
             return false;
+        }
+        return true;
+    };
+
+    // create comment
+
+    const handleComment = async () => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
         }
 
         if (!textComment) {
@@ -114,17 +153,6 @@ const PageComment = ({
                 icon: "warning",
                 title: "please enter comment !",
             });
-            return false;
-        }
-
-        return true;
-    };
-
-    // create comment
-
-    const handleComment = async () => {
-        const check = handleValidateComment();
-        if (!check) {
             return;
         }
 
@@ -137,32 +165,20 @@ const PageComment = ({
         await ioHandlerCreateComment(dataBuider, socket);
     };
 
-    //delete comment
+    // delete comment
 
     const handleDeleteComment = async (commentId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
         let dataBuider = { commentId: commentId, matchId: matchId };
 
         await ioHandleDeleteComment(dataBuider, socket);
-
-        // let res = await handleDeleteCommentAction({ commentId: commentId });
-        // if (res.errorCode === 0) {
-        //     setListCommentNew(
-        //         listCommentNew.filter(
-        //             (item: IComment, index: number) => item.id !== commentId
-        //         )
-        //     );
-        // }
     };
 
-    // check login before like or dislike
-
-    const handleCheckLogin = (): boolean => {
-        if (!isLogin) {
-            router.push(routes.login.url);
-            return false;
-        }
-        return true;
-    };
+    // like comment
 
     const handleActionLike = async (commentId: number) => {
         const check = handleCheckLogin();
@@ -179,6 +195,8 @@ const PageComment = ({
         await ioHandleLikeComment(dataBuider, socket);
     };
 
+    // dislike comment
+
     const handleActionDislike = async (commentId: number) => {
         const check = handleCheckLogin();
         if (!check) {
@@ -194,131 +212,14 @@ const PageComment = ({
         await ioHandleDislikeComment(dataBuider, socket);
     };
 
-    const handleActionLikeFeedback = async (
-        feedbackId: number,
-        indexComment: number,
-        indexFeedback: number
-    ) => {
-        const check = handleCheckLogin();
-        if (!check) {
-            return;
-        }
-
-        let res = await handleLikeFeedbackAction({
-            feedbackId: feedbackId,
-            userId: userId,
-        });
-
-        if (res.errorCode === 0) {
-            setListCommentNew(
-                listCommentNew.map((item: IComment, index: number) => {
-                    if (index === indexComment) {
-                        item.Feedbacks = item.Feedbacks.map(
-                            (itemChild: IFeedback, indexChild: number) => {
-                                if (indexChild === indexFeedback) {
-                                    if (
-                                        itemChild.listUserLike.includes(userId)
-                                    ) {
-                                        itemChild.listUserLike =
-                                            itemChild.listUserLike.filter(
-                                                (itemDr) => itemDr !== userId
-                                            );
-
-                                        itemChild.like = itemChild.like - 1;
-                                    } else {
-                                        itemChild.listUserLike.push(userId);
-                                        itemChild.like = itemChild.like + 1;
-                                        if (
-                                            itemChild.listUserDislike.includes(
-                                                userId
-                                            )
-                                        ) {
-                                            itemChild.listUserDislike =
-                                                itemChild.listUserDislike.filter(
-                                                    (itemDr: number) =>
-                                                        itemDr !== userId
-                                                );
-                                            itemChild.disLike =
-                                                itemChild.disLike - 1;
-                                        }
-                                    }
-                                }
-                                return itemChild;
-                            }
-                        );
-                        item.isViewFeedback = true;
-                    }
-                    return item;
-                })
-            );
-        }
-    };
-
-    const handleActionDislikeFeedback = async (
-        feedbackId: number,
-        indexComment: number,
-        indexFeedback: number
-    ) => {
-        const check = handleCheckLogin();
-        if (!check) {
-            return;
-        }
-
-        let res = await handleDislikeFeedbackAction({
-            feedbackId: feedbackId,
-            userId: userId,
-        });
-
-        if (res.errorCode === 0) {
-            setListCommentNew(
-                listCommentNew.map((item: IComment, index: number) => {
-                    if (index === indexComment) {
-                        item.Feedbacks = item.Feedbacks.map(
-                            (itemChild: IFeedback, indexChild: number) => {
-                                if (indexChild === indexFeedback) {
-                                    if (
-                                        itemChild.listUserDislike.includes(
-                                            userId
-                                        )
-                                    ) {
-                                        itemChild.listUserDislike =
-                                            itemChild.listUserDislike.filter(
-                                                (itemDr) => itemDr !== userId
-                                            );
-
-                                        itemChild.disLike =
-                                            itemChild.disLike - 1;
-                                    } else {
-                                        itemChild.listUserDislike.push(userId);
-                                        itemChild.disLike =
-                                            itemChild.disLike + 1;
-                                        if (
-                                            itemChild.listUserLike.includes(
-                                                userId
-                                            )
-                                        ) {
-                                            itemChild.listUserLike =
-                                                itemChild.listUserLike.filter(
-                                                    (itemDr: number) =>
-                                                        itemDr !== userId
-                                                );
-                                            itemChild.like = itemChild.like - 1;
-                                        }
-                                    }
-                                }
-                                return itemChild;
-                            }
-                        );
-
-                        item.isViewFeedback = true;
-                    }
-                    return item;
-                })
-            );
-        }
-    };
+    // create feedback
 
     const handleCreateFeedback = async (commentId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
         if (!textFeedback) {
             Swal.fire({
                 icon: "warning",
@@ -331,34 +232,58 @@ const PageComment = ({
             content: textFeedback,
             commentId: commentId,
             userId: userId,
+            matchId: matchId,
         };
 
-        await handleCreateFeedbackAction(dataBuider);
-        // if (res.errorCode === 0) {
-        //     setListCommentNew(listCommentNew.map((item:IComment ,index:number)=>{
+        await ioHandleCreateFeedback(dataBuider, socket);
 
-        //     }))
-        // }
+        setIdWriteFeedback(0);
     };
 
-    const handleDeleteFeedback = async (
-        feedbackId: number,
-        indexComment: number
-    ) => {
-        let res = await handleDeleteFeedbackAction({ feedbackId: feedbackId });
+    // delete feedback
 
-        if (res.errorCode === 0) {
-            setListCommentNew(
-                listCommentNew.map((item: IComment, index: number) => {
-                    if (index === indexComment) {
-                        item.Feedbacks = item.Feedbacks.filter(
-                            (itemChild) => itemChild.id !== feedbackId
-                        );
-                    }
-                    return item;
-                })
-            );
+    const handleDeleteFeedback = async (feedbackId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
         }
+
+        let dataBuider = { feedbackId: feedbackId, matchId: matchId };
+
+        await ioHandleDeleteFeedback(dataBuider, socket);
+    };
+
+    // like feedback
+
+    const handleActionLikeFeedback = async (feedbackId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        let dataBuider = {
+            feedbackId: feedbackId,
+            userId: userId,
+            matchId: matchId,
+        };
+
+        await ioHandleLikeFeedback(dataBuider, socket);
+    };
+
+    // dislike feedback
+    const handleActionDislikeFeedback = async (feedbackId: number) => {
+        const check = handleCheckLogin();
+        if (!check) {
+            return;
+        }
+
+        let dataBuider = {
+            feedbackId: feedbackId,
+            userId: userId,
+            matchId: matchId,
+        };
+
+        await ioHandleDislikeFeedback(dataBuider, socket);
     };
 
     const handleSetListViewFeedback = (id: number) => {
@@ -405,7 +330,9 @@ const PageComment = ({
                     <div className="flex justify-end items-center mt-[10px]">
                         <button
                             className="border-none rounded-full py-[10px] px-[25px] mr-[10px] bg-[#fff] hover:bg-[#ddd] font-[600]"
-                            onClick={() => setTextComment("")}
+                            onClick={() => {
+                                setTextComment("");
+                            }}
                         >
                             Hủy
                         </button>
@@ -426,7 +353,10 @@ const PageComment = ({
                     listCommentNew.length > 0 &&
                     listCommentNew.map((item: IComment, index: number) => {
                         return (
-                            <div key={index} className="flex justify-center">
+                            <div
+                                key={index}
+                                className="flex justify-center mt-[20px]"
+                            >
                                 <div
                                     className={`${handlebackground(
                                         item.User.id === userId
@@ -461,29 +391,34 @@ const PageComment = ({
                                                 {item.content}
                                             </p>
                                         </div>
-                                        <div className="w-[10%] py-[10px]">
-                                            <Tooltip
-                                                title={
-                                                    <div
-                                                        className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
-                                                        onClick={() =>
-                                                            handleDeleteComment(
-                                                                item.id
-                                                            )
-                                                        }
-                                                    >
-                                                        <p className="text-[#000]">
-                                                            <i className="bi bi-trash mr-[10px]"></i>{" "}
-                                                            Xóa
-                                                        </p>
-                                                    </div>
-                                                }
-                                                placement="bottom"
-                                                trigger="click"
-                                            >
-                                                <i className="bi bi-three-dots-vertical text-[#ccc]"></i>
-                                            </Tooltip>
-                                        </div>
+
+                                        {item.User.id === userId ? (
+                                            <div className="w-[10%] py-[10px]">
+                                                <Tooltip
+                                                    title={
+                                                        <div
+                                                            className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
+                                                            onClick={() =>
+                                                                handleDeleteComment(
+                                                                    item.id
+                                                                )
+                                                            }
+                                                        >
+                                                            <p className="text-[#000]">
+                                                                <i className="bi bi-trash mr-[10px]"></i>{" "}
+                                                                Xóa
+                                                            </p>
+                                                        </div>
+                                                    }
+                                                    placement="bottom"
+                                                    trigger="click"
+                                                >
+                                                    <i className="bi bi-three-dots-vertical text-[#ccc]"></i>
+                                                </Tooltip>
+                                            </div>
+                                        ) : (
+                                            <></>
+                                        )}
                                     </div>
 
                                     <div className="flex justify-start items-center">
@@ -655,7 +590,7 @@ const PageComment = ({
                                                             ) => {
                                                                 return (
                                                                     <div
-                                                                        className="flex"
+                                                                        className="flex mt-[10px]"
                                                                         key={
                                                                             indexFeed
                                                                         }
@@ -715,30 +650,38 @@ const PageComment = ({
                                                                                     </p>
                                                                                 </div>
 
-                                                                                <div className="w-[10%] py-[10px]">
-                                                                                    <Tooltip
-                                                                                        title={
-                                                                                            <div
-                                                                                                className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
-                                                                                                onClick={() =>
-                                                                                                    handleDeleteFeedback(
-                                                                                                        itemFeed.id,
-                                                                                                        index
-                                                                                                    )
-                                                                                                }
-                                                                                            >
-                                                                                                <p className="text-[#000]">
-                                                                                                    <i className="bi bi-trash mr-[10px]"></i>{" "}
-                                                                                                    Xóa
-                                                                                                </p>
-                                                                                            </div>
-                                                                                        }
-                                                                                        placement="bottom"
-                                                                                        trigger="click"
-                                                                                    >
-                                                                                        <i className="bi bi-three-dots-vertical text-[#000] hover:text-[#ccc]"></i>
-                                                                                    </Tooltip>
-                                                                                </div>
+                                                                                {itemFeed
+                                                                                    .User
+                                                                                    .id ===
+                                                                                userId ? (
+                                                                                    <div className="w-[10%] py-[10px]">
+                                                                                        <Tooltip
+                                                                                            title={
+                                                                                                <div
+                                                                                                    className="h-[50px] w-[100px] bg-[#fff] p-[5px] rounded-[5px] flex justify-center items-center hover:cursor-pointer"
+                                                                                                    onClick={() =>
+                                                                                                        handleDeleteFeedback(
+                                                                                                            itemFeed.id
+                                                                                                        )
+                                                                                                    }
+                                                                                                >
+                                                                                                    <p className="text-[#000]">
+                                                                                                        <i className="bi bi-trash mr-[10px]"></i>{" "}
+                                                                                                        Xóa
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                            }
+                                                                                            placement="bottom"
+                                                                                            trigger="click"
+                                                                                        >
+                                                                                            <i className="bi bi-three-dots-vertical text-[#000] hover:text-[#ccc]"></i>
+                                                                                        </Tooltip>
+                                                                                    </div>
+                                                                                ) : (
+                                                                                    <>
+
+                                                                                    </>
+                                                                                )}
                                                                             </div>
 
                                                                             <div className="flex justify-start items-center">
@@ -764,9 +707,7 @@ const PageComment = ({
                                                                                             } hover:opacity-[0.5] cursor-pointer`}
                                                                                             onClick={() =>
                                                                                                 handleActionLikeFeedback(
-                                                                                                    itemFeed.id,
-                                                                                                    index,
-                                                                                                    indexFeed
+                                                                                                    itemFeed.id
                                                                                                 )
                                                                                             }
                                                                                         ></i>
@@ -802,9 +743,7 @@ const PageComment = ({
                                                                                             } hover:opacity-[0.5] cursor-pointer`}
                                                                                             onClick={() =>
                                                                                                 handleActionDislikeFeedback(
-                                                                                                    itemFeed.id,
-                                                                                                    index,
-                                                                                                    indexFeed
+                                                                                                    itemFeed.id
                                                                                                 )
                                                                                             }
                                                                                         ></i>
