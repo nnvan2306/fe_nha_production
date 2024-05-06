@@ -2,21 +2,21 @@
 
 import { routes } from "@/helpers/menuRouterHeader";
 import { logout } from "@/store/feauture/authSlice";
-import { RootState } from "@/store/store";
+import { RootState, useAppDispatch, useAppSelector } from "@/store/store";
 import Link from "next/link";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { Tooltip } from "antd";
 import { handlebackground } from "@/helpers/HandleBackground";
 import Image from "next/image";
 
 export default function ControlAuth() {
-    const isLogin = useSelector((state: RootState) => state.auth.isLogin);
-    const nameUser = useSelector((state: RootState) => state.auth.name);
-    const color = useSelector((state: RootState) => state.auth.color);
-    const avatar = useSelector((state: RootState) => state.auth.avatar);
+    const isLogin = useAppSelector((state: RootState) => state.auth.isLogin);
+    const nameUser = useAppSelector((state: RootState) => state.auth.name);
+    const color = useAppSelector((state: RootState) => state.auth.color);
+    const avatar = useAppSelector((state: RootState) => state.auth.avatar);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const handleLogout = () => {
         dispatch(logout());

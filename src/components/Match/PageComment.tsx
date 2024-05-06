@@ -4,13 +4,13 @@ import className from "classnames/bind";
 import styles from "./PageComment.module.scss";
 import { handlebackground } from "@/helpers/HandleBackground";
 import { routes } from "@/helpers/menuRouterHeader";
-import { RootState } from "@/store/store";
+import { RootState, useAppSelector } from "@/store/store";
 import { IComment, IFeedback, IListLimit } from "@/utils/interface";
 import { Tooltip } from "antd";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { io } from "socket.io-client";
 import Image from "next/image";
@@ -122,11 +122,11 @@ const PageComment = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket]);
 
-    const isLogin = useSelector((state: RootState) => state.auth.isLogin);
-    const nameUser = useSelector((state: RootState) => state.auth.name);
-    const userId = useSelector((state: RootState) => state.auth.userId);
-    const color = useSelector((state: RootState) => state.auth.color);
-    const avatar = useSelector((state: RootState) => state.auth.avatar);
+    const isLogin = useAppSelector((state: RootState) => state.auth.isLogin);
+    const nameUser = useAppSelector((state: RootState) => state.auth.name);
+    const userId = useAppSelector((state: RootState) => state.auth.userId);
+    const color = useAppSelector((state: RootState) => state.auth.color);
+    const avatar = useAppSelector((state: RootState) => state.auth.avatar);
 
     const router: AppRouterInstance = useRouter();
 
