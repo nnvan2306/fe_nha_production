@@ -22,8 +22,8 @@ const PageDetailMatch = ({
     };
 
     return (
-        <div className=" w-[100%] relative pb-[50px]">
-            <div className="w-[10%] absolute mt-[10px] ml-[10px]">
+        <div className=" w-[100%] md:relative pb-[50px]">
+            <div className="w-[25%] md:w-[10%] md:absolute mt-[10px] ml-[10px]">
                 <Link
                     href={{
                         pathname: `${routes.match.url}`,
@@ -39,10 +39,10 @@ const PageDetailMatch = ({
                 </Link>
             </div>
 
-            <div className="w-[70%] h-[100%] ml-[50%] translate-x-[-50%] ">
+            <div className="md:w-[70%] w-[100%] h-[100%] md:ml-[50%] md:translate-x-[-50%]">
                 <div className="w-[100%] flex pt-[20px]">
                     <div className="w-[45%] flex justify-end">
-                        <div className=" text-center">
+                        <div className="text-center">
                             <Image
                                 className="mr-[20px]"
                                 src={
@@ -54,7 +54,7 @@ const PageDetailMatch = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[500] mr-[20px] mb-[10px] capitalize">
+                            <p className="md:text-[25px] text-[20px] font-[500] mr-[20px] mb-[10px] capitalize">
                                 {infoMatch?.hostId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
@@ -66,7 +66,7 @@ const PageDetailMatch = ({
                                         return (
                                             <p
                                                 key={index}
-                                                className="text-start"
+                                                className="text-start ml-[15px]"
                                             >
                                                 {item.teamId ===
                                                 infoMatch?.hostId
@@ -113,7 +113,7 @@ const PageDetailMatch = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="text-[25px] font-[500] mb-[10px] capitalize">
+                            <p className="md:text-[25px] text-[20px] font-[500] mb-[10px] capitalize">
                                 {infoMatch?.guestId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
@@ -123,7 +123,10 @@ const PageDetailMatch = ({
                                 listScored.map(
                                     (item: IScored, index: number) => {
                                         return (
-                                            <p key={index} className="text-end">
+                                            <p
+                                                key={index}
+                                                className="text-end mr-[15px]"
+                                            >
                                                 {item.teamId ===
                                                 infoMatch?.guestId
                                                     ? `${item.namePlayer} ${
@@ -142,29 +145,33 @@ const PageDetailMatch = ({
                     </div>
                 </div>
 
-                <div className="w-[100%] mt-[30px]">
+                <div className="md:w-[100%] w-[90%] ml-[50%] translate-x-[-50%] mt-[30px]">
                     <video
                         className="w-[100%] rounded-[10px] shadow-sm"
                         src={`${process.env.NEXT_PUBLIC_BASE_URL}${infoMatch?.match_url}`}
                         controls
                     ></video>
                     <div className="mt-[10px] w-[100%]">
-                        <span className="text-[20px] font-[600] uppercase">
+                        <span className="md:text-[20px] text-[16px] font-[600] uppercase">
                             {infoMatch?.title}
                         </span>
-                        <span className="text-[20px] mx-[10px]">|</span>
-                        <span className="text-[20px] font-[600] uppercase">
+                        <span className="md:text-[20px] text-[16px] mx-[10px]">
+                            |
+                        </span>
+                        <span className="md:text-[20px] text-[16px] font-[600] uppercase">
                             {infoMatch?.meta}
                         </span>
-                        <span className="text-[20px] mx-[10px]">|</span>
+                        <span className="md:text-[20px] text-[16px] mx-[10px]">
+                            |
+                        </span>
                         <br />
-                        <span className="text-[20px] font-[600] uppercase">
+                        <span className="md:text-[20px] text-[16px] font-[600] uppercase">
                             ngoại hang anh <span>{infoMatch?.Season.name}</span>
                         </span>
                     </div>
                 </div>
 
-                <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px] py-[30px]">
+                {/* <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px] py-[30px]">
                     <table className="w-[100%]">
                         <thead>
                             <tr>
@@ -313,7 +320,7 @@ const PageDetailMatch = ({
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> */}
             </div>
         </div>
     );

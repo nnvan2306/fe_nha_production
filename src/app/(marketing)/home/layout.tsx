@@ -12,11 +12,11 @@ export default function LayoutHome({
                 <Header />
             </div>
 
-            <div className="w-[100%] min-h-[80vh] z-1 mt-[var(--height-header)] pb-[30px] pt-[5px]">
+            <div className="w-[100%] min-h-[80vh] mt-[var(--height-header)] pb-[30px] pt-[5px]">
                 {children}
             </div>
 
-            <div className="w-[100%] absolute z-1">
+            <div className="w-[100vw] absolute z-1">
                 <Footer />
             </div>
         </div>

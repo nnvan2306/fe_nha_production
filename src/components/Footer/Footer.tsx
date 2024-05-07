@@ -2,10 +2,10 @@ import React from "react";
 
 export default function Footer() {
     return (
-        <div className="w-[100%] bg-[#424242] p-[50px]">
-            <div className="w-[80%] ml-[50%] translate-x-[-50%] flex justify-around ">
-                <ul className="text-[#fff]">
-                    <li className="text-[20px] font-[700] text-[#fff]">
+        <div className="w-[100%] bg-[#424242] md:p-[50px] pt-[20px]">
+            <div className="md:w-[80%] w-[100%] md:ml-[50%] md:translate-x-[-50%] flex justify-around">
+                <ul className="text-[#fff] px-[5px]">
+                    <li className="md:text-[20px] text-[18px] font-[700] text-[#fff] text-center">
                         Language
                     </li>
                     <li className="mt-[10px] text-[#fff]">JavaScript</li>
@@ -14,8 +14,8 @@ export default function Footer() {
                     <li>C++</li>
                 </ul>
 
-                <ul className="text-[#fff]">
-                    <li className="text-[20px] font-[700] text-[#fff]">
+                <ul className="text-[#fff] px-[5px]">
+                    <li className="md:text-[20px] text-[18px] font-[700] text-[#fff]">
                         Technology
                     </li>
                     <li className="mt-[10px] text-[#fff]">React</li>
@@ -24,8 +24,8 @@ export default function Footer() {
                     <li>Express</li>
                 </ul>
 
-                <ul className="text-[#fff]">
-                    <li className="text-[20px] font-[700] text-[#fff]">
+                <ul className="text-[#fff] px-[5px]">
+                    <li className="md:text-[20px] text-[18px] font-[700] text-[#fff]">
                         Other
                     </li>
                     <li className="mt-[10px] text-[#fff]">Html</li>

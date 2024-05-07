@@ -39,14 +39,14 @@ export async function HandleData({ matchId }: { matchId: number }) {
         });
         return (
             <div className="w-[100%]">
-                <div className="w-[80%] ml-[50%] translate-x-[-50%]">
+                <div className="md:w-[80%] w-[100%] ml-[50%] translate-x-[-50%]">
                     <PageDetailMatch
                         infoMatch={resMatch.data}
                         listScored={resScored.data}
                     />
                 </div>
 
-                <div className="w-[80%] ml-[50%] translate-x-[-50%]">
+                <div className="w-[100%] md:w-[80%] ml-[50%] translate-x-[-50%]">
                     <PageComment
                         listComment={resComment.data}
                         matchId={matchId}

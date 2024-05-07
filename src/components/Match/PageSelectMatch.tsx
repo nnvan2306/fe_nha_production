@@ -70,16 +70,16 @@ export default function PageSelectMatch({
     };
 
     return (
-        <div className="w-[80%] h-[100%] ml-[50%] translate-x-[-50%]">
-            <div className=" w-[100%] h-[80px] flex justify-around mt-[10px]">
+        <div className="w-[100%] h-[100%] md:w-[80%] md:ml-[50%] md:translate-x-[-50%]">
+            <div className="w-[100%] h-[80px] md:flex md:justify-around mt-[10px] px-[10px] md:px-[0px] grid grid-cols-2 gap-2">
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
+                    className="md:w-[25%] md:h-[60%] w-[100%] h-[40px] rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px] "
                     value={seasonId}
                     onChange={(e) => setSeasonId(+e.target.value)}
                 >
-                    <option value="">choose season</option>
+                    <option value="">season</option>
                     {listSeason &&
                         listSeason.length > 0 &&
                         listSeason.map((item: IList, index: number) => {
@@ -94,11 +94,11 @@ export default function PageSelectMatch({
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
+                    className="md:w-[25%] md:h-[60%] w-[100%] h-[40px]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
                     value={hostId}
                     onChange={(e) => setHostId(+e.target.value)}
                 >
-                    <option value="">choose host Team</option>
+                    <option value="">host Team</option>
                     {listTeam &&
                         listTeam.length > 0 &&
                         listTeam.map((item: IList, index: number) => {
@@ -113,11 +113,11 @@ export default function PageSelectMatch({
                 <select
                     name=""
                     id=""
-                    className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
+                    className="md:w-[25%] md:h-[60%] w-[100%] h-[40px] rounded-[10px] border-[1px] border-[#ccc] shadow-sm px-[10px]"
                     value={guestId}
                     onChange={(e) => setGuestId(+e.target.value)}
                 >
-                    <option value="">choose guest Team</option>
+                    <option value="">guest Team</option>
                     {listTeam &&
                         listTeam.length > 0 &&
                         listTeam.map((item: IList, index: number) => {
@@ -129,20 +129,20 @@ export default function PageSelectMatch({
                         })}
                 </select>
 
-                <div className="w-[20%] h-[60%]">
+                <div className="md:w-[25%] md:h-[60%] w-[100%] h-[40px]">
                     <Button
                         className=" w-[100%] h-[100%] rounded-[10px] border-[1px] border-[#ccc] shadow-sm disabled"
                         onClick={() => handleGetmatch()}
                         loading={loadings}
                     >
-                        Tìm kiếm
+                        Search
                     </Button>
                 </div>
             </div>
 
             {listMatch.length === 0 ? <Empty className="mt-[50px]" /> : <></>}
 
-            <div className="w-[100%] grid grid-cols-2 gap-3">
+            <div className="w-[95%] grid md:grid-cols-2 md:gap-3 grid-cols-1 gap-1 md:mt-[20px] mt-[40px] mx-[10px]">
                 {listMatch &&
                     listMatch.length > 0 &&
                     listMatch.map((item: IMatch, index: number) => {

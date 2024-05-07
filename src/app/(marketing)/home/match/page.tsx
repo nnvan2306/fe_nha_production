@@ -23,7 +23,7 @@ export async function HandleData() {
         });
 
         return (
-            <div className="w-[70%] ml-[50%] translate-x-[-50%]">
+            <div className="w-[100%] md:w-[70%] md:ml-[50%] md:translate-x-[-50%]">
                 <PageSelectMatch listSeason={listSeason} listTeam={listTeam} />
             </div>
         );

@@ -50,7 +50,7 @@ export default function ControlAuth() {
                             <div
                                 className={`${handlebackground(
                                     color
-                                )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff]`}
+                                )}  w-[40px] h-[40px] rounded-full flex justify-center items-center border-solid border-[1px] border-[#fff] mr-[20px] md:mr-[0]`}
                             >
                                 {avatar ? (
                                     <Image
@@ -68,7 +68,7 @@ export default function ControlAuth() {
                             </div>
                         </Tooltip>
 
-                        <p className="text-[20px] ml-[20px] text-[#fff] mr-[40px]">
+                        <p className="text-[20px] ml-[20px] text-[#fff] mr-[40px] md:block hidden">
                             {nameUser}
                         </p>
                     </div>
