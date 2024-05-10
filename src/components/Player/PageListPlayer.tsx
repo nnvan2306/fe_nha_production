@@ -21,13 +21,13 @@ export default function PageListPlayer({
 
     return (
         <>
-            <div className=" ml-[50%] translate-x-[-50%] grid grid-cols-7 gap-[1]">
+            <div className="md:w-[70%] w-[95%] ml-[50%] translate-x-[-50%] grid md:grid-cols-7 grid-cols-3 md:gap-1 gap-2">
                 {listPlayer &&
                     listPlayer.length > 0 &&
                     listPlayer.map((item: IPlayer, index: number) => {
                         return (
                             <div
-                                className="w-[100px] h-[200px] border-[1px] border-[#ccc] border-solid rounded-[5px] p-[5px] mt-[10px] cursor-pointer"
+                                className="md:w-[100px] h-[200px] border-[1px] border-[#ccc] border-solid rounded-[5px] p-[5px] mt-[10px] cursor-pointer"
                                 key={index}
                                 onClick={() => handleToDetail(item.id)}
                             >

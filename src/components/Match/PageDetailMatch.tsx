@@ -171,11 +171,11 @@ const PageDetailMatch = ({
                     </div>
                 </div>
 
-                {/* <div className="w-[100%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px] py-[30px]">
+                <div className="md:w-[100%] w-[90%] ml-[50%] translate-x-[-50%] border-[1px] border-[#ccc] border-solid rounded-[10px] shadow-md mt-[20px] py-[30px]">
                     <table className="w-[100%]">
                         <thead>
                             <tr>
-                                <td className="w-[10%] text-center py-[10px]">
+                                <td className="w-[10%] text-center py-[10px] px-[10px]">
                                     <Image
                                         className="object-contain"
                                         src={
@@ -190,7 +190,7 @@ const PageDetailMatch = ({
                                     />{" "}
                                 </td>
                                 <td className="w-[80%] text-center">
-                                    SỐ LIỆU THÔNG KÊ VỀ ĐỘI TUYỂN
+                                    SỐ LIỆU THÔNG KÊ
                                 </td>
                                 <td className="w-[10%] text-center">
                                     <Image
@@ -320,7 +320,7 @@ const PageDetailMatch = ({
                             </tr>
                         </tbody>
                     </table>
-                </div> */}
+                </div>
             </div>
         </div>
     );

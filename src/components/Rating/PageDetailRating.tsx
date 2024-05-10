@@ -12,8 +12,8 @@ export default function PageDetailRating({
     listResult: IListResult[];
 }) {
     return (
-        <div className="w-[100%] mt-[20px]">
-            <table className="w-[100%] shadow-sm">
+        <div className="w-[100%] overflow-auto md:w-[70%] ml-[50%] translate-x-[-50%] mt-[20px]">
+            <table className="md:w-[100%] w-[1000px] overflow-auto shadow-sm">
                 <thead className="w-[100%]">
                     <tr className="w-[100%]">
                         <td className="w-[40%]">Câu lạc bộ</td>

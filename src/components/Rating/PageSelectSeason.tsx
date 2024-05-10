@@ -29,9 +29,9 @@ export default function PageSelectSeason({
     }, []);
 
     return (
-        <div className="w-[100%] mt-[20px]">
+        <div className="w-[100%] md:w-[70%] ml-[50%] translate-x-[-50%] mt-[20px] px-[10px]">
             <select
-                className="w-[20%] py-[10px] px-[15px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                className="md:w-[20%] w-[50%] py-[10px] px-[15px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
                 value={seasonIdCurrent}
                 onChange={(e) => handleChangeSeason(+e.target.value)}
             >

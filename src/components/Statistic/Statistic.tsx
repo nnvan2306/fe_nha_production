@@ -29,9 +29,9 @@ export default function Statistic({
     }, []);
 
     return (
-        <div className="w-[60%] ml-[50%] translate-x-[-50%]">
+        <div className="md:w-[60%] w-[100%] ml-[50%] translate-x-[-50%]">
             <select
-                className="mt-[20px] w-[25%] p-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-sm"
+                className="mt-[20px] md:w-[25%] w-[40%] md:ml-[0px] ml-[20px] p-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-sm"
                 value={seasonId}
                 onChange={(e) => handleChangeSeason(+e.target.value)}
             >

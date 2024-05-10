@@ -22,16 +22,16 @@ export default function PageDetailPlayer({
         router.push(routes.player.url);
     };
     return (
-        <div className="relative">
+        <div className="md:relative w-[100%]">
             <div
-                className="w-[80px] h-[40px] mt-[10px] ml-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] bg-[#fecfef] cursor-pointer flex absolute z-1"
+                className="w-[80px] h-[40px] mt-[10px] ml-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] bg-[#fecfef] cursor-pointer flex md:absolute z-1"
                 onClick={handleBack}
             >
                 <i className="bi bi-chevron-left mx-[5px] text-[#2a5298] leading-[40px]"></i>
                 <p className="text-[#2a5298] leading-[40px]">Back</p>
             </div>
 
-            <div className="absolute z-2 w-[60%] ml-[50%] translate-x-[-50%] mt-[2px]">
+            <div className="md:absolute md:z-2 md:w-[60%] w-[95%] ml-[50%] translate-x-[-50%] md:mt-[2px] mt-[10px]">
                 <div className="flex items-center">
                     <Image
                         className="border-[1px] border-[#ccc] border-solid rounded-[10px] overflow-hidden object-contain"
@@ -53,11 +53,12 @@ export default function PageDetailPlayer({
                 <div className="w-[100] mt-[20px]">
                     <Row>
                         <Col
-                            span={12}
-                            className="pr-[20px] pb-[20px] border-r-1 border-solid border-r-[#ccc] border-[#fff]"
+                            span={24}
+                            md={12}
+                            className="pr-[20px] pb-[20px] md:border-r-1 md:border-solid md:border-r-[#ccc] md:border-[#fff]"
                         >
                             <div className="-[100%] h-[100%] ">
-                                <p className="text-[20px]">
+                                <p className="text-[20px] mb-[10px]">
                                     Thống kê{" "}
                                     <i className="bi bi-chevron-right text-[15px]"></i>
                                 </p>
@@ -119,7 +120,7 @@ export default function PageDetailPlayer({
                                 </table>
                             </div>
                         </Col>
-                        <Col span={12} className="pl-[20px]">
+                        <Col span={24} md={12} className="md:pl-[20px]">
                             <p className="text-[20px]">Giới thiệu</p>
                             <div
                                 dangerouslySetInnerHTML={{

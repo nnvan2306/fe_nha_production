@@ -14,7 +14,7 @@ export async function HandleData({ detail }: { detail: React.ReactNode }) {
             };
         });
         return (
-            <div className="w-[70%] ml-[50%] translate-x-[-50%]">
+            <div className="w-[100%] ml-[50%] translate-x-[-50%]">
                 <PageSelectSeason
                     listSeason={listSeasonAwap}
                     seasonId={res?.data[0]?.id}

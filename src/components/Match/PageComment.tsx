@@ -297,7 +297,7 @@ const PageComment = ({
     };
 
     return (
-        <div className="w-[70%] ml-[50%] translate-x-[-50%]">
+        <div className="md:w-[60%] w-[90%] ml-[50%] translate-x-[-50%]">
             <div className="mt-[40px] w-[100%] flex justify-center ">
                 <div
                     className={`${handlebackground(

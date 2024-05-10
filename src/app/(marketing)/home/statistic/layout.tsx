@@ -14,7 +14,7 @@ export async function HandleData({ detail }: { detail: React.ReactNode }) {
         });
 
         return (
-            <div className="">
+            <div className="w-[100%]">
                 <Statistic
                     listseason={listSort}
                     seasonCurrent={listSort[0]?.id}

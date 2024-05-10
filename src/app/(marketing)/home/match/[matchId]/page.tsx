@@ -46,7 +46,7 @@ export async function HandleData({ matchId }: { matchId: number }) {
                     />
                 </div>
 
-                <div className="w-[100%] md:w-[80%] ml-[50%] translate-x-[-50%]">
+                <div className="w-[100%]">
                     <PageComment
                         listComment={resComment.data}
                         matchId={matchId}

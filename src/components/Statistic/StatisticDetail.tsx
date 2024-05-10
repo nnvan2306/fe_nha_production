@@ -21,9 +21,9 @@ export default function StatisticDetail({
     listTopRedCard: IStatistic[];
 }) {
     return (
-        <div className="w-[60%] ml-[50%] translate-x-[-50%]">
+        <div className="md:w-[60%] w-[100%] px-[15px] md:px-[0px] ml-[50%] translate-x-[-50%]">
             <p className="my-[20px]">Số bàn thắng</p>
-            <table className="w-[90%] ml-[50%] translate-x-[-50%]">
+            <table className="md:w-[90%] w-[100%] ml-[50%] translate-x-[-50%]">
                 <thead>
                     <tr>
                         <td className="p-[10px]">Vận động viên</td>
@@ -84,7 +84,7 @@ export default function StatisticDetail({
 
             <p className="my-[20px]">Số đường kiến tạo</p>
 
-            <table className="w-[90%] ml-[50%] translate-x-[-50%]">
+            <table className="md:w-[90%] w-[100%] ml-[50%] translate-x-[-50%]">
                 <thead>
                     <tr>
                         <td className="p-[10px]">Vận động viên</td>
@@ -145,7 +145,7 @@ export default function StatisticDetail({
 
             <p className="my-[20px]">Số thẻ vàng </p>
 
-            <table className="w-[90%] ml-[50%] translate-x-[-50%]">
+            <table className="md:w-[90%] w-[100%] ml-[50%] translate-x-[-50%]">
                 <thead>
                     <tr>
                         <td className="p-[10px]">Vận động viên</td>
@@ -208,7 +208,7 @@ export default function StatisticDetail({
 
             <p className="my-[20px]">Số thẻ đỏ</p>
 
-            <table className="w-[90%] ml-[50%] translate-x-[-50%]">
+            <table className="md:w-[90%] w-[100%] ml-[50%] translate-x-[-50%]">
                 <thead>
                     <tr>
                         <td className="p-[10px]">Vận động viên</td>

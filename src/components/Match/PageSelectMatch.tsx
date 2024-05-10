@@ -177,9 +177,9 @@ export default function PageSelectMatch({
                                     </div>
 
                                     <div className="w-[15%] mt-[40px]">
-                                        <div className="w-[100%] h-[30px] flex items-center">
+                                        <div className="w-[100%] h-[30px] flex items-center justify-between">
+                                            <p>{item.hostGoal} </p>
                                             <p>
-                                                {item.hostGoal}{" "}
                                                 {item.hostGoal >
                                                 item.guestGoal ? (
                                                     <span className="ml-[10px]">
@@ -191,9 +191,9 @@ export default function PageSelectMatch({
                                             </p>
                                         </div>
 
-                                        <div className="w-[100%] h-[50px] flex items-center">
+                                        <div className="w-[100%] h-[50px] flex items-center justify-between">
+                                            <p>{item.guestGoal}</p>
                                             <p>
-                                                {item.guestGoal}
                                                 {item.hostGoal <
                                                 item.guestGoal ? (
                                                     <span>
@@ -206,6 +206,7 @@ export default function PageSelectMatch({
                                         </div>
                                     </div>
                                 </div>
+
                                 <div className="w-[30%] h-[100%] border-[1px] border-solid border-[#ccc]">
                                     <p className="mt-[10px] mb-[2px] text-center">
                                         KT
