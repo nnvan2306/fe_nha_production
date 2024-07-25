@@ -56,6 +56,7 @@ const PageComment = ({
         // data nhận đc sau khi create comment success
 
         socket.on("reply_suc", (data: any) => {
+            console.log(data);
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );

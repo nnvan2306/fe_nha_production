@@ -1,36 +1,36 @@
 import { IGroupRoute } from "@/utils/interface";
 
-export const routes : IGroupRoute  ={
-    match:{
-        label:'match',
-        url:'/home/match',
+export const routes: IGroupRoute = {
+    match: {
+        label: "match",
+        url: "/home/match",
     },
-    blog:{
-        label:'blog',
-        url:'/home/blog',
+    blog: {
+        label: "blog",
+        url: "/home/blog",
     },
-    rank:{
-        label:'rank',
-        url:'/home/rating',
+    rank: {
+        label: "rank",
+        url: "/home/rating",
     },
-    statistic:{
-        label:'statistic',
-        url:'/home/statistic'
+    statistic: {
+        label: "statistic",
+        url: "/home/statistic",
     },
-    player:{
-        label:'player',
-        url:'/home/player',
+    player: {
+        label: "player",
+        url: "/home/player",
     },
-    booking:{
-        label:'booking',
-        url:'/home/booking',
+    booking: {
+        label: "booking",
+        url: "/home/booking",
     },
-    login:{
-        label:'login',
-        url:'/auth/login',
+    login: {
+        label: "login",
+        url: "/auth/login",
     },
-    register:{
-        label:'register',
-        url:'/auth/register',
-    }
-}
+    register: {
+        label: "register",
+        url: "/auth/register",
+    },
+};

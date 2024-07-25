@@ -3,7 +3,7 @@ import PageBookingDetail from "@/components/Booking/PageBookingDetail";
 import { Suspense } from "react";
 
 interface IParams {
-    searchParams: {
+    params: {
         id: number;
     };
 }
@@ -22,7 +22,7 @@ export async function HandleData({ id }: { id: number }) {
     }
 }
 
-export default async function PageTicket({ searchParams: { id } }: IParams) {
+export default async function PageTicket({ params: { id } }: IParams) {
     return (
         <div>
             <Suspense fallback={<div>Loading.....</div>}>
