@@ -8,7 +8,7 @@ interface IParams {
     };
 }
 
-export async function HandleData({ id }: { id: number }) {
+async function HandleData({ id }: { id: number }) {
     const res = await handleGetOneTicket(id);
 
     if (res.errorCode === 0) {
