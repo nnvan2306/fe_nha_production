@@ -74,6 +74,8 @@ export async function HandleData({ id }: { id: number }) {
             </div>
         );
     }
+
+    return <div>Error fetching data</div>;
 }
 
 const DetailRating = async ({ params: { id } }: IParams) => {

@@ -55,6 +55,7 @@ export async function HandleData({ matchId }: { matchId: number }) {
             </div>
         );
     }
+    return <div>Error fetching data</div>;
 }
 
 export default async function Page({ params: { matchId } }: IParams) {

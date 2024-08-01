@@ -15,6 +15,7 @@ export async function HandleData() {
             />
         );
     }
+    return <div>Error fetching data</div>;
 }
 
 export default async function PageCalendar() {

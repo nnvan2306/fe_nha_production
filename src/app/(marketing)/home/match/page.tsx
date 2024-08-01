@@ -28,6 +28,8 @@ export async function HandleData() {
             </div>
         );
     }
+
+    return <div>Error fetching data</div>;
 }
 
 export default async function Page() {

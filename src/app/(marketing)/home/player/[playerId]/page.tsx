@@ -23,6 +23,8 @@ export async function HandleData({ playerId }: { playerId: number }) {
             <PageDetailPlayer infoPlayer={res.data} listStatistic={listSort} />
         );
     }
+
+    return <div>Error fetching data</div>;
 }
 
 const PageDetail = async ({ params: { playerId } }: IParams) => {

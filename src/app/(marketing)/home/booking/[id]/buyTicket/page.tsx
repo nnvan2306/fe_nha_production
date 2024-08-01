@@ -21,7 +21,7 @@ async function HandleData({ id }: { id: number }) {
         );
     }
 
-    return <div>Error fetching ticket data</div>;
+    return <div>Error fetching data</div>;
 }
 
 export default async function PageTicket({ params: { id } }: IParams) {

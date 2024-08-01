@@ -98,6 +98,8 @@ export async function HandleData({ id }: { id: number }) {
             />
         );
     }
+
+    return <div>Error fetching data</div>;
 }
 
 const PageStatistic = async ({ params: { id } }: IParams) => {

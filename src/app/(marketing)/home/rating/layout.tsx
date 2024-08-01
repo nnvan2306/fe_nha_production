@@ -26,6 +26,8 @@ export async function HandleData({ detail }: { detail: React.ReactNode }) {
             </div>
         );
     }
+
+    return <div>Error fetching data</div>;
 }
 
 export default async function PageSelect({

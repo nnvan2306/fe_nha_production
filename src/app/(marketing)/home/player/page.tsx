@@ -7,6 +7,8 @@ export async function HandleData() {
     if (res.errorCode === 0) {
         return <PageListPlayer listPlayer={res.data} />;
     }
+
+    return <div>Error fetching data</div>;
 }
 
 export default async function PagePlayer() {
