@@ -67,6 +67,7 @@ const PageTicket: NextPage<IParams> = async ({ params: { id } }) => {
     try {
         data = await fetchTickets(id);
     } catch (error) {
+        console.log(error);
         return <div>Error fetching data</div>;
     }
 
