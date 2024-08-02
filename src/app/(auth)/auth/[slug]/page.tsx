@@ -65,10 +65,24 @@ export default function PageLogin({
         }
 
         try {
-            let res =
-                slug === routes.login.label
-                    ? await handleLoginAction(dataBuider)
-                    : await handleRegisterAction(dataBuider);
+            let res;
+            if (slug === routes.login.label) {
+                res = await handleLoginAction(dataBuider);
+                if (res.errorCode === 0) {
+                    dispatch(
+                        loginSuccess({
+                            isLogin: true,
+                            name: res.data.name,
+                            userId: res.data.id,
+                            avatar: res.data.avatar_url,
+                            color: color,
+                        })
+                    );
+                    router.push("/home");
+                }
+            } else {
+                res = await handleRegisterAction(dataBuider);
+            }
 
             if (res.errorCode === 0) {
                 Swal.fire({
@@ -80,24 +94,45 @@ export default function PageLogin({
                     }`,
                 });
 
-                if (slug === routes.login.label) {
-                    dispatch(
-                        loginSuccess({
-                            isLogin: true,
-                            name: res.data.name,
-                            userId: res.data.id,
-                            avatar: res.data.avatar,
-                            color: color,
-                        })
-                    );
-                    router.push("/home");
-                }
-
                 setEmail("");
                 setName("");
                 setPassword("");
                 setRePassword("");
             }
+
+            // let res =
+            //     slug === routes.login.label
+            //         ? await handleLoginAction(dataBuider)
+            //         : await handleRegisterAction(dataBuider);
+
+            // if (res.errorCode === 0) {
+            //     Swal.fire({
+            //         icon: "success",
+            //         title: `${
+            //             slug === routes.login.label
+            //                 ? "Login successfully"
+            //                 : "Account successfully created"
+            //         }`,
+            //     });
+
+            //     if (slug === routes.login.label) {
+            //         dispatch(
+            //             loginSuccess({
+            //                 isLogin: true,
+            //                 name: res.data.name,
+            //                 userId: res.data.id,
+            //                 avatar: res.data.avatar,
+            //                 color: color,
+            //             })
+            //         );
+            //         router.push("/home");
+            //     }
+
+            //     setEmail("");
+            //     setName("");
+            //     setPassword("");
+            //     setRePassword("");
+            // }
         } catch (err: any) {
             console.log(err);
             Swal.fire({
