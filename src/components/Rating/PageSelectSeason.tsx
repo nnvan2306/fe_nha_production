@@ -28,6 +28,7 @@ export default function PageSelectSeason({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    console.log(listSeason);
     return (
         <div className="w-[100%] md:w-[70%] ml-[50%] translate-x-[-50%] mt-[20px] px-[10px]">
             <select

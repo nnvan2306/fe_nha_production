@@ -11,6 +11,9 @@ export default function PageDetailRating({
     listRating: IRating[];
     listResult: IListResult[];
 }) {
+    console.log("listRating >>>>>", listRating);
+    console.log("listResult >>>>>", listResult);
+
     return (
         <div className="w-[100%] overflow-auto md:w-[70%] ml-[50%] translate-x-[-50%] mt-[20px]">
             <table className="md:w-[100%] w-[1000px] overflow-auto shadow-sm">
