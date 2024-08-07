@@ -24,6 +24,11 @@ const nextConfig = {
                 hostname: "png.pngtree.com",
                 pathname: "/**",
             },
+            {
+                protocol: "https",
+                hostname: "api.nha.vandev.top",
+                pathname: "/**",
+            },
         ],
     },
 };
