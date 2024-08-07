@@ -15,10 +15,7 @@ const menu: MenuProps["items"] = [
         label: <Link href={routes.match.url}>TRẬN ĐẤU</Link>,
         key: routes.match.label,
     },
-    {
-        label: <Link href={routes.blog.url}>TIN TỨC</Link>,
-        key: routes.blog.label,
-    },
+
     {
         label: <Link href={routes.rank.url}>BẢNG XẾP HẠNG</Link>,
         key: routes.rank.label,
@@ -47,8 +44,6 @@ const Header: React.FC = () => {
         router.push(
             cate === "match"
                 ? routes.match.url
-                : cate === "blog"
-                ? routes.blog.url
                 : cate === "rating"
                 ? routes.rank.url
                 : cate === "statistic"
@@ -115,12 +110,7 @@ const Header: React.FC = () => {
                     >
                         TRẬN ĐẤU
                     </p>
-                    <p
-                        className="hover:cursor-pointer hover:text-[blue] mt-[40px]"
-                        onClick={() => handleNavigate("blog")}
-                    >
-                        TIN TỨC
-                    </p>
+
                     <p
                         className="hover:cursor-pointer hover:text-[blue] mt-[40px]"
                         onClick={() => handleNavigate("rating")}
