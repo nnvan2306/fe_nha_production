@@ -45,13 +45,13 @@ export default function PageListPlayer({
                                         {item.name}
                                     </p>
                                     <p className="text-[12px] h-[30%] leading-[30px]">
-                                        {item.location === "1"
+                                        {item.location === 1
                                             ? "thủ môn"
-                                            : item.location === "2"
+                                            : item.location === 2
                                             ? "trung vệ"
-                                            : item.location === "3"
+                                            : item.location === 3
                                             ? " hậu vệ"
-                                            : item.location === "4"
+                                            : item.location === 4
                                             ? "tiền vệ"
                                             : "tiền đạo"}
                                     </p>
