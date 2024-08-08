@@ -62,7 +62,7 @@ const fetchTickets = async (id: number) => {
     throw new Error("Error fetching data");
 };
 
-const PageTicket: NextPage<IParams> = async ({ params: { id } }) => {
+export default async function PageTicket({ params: { id } }: IParams) {
     let data;
     try {
         data = await fetchTickets(id);
@@ -84,6 +84,6 @@ const PageTicket: NextPage<IParams> = async ({ params: { id } }) => {
             </Suspense>
         </div>
     );
-};
+}
 
-export default PageTicket;
+// export default PageTicket;
