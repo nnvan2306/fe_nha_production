@@ -52,32 +52,34 @@ export default function PageListTicket({
 
                         <p className="text-center mb-[10px]">
                             <span className="capitalize mr-[10px] text-[24px] font-[600]">
-                                {listTicket[0]?.Calendar.Teams[0].name}
+                                {listTicket[0]?.Calendar?.Teams[0]?.name}
                             </span>
 
                             <span>Vs</span>
 
                             <span className="capitalize ml-[10px] text-[24px] font-[600]">
-                                {listTicket[0]?.Calendar.Teams[1].name}
+                                {listTicket[0]?.Calendar?.Teams[1]?.name}
                             </span>
                         </p>
 
                         <p className="text-[red] text-center text-[16px] mb-[10px]">
-                            <span>{listTicket[0]?.Calendar.Stadium.name},</span>
                             <span>
-                                {listTicket[0]?.Calendar.Stadium.location}
+                                {listTicket[0]?.Calendar?.Stadium?.name},
+                            </span>
+                            <span>
+                                {listTicket[0]?.Calendar?.Stadium?.location}
                             </span>
                         </p>
 
                         <p className="text-[16px] text-center mb-[20px]">
                             <span className="mr-[10px]">
-                                {moment(listTicket[0]?.Calendar.date).format(
+                                {moment(listTicket[0]?.Calendar?.date).format(
                                     "dddd, D MMMM YYYY"
                                 )}
                             </span>
                             <span>|</span>
                             <span className="ml-[10px]">
-                                {listTicket[0]?.Calendar.hour}
+                                {listTicket[0]?.Calendar?.hour}
                             </span>
                         </p>
 
@@ -142,7 +144,7 @@ export default function PageListTicket({
                                                                 <i className="bi bi-flag mr-[10px] text-[20px] opacity-[0.7]"></i>
                                                                 <span className="font-[600] text-[20px] opacity-[0.7]">
                                                                     Section :{" "}
-                                                                    {item.name}
+                                                                    {item?.name}
                                                                 </span>
                                                             </p>
 
@@ -154,13 +156,13 @@ export default function PageListTicket({
                                                                 </span>
                                                                 <span
                                                                     className={`${
-                                                                        item.totalTicket
+                                                                        item?.totalTicket
                                                                             ? ""
                                                                             : "text-[red]"
                                                                     } text-[20px] font-[600] `}
                                                                 >
                                                                     {
-                                                                        item.totalTicket
+                                                                        item?.totalTicket
                                                                     }
                                                                 </span>
                                                             </p>
@@ -192,7 +194,7 @@ export default function PageListTicket({
 
                                                         <div className="w-[35%] border-dashed border-[1px] border-l-[#000] border-t-[#fff] border-r-[#fff] border-b-[#fff] p-[20px]">
                                                             <h6 className="font-[700] text-end">
-                                                                £{item.price}
+                                                                £{item?.price}
                                                             </h6>
                                                             <p className="text-end opacity-[0.7]">
                                                                 per ticket
@@ -222,13 +224,13 @@ export default function PageListTicket({
                             <Col span={14}>
                                 <div className="w-[100%] px-[30px]">
                                     <h5 className="uppercase  text-[red]">
-                                        {listTicket[0]?.Calendar.Stadium.name}
+                                        {listTicket[0]?.Calendar?.Stadium.name}
                                     </h5>
 
                                     <Image
                                         src={
-                                            listTicket[0]?.Calendar.Stadium
-                                                ? `${process.env.NEXT_PUBLIC_BASE_URL}${listTicket[0]?.Calendar.Stadium.stadiumImage_url}`
+                                            listTicket[0]?.Calendar?.Stadium
+                                                ? `${process.env.NEXT_PUBLIC_BASE_URL}${listTicket[0]?.Calendar?.Stadium?.stadiumImage_url}`
                                                 : ""
                                         }
                                         alt="stadium"

@@ -61,11 +61,11 @@ export default function PageListCalendar({
         router.push(`${routes.booking.url}/${id}`);
     };
     return (
-        <div className="w-[80%] h-[100vh] ml-[50%] translate-x-[-50%] flex justify-center">
-            <div className="w-[75%] h-[100%]">
-                <div className=" w-[100%] h-[10%] flex justify-around mt-[10px]">
+        <div className="md:w-[80%] w-[100%] h-[100vh] ml-[50%] translate-x-[-50%] flex justify-center">
+            <div className="md:w-[75%] w-[100%] h-[100%]">
+                <div className="w-[100%] h-[10%] flex justify-around mt-[10px]">
                     <select
-                        className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm p-[5px]"
+                        className="md:w-[25%] w-[40%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm p-[5px]"
                         value={hostId}
                         onChange={(e) => setHostId(+e.target.value)}
                     >
@@ -82,7 +82,7 @@ export default function PageListCalendar({
                     </select>
 
                     <select
-                        className="w-[25%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm p-[5px]"
+                        className="md:w-[25%] w-[40%] h-[60%]  rounded-[10px] border-[1px] border-[#ccc] shadow-sm p-[5px]"
                         value={guestId}
                         onChange={(e) => setGuestId(+e.target.value)}
                     >
@@ -98,18 +98,19 @@ export default function PageListCalendar({
                             })}
                     </select>
 
-                    <div className="w-[20%] h-[60%]">
+                    <div className="w-[15%] h-[60%]">
                         <Button
                             className=" w-[100%] h-[100%] rounded-[10px] border-[1px] border-[#ccc] shadow-sm disabled"
                             loading={loadings}
                             onClick={() => handleGetCalendar()}
                         >
-                            Tìm kiếm
+                            <p className="md:block hidden">Tìm kiếm</p>
+                            <i className="md:hidden block bi bi-search"></i>
                         </Button>
                     </div>
                 </div>
 
-                <div className="bg-[#fff] p-[20px] rounded-[10px] h-[90%] overflow-auto">
+                <div className="bg-[#fff] md:p-[20px] p-[4px] rounded-[10px] h-[90%] overflow-auto">
                     {listCalendar && listCalendar.length > 0 ? (
                         listCalendar.map((item: ICalendar, index: number) => {
                             return (
@@ -118,14 +119,14 @@ export default function PageListCalendar({
                                         className="mb-[20px] hover:cursor-pointer"
                                         onClick={() => handleToTicket(item.id)}
                                     >
-                                        <Col span={4}>
-                                            <div className="w-[50%] h-[100%] p-[5px] ml-[50%] translate-x-[-50%] bg-[#fafafa] rounded-[5px] hover:bg-[#fff]">
-                                                <p className="text-center font-[500] ">
+                                        <Col md={4} span={5}>
+                                            <div className="md:w-[50%] w-[100%] h-[100%] p-[5px] ml-[50%] translate-x-[-50%] bg-[#fafafa] rounded-[5px] hover:bg-[#fff]">
+                                                <p className="text-center font-[500] text-[16px]">
                                                     {moment(item.date).format(
                                                         "MMMM"
                                                     )}
                                                 </p>
-                                                <p className="text-center text-[30px] font-[500]">
+                                                <p className="text-center md:text-[30px] text-[20px] font-[500]">
                                                     {" "}
                                                     {moment(item.date).format(
                                                         "D"
@@ -139,9 +140,12 @@ export default function PageListCalendar({
                                                 </p>
                                             </div>
                                         </Col>
-                                        <Col span={16}>
-                                            <p>ENGLISH PREMIER LEAGUE</p>
-                                            <p className="text-[20px] font-[500] hover:text-[red]">
+
+                                        <Col md={16} span={14}>
+                                            <p className="md:text-[16px] text-[12px]">
+                                                ENGLISH PREMIER LEAGUE
+                                            </p>
+                                            <p className="md:text-[20px] text-[16px] md:font-[500] font-[600] hover:text-[red]">
                                                 {item.hostId ===
                                                 item.Teams[0].id
                                                     ? item.Teams[0].name
@@ -165,8 +169,10 @@ export default function PageListCalendar({
                                                 </span>
                                             </p>
                                         </Col>
+
                                         <Col
-                                            span={4}
+                                            md={4}
+                                            span={5}
                                             className="flex items-center"
                                         >
                                             <button className="w-[100%] p-[8px] border-none rounded-[10px] text-[#fff] bg-[#3db900] hover:opacity-[0.6]">
@@ -185,7 +191,7 @@ export default function PageListCalendar({
                 </div>
             </div>
 
-            <div className="w-[25%] ml-[30px]">
+            <div className="w-[25%] md:block hidden ml-[30px]">
                 <BlogChooseMe />{" "}
             </div>
         </div>
