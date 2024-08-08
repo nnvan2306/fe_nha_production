@@ -102,6 +102,10 @@ const Header: React.FC = () => {
                 </Col>
             </Row>
 
+            <a href="https://fe-nha-production.vercel.app/home/booking/1">
+                click me
+            </a>
+
             {isViewSibar ? (
                 <div className="w-[100%] h-[100vh] bg-[#fff] px-[20px] pt-[40px] absolute z-[10]">
                     <p
