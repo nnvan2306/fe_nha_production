@@ -60,7 +60,7 @@ export default function PageDetailRating({
                                             className="mx-[15px]"
                                             width={30}
                                             height={30}
-                                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${item.Team?.logo_url}`}
+                                            src={`${process.env.NEXT_PUBLIC_BASE_URL}${item?.Team?.logo_url}`}
                                             alt=""
                                         />
                                         <p className="ml-[20px]">
