@@ -62,12 +62,10 @@ export default async function PageCalendar() {
         <div>
             <Suspense fallback={<div>Loading.....</div>}>
                 <div>
-                    return (
                     <PageListCalendar
                         listTeam={res.res}
                         listCalendarDefault={res.resDefaultCalendar}
                     />
-                    );
                 </div>
             </Suspense>
         </div>

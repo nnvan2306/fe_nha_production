@@ -81,11 +81,11 @@ export default function ControlAuth() {
                         </button>
                     </Link>
 
-                    <Link href={routes.register.url}>
+                    {/* <Link href={routes.register.url}>
                         <button className=" bg-[#3F1052] w-[100px] h-[40px] mt-[20px] p-[10px] text-[#fff] border-[1px] border-[#fff] rounded-[5px] mx-[10px] hover:bg-[#fff] hover:text-[#000]">
                             Đăng Ký
                         </button>
-                    </Link>
+                    </Link> */}
                 </>
             )}
         </div>
