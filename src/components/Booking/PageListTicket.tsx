@@ -25,7 +25,6 @@ export default function PageListTicket({
     minPrice: number;
     idCalendar: number;
 }) {
-    console.log(listTicket);
     const router: AppRouterInstance = useRouter();
 
     const handleBuyTicket = (infoTicket: ITicket) => {
@@ -87,7 +86,7 @@ export default function PageListTicket({
                             <div className="w-[50px] h-[50px] bg-[#fff] rounded-[10px] shadow-md flex justify-center items-center mr-[20px]">
                                 {listTicket.reduce(
                                     (total, currentValue) =>
-                                        total + currentValue.totalTicket,
+                                        total + currentValue?.totalTicket,
                                     0
                                 )}
                             </div>

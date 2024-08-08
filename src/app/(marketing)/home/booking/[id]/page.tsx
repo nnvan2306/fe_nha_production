@@ -54,7 +54,7 @@ const fetchTickets = async (id: number) => {
     const res = await getAllTicket(id);
 
     if (res.errorCode === 0) {
-        let arrFindMinPrice = res.data.map((item) => item.price);
+        let arrFindMinPrice = res.data?.map((item) => item.price);
         let min = Math.min(...arrFindMinPrice);
         return { tickets: res.data, minPrice: min };
     }
