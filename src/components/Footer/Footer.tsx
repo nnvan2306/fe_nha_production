@@ -22,6 +22,7 @@ export default function Footer() {
                     <li>NextJs</li>
                     <li>NodeJs</li>
                     <li>Express</li>
+                    <li>NestJs</li>
                 </ul>
 
                 <ul className="text-[#fff] px-[5px]">
@@ -30,11 +31,11 @@ export default function Footer() {
                     </li>
                     <li className="mt-[10px] text-[#fff]">Html</li>
                     <li>Css</li>
+                    <li>Sass</li>
                     <li>Redux</li>
                     <li>Ant Design</li>
                     <li>TailwindCss</li>
                     <li>Bootstrap</li>
-                    <li>Sass</li>
                     <li>Git</li>
                 </ul>
             </div>

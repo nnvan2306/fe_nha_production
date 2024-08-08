@@ -54,7 +54,7 @@ const PageDetailMatch = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="md:text-[25px] text-[20px] font-[500] mr-[20px] mb-[10px] capitalize">
+                            <p className="md:text-[25px] text-[16px] font-[600] mr-[20px] mb-[10px] capitalize">
                                 {infoMatch?.hostId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
@@ -113,7 +113,7 @@ const PageDetailMatch = ({
                                 height={50}
                                 width={50}
                             />
-                            <p className="md:text-[25px] text-[20px] font-[500] mb-[10px] capitalize">
+                            <p className="md:text-[25px] text-[16px] font-[600] mb-[10px] capitalize">
                                 {infoMatch?.guestId === infoMatch?.Teams[0].id
                                     ? infoMatch?.Teams[0].name
                                     : infoMatch?.Teams[1].name}
@@ -164,7 +164,6 @@ const PageDetailMatch = ({
                         <span className="md:text-[20px] text-[16px] mx-[10px]">
                             |
                         </span>
-                        <br />
                         <span className="md:text-[20px] text-[16px] font-[600] uppercase">
                             ngoại hang anh <span>{infoMatch?.Season.name}</span>
                         </span>

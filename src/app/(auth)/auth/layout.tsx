@@ -39,7 +39,7 @@ export default function LayoutAuth({
 }) {
     return (
         <div
-            className="relative w-[100%] min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
+            className="relative w-[100vw] min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
             style={{ backgroundImage: `url(${thumbnail.src})` }}
         >
             <div className="w-full flex justify-start p-5">
@@ -51,7 +51,7 @@ export default function LayoutAuth({
                 </Link>
             </div>
 
-            <div className="flex-grow flex items-center justify-center w-[100%]">
+            <div className="flex-grow flex items-center justify-center w-[100%] ">
                 {children}
             </div>
         </div>

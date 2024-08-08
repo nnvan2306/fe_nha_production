@@ -162,13 +162,13 @@ export default function PageDetailPlayer({
                                 Vị trí :{" "}
                                 <span className="font-[400]">
                                     {" "}
-                                    {infoPlayer?.location === "1"
+                                    {infoPlayer?.location === 1
                                         ? "Thủ môn"
-                                        : infoPlayer?.location === "2"
+                                        : infoPlayer?.location === 2
                                         ? "Trung vệ"
-                                        : infoPlayer?.location === "3"
+                                        : infoPlayer?.location === 3
                                         ? "Hậu vệ"
-                                        : infoPlayer?.location === "4"
+                                        : infoPlayer?.location === 4
                                         ? "Tiền vệ"
                                         : "Tiền đạo"}
                                 </span>
