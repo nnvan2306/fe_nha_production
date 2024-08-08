@@ -71,6 +71,8 @@ const PageTicket: NextPage<IParams> = async ({ params: { id } }) => {
         return <div>Error fetching data</div>;
     }
 
+    console.log(data.tickets);
+
     return (
         <div>
             <Suspense fallback={<div>Loading.....</div>}>
