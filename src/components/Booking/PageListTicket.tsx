@@ -25,6 +25,7 @@ export default function PageListTicket({
     minPrice: number;
     idCalendar: number;
 }) {
+    console.log(listTicket);
     const router: AppRouterInstance = useRouter();
 
     const handleBuyTicket = (infoTicket: ITicket) => {
