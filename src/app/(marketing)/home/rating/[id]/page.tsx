@@ -111,8 +111,6 @@ const returnListResult = (prev: IListResult[] | [], arrResult: any): any[] => {
 const HandleData = async (id: number) => {
     const res = await getRatingAction(id);
 
-    console.log(res);
-
     let listResult: IListResult[] | [] = [];
     let listRating: IRating[] | [] = [];
 
