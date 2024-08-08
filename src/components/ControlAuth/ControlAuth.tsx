@@ -29,7 +29,7 @@ export default function ControlAuth() {
                     className="bg-[#fff] p-[0]"
                     trigger="click"
                     title={
-                        <div className="h-[150px] w-[100px] bg-[#fff] p-[5px] rounded-[5px]">
+                        <div className="min-h-[100px] w-[100px] bg-[#fff] p-[5px] rounded-[5px]">
                             {isLogin ? (
                                 <>
                                     <button
