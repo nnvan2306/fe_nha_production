@@ -148,7 +148,7 @@ export default function PageLogin({
         <div
             className={cx(
                 "form-login",
-                "w-[400px]  bg-[#fff] ml-[50%] translate-x-[-50%] rounded-[10px] shadow-lg pt-[20px] px-[40px] pb-[30px]"
+                "w-[100px] bg-[#fff] ml-[50%] translate-x-[-50%] rounded-[10px] shadow-lg pt-[20px] px-[40px] pb-[30px]"
             )}
         >
             <p className="text-center text-[25px] font-[600]">

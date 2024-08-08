@@ -7,7 +7,7 @@ const cx: Function = className.bind(styles);
 
 export default function PageAuth() {
     return (
-        <div className={cx("form-auth", "w-[100%] h-[100%]")}>
+        <div className={cx("form-auth", "w-[100vw] h-[100vh] ")}>
             <Image
                 className="w-[100vw] h-[100vh] object-cover"
                 src={thumbnail}
