@@ -86,7 +86,7 @@ export default function PageListTicket({
                             <div className="w-[50px] h-[50px] bg-[#fff] rounded-[10px] shadow-md flex justify-center items-center mr-[20px]">
                                 {listTicket.reduce(
                                     (total, currentValue) =>
-                                        total + currentValue?.totalTicket,
+                                        total + currentValue.totalTicket,
                                     0
                                 )}
                             </div>
@@ -143,7 +143,7 @@ export default function PageListTicket({
                                                                 <i className="bi bi-flag mr-[10px] text-[20px] opacity-[0.7]"></i>
                                                                 <span className="font-[600] text-[20px] opacity-[0.7]">
                                                                     Section :{" "}
-                                                                    {item?.name}
+                                                                    {item.name}
                                                                 </span>
                                                             </p>
 
@@ -155,13 +155,13 @@ export default function PageListTicket({
                                                                 </span>
                                                                 <span
                                                                     className={`${
-                                                                        item?.totalTicket
+                                                                        item.totalTicket
                                                                             ? ""
                                                                             : "text-[red]"
                                                                     } text-[20px] font-[600] `}
                                                                 >
                                                                     {
-                                                                        item?.totalTicket
+                                                                        item.totalTicket
                                                                     }
                                                                 </span>
                                                             </p>
@@ -193,7 +193,7 @@ export default function PageListTicket({
 
                                                         <div className="w-[35%] border-dashed border-[1px] border-l-[#000] border-t-[#fff] border-r-[#fff] border-b-[#fff] p-[20px]">
                                                             <h6 className="font-[700] text-end">
-                                                                £{item?.price}
+                                                                £{item.price}
                                                             </h6>
                                                             <p className="text-end opacity-[0.7]">
                                                                 per ticket
@@ -226,7 +226,7 @@ export default function PageListTicket({
                                         {listTicket[0]?.Calendar?.Stadium.name}
                                     </h5>
 
-                                    <Image
+                                    {/* <Image
                                         src={
                                             listTicket[0]?.Calendar?.Stadium
                                                 ? `${process.env.NEXT_PUBLIC_BASE_URL}${listTicket[0]?.Calendar?.Stadium?.stadiumImage_url}`
@@ -236,7 +236,7 @@ export default function PageListTicket({
                                         width={1000}
                                         height={400}
                                         className="w-[100%] rounded-[10px] "
-                                    />
+                                    /> */}
                                 </div>
                             </Col>
                         </Row>
