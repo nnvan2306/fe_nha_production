@@ -41,7 +41,6 @@
 
 import { getAllTicket } from "@/action/ticketAction";
 import PageListTicket from "@/components/Booking/PageListTicket";
-import { NextPage } from "next";
 import { Suspense } from "react";
 
 interface IParams {
@@ -54,6 +53,7 @@ const fetchTickets = async (id: number) => {
     const res = await getAllTicket(id);
 
     if (res.errorCode === 0) {
+        console.log(res);
         let arrFindMinPrice = res.data?.map((item) => item.price);
         let min = Math.min(...arrFindMinPrice);
         return { tickets: res.data, minPrice: min };
@@ -85,5 +85,3 @@ export default async function PageTicket({ params: { id } }: IParams) {
         </div>
     );
 }
-
-// export default PageTicket;
