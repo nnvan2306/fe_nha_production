@@ -8,7 +8,7 @@ export default function LayoutAuth({
     children: React.ReactNode;
 }) {
     return (
-        <div className="w-[100vw] h-[100vh] relative">
+        <div className="w-[100%] h-[100%] relative">
             <Image
                 className="w-[100vw] h-[100vh] object-cover absolute z-1"
                 src={thumbnail}
