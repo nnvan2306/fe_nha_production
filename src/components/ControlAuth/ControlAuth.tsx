@@ -29,7 +29,7 @@ export default function ControlAuth() {
                     className="bg-[#fff] p-[0]"
                     trigger="click"
                     title={
-                        <div className="h-[100px] w-[100px] bg-[#fff] p-[5px] rounded-[5px]">
+                        <div className="h-[150px] w-[100px] bg-[#fff] p-[5px] rounded-[5px]">
                             {isLogin ? (
                                 <>
                                     <button
@@ -50,7 +50,7 @@ export default function ControlAuth() {
 
                                     <Link href={routes.register.url}>
                                         <button className="w-[100%] h-[30px] border-none mt-[10px] rounded-[5px]">
-                                            Đăng Nhập
+                                            Đăng Ký
                                         </button>
                                     </Link>
                                 </>
