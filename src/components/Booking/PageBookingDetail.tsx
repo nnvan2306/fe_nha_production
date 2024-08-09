@@ -252,9 +252,13 @@ export default function PageBookingDetail({
     };
 
     return (
-        <div className="h-[100%] pt-[30px] w-[80%] ml-[50%] translate-x-[-50%] ">
+        <div className="h-[100%] pt-[30px] md:w-[80%] w-[95%] ml-[50%] translate-x-[-50%] ">
             <Row className="w-[100%] ">
-                <Col span={14} className="pr-[20px]">
+                <Col
+                    md={14}
+                    span={24}
+                    className="md:pr-[20px] md:order-1 order-2"
+                >
                     <div className="flex justify-center items-center w-[100%]">
                         <div
                             className={`w-[30px] h-[30px] border-[2px] border-solid   rounded-full flex justify-center items-center ${
@@ -318,7 +322,7 @@ export default function PageBookingDetail({
                             </p>
 
                             <Row>
-                                <Col span={12} className="pr-[20px]">
+                                <Col md={12} span={24} className="md:pr-[20px]">
                                     <div className="w-[100%] ">
                                         <label htmlFor="email">
                                             Email Address{" "}
@@ -338,6 +342,7 @@ export default function PageBookingDetail({
                                             }
                                         />
                                     </div>
+
                                     <div className="w-[100%]  mt-[30px]">
                                         <label htmlFor="phoneNumber">
                                             Mobile Phone{" "}
@@ -356,8 +361,8 @@ export default function PageBookingDetail({
                                         />
                                     </div>
                                 </Col>
-                                <Col span={12} className="pl-[20px]">
-                                    <div className="w-[100%] ">
+                                <Col md={12} span={24} className="md:pl-[20px]">
+                                    <div className="w-[100%] md:mt-[0px] mt-[30px]">
                                         <label htmlFor="reEmail">
                                             Confirm Email Address{" "}
                                             <span className="text-[red]">
@@ -439,7 +444,7 @@ export default function PageBookingDetail({
                                     </Col>
                                 )}
 
-                                <Col span={12} className="pr-[20px]">
+                                <Col md={12} span={24} className="md:pr-[20px]">
                                     <div className="w-[100%] ">
                                         <label htmlFor="firstName">
                                             First Name
@@ -503,7 +508,7 @@ export default function PageBookingDetail({
                                     </div>
                                 </Col>
 
-                                <Col span={12} className="pl-[20px]">
+                                <Col md={12} span={24} className="md:pl-[20px]">
                                     <div className="w-[100%] ">
                                         <label htmlFor="lastName">
                                             Last Name
@@ -591,8 +596,8 @@ export default function PageBookingDetail({
 
                             <div className="">
                                 <Image
-                                    width={500}
-                                    height={500}
+                                    width={200}
+                                    height={200}
                                     className="ml-[50%] translate-x-[-50%]"
                                     src={`${process.env.NEXT_PUBLIC_QR__URL}${process.env.NEXT_PUBLIC_BANK_ID}-${process.env.NEXT_PUBLIC_BANK_ACCOUNT_NO}-${process.env.NEXT_PUBLIC_BANK_TEMPLATE}.png?amount=${totalPrice}&addInfo=${uuid}`}
                                     alt="QR"
@@ -602,7 +607,11 @@ export default function PageBookingDetail({
                     )}
                 </Col>
 
-                <Col span={10} className="pl-[20px]">
+                <Col
+                    md={10}
+                    span={24}
+                    className="md:pl-[20px] md:mb-[0px] mb-[30px] "
+                >
                     <div className="w-[100%] shadow-md rounded-[10px] overflow-hidden">
                         <Image
                             src={buyTicket}

@@ -42,9 +42,9 @@ export default function PageListTicket({
     };
     return (
         <div className="w-[100%] ">
-            <div className="w-[80%] ml-[50%] translate-x-[-50%]">
+            <div className="md:w-[80%] w-[95%] ml-[50%] translate-x-[-50%]">
                 <div className="w-[100%]  flex">
-                    <div className="w-[75%] bg-[#fff] mt-[20px] p-[20px] rounded-[10px] shadow-md mb-[50px]">
+                    <div className="md:w-[75%] w-[100%] bg-[#fff] mt-[20px] p-[20px] rounded-[10px] shadow-md mb-[50px]">
                         <p className="text-center font-[700] text-[12px] uppercase opacity-[0.5] mb-[10px]">
                             english premier league
                         </p>
@@ -103,10 +103,11 @@ export default function PageListTicket({
                         <BuyingGuide />
                     </div>
 
-                    <div className="w-[25%] ml-[20px]">
+                    <div className="md:w-[25%] md:block hidden ml-[20px]">
                         <BlogChooseMe />
                     </div>
                 </div>
+
                 <div className="">
                     <h5>Available Tickets</h5>
                     <p className="text-[12px] opacity-[0.7]">
@@ -122,8 +123,12 @@ export default function PageListTicket({
                     <Divider />
 
                     <div className="">
-                        <Row>
-                            <Col span={10}>
+                        <Row className="custom-row">
+                            <Col
+                                md={10}
+                                span={24}
+                                className="md:order-1 order-2"
+                            >
                                 <div
                                     className={cx(
                                         "form-list-ticket",
@@ -220,7 +225,7 @@ export default function PageListTicket({
                                 </div>
                             </Col>
 
-                            <Col span={14}>
+                            <Col md={14} span={24} className="md:order-2">
                                 <div className="w-[100%] px-[30px]">
                                     <h5 className="uppercase  text-[red]">
                                         {listTicket[0]?.Calendar?.Stadium.name}
