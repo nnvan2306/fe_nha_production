@@ -47,7 +47,8 @@ const PageComment = ({
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        connected(io, "http://localhost:8080", setSocket);
+        // connected(io, "http://localhost:8080", setSocket);
+        connected(io, "https://api.nha.vandev.top", setSocket);
     }, []);
 
     useEffect(() => {
