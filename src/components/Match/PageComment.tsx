@@ -7,14 +7,11 @@ import { routes } from "@/helpers/menuRouterHeader";
 import { RootState, useAppSelector } from "@/store/store";
 import { IComment, IFeedback, IListLimit } from "@/utils/interface";
 import { Tooltip } from "antd";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
-// import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { io } from "socket.io-client";
+import { io, Socket } from "socket.io-client";
 import Image from "next/image";
-import { Socket } from "socket.io";
 import {
     connected,
     ioHandleCreateFeedback,
@@ -27,8 +24,9 @@ import {
     ioHandlerCreateComment,
 } from "@/helpers/Io";
 import { handleSetListComments } from "@/helpers/handleSetListComment";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
-const cx: Function = className.bind(styles);
+const cx = className.bind(styles);
 
 const PageComment = ({
     listComment,
@@ -47,14 +45,19 @@ const PageComment = ({
     const [socket, setSocket] = useState<Socket | null>(null);
 
     useEffect(() => {
-        // connected(io, "http://localhost:8080", setSocket);
-        connected(io, "https://api.nha.vandev.top", setSocket);
+        const socket = io("https://api.nha.vandev.top", {
+            transports: ["websocket"],
+            secure: true,
+        });
+        setSocket(socket);
+
+        return () => {
+            socket.disconnect();
+        };
     }, []);
 
     useEffect(() => {
         if (!socket) return;
-
-        // data nhận đc sau khi create comment success
 
         socket.on("reply_suc", (data: any) => {
             console.log(data);
@@ -64,15 +67,11 @@ const PageComment = ({
             setTextComment("");
         });
 
-        // data nhận được sau khi like comment success
-
         socket.on("likeCommentSuccess", (data: any) => {
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
         });
-
-        //data nhận được sau khi dislike comment success
 
         socket.on("dislikeCommentSuccess", (data: any) => {
             setListCommentNew(
@@ -80,15 +79,11 @@ const PageComment = ({
             );
         });
 
-        //data nhận được sau khi delete comment success
-
         socket.on("deleteCommentSuccess", (data: any) => {
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
         });
-
-        // data nhận được sau khi create feedback success
 
         socket.on("createFeedbackSuccess", (data: any) => {
             setListCommentNew(
@@ -97,15 +92,11 @@ const PageComment = ({
             setTextFeedback("");
         });
 
-        //data nhận được sau khi delete feedback success
-
         socket.on("deleteFeedbackSuccess", (data: any) => {
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
         });
-
-        // data nhận được sau khi like feedback success
 
         socket.on("likeFeedbackSuccess", (data: any) => {
             setListCommentNew(
@@ -113,16 +104,24 @@ const PageComment = ({
             );
         });
 
-        // data nhận được sau khi dislike feedback success
-
         socket.on("dislikeFeedbackSuccess", (data: any) => {
             setListCommentNew(
                 handleSetListComments(data.data, listViewFeedback)
             );
         });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [socket]);
+        // Cleanup on unmount
+        return () => {
+            socket.off("reply_suc");
+            socket.off("likeCommentSuccess");
+            socket.off("dislikeCommentSuccess");
+            socket.off("deleteCommentSuccess");
+            socket.off("createFeedbackSuccess");
+            socket.off("deleteFeedbackSuccess");
+            socket.off("likeFeedbackSuccess");
+            socket.off("dislikeFeedbackSuccess");
+        };
+    }, [socket, listViewFeedback]);
 
     const isLogin = useAppSelector((state: RootState) => state.auth.isLogin);
     const nameUser = useAppSelector((state: RootState) => state.auth.name);
