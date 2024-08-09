@@ -226,7 +226,7 @@ export default function PageListTicket({
                                         {listTicket[0]?.Calendar?.Stadium.name}
                                     </h5>
 
-                                    {/* <Image
+                                    <Image
                                         src={
                                             listTicket[0]?.Calendar?.Stadium
                                                 ? `${process.env.NEXT_PUBLIC_BASE_URL}${listTicket[0]?.Calendar?.Stadium?.stadiumImage_url}`
@@ -236,7 +236,7 @@ export default function PageListTicket({
                                         width={1000}
                                         height={400}
                                         className="w-[100%] rounded-[10px] "
-                                    /> */}
+                                    />
                                 </div>
                             </Col>
                         </Row>
