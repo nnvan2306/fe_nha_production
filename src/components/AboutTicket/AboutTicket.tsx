@@ -2,7 +2,7 @@ import React from "react";
 
 export default function AboutTicket() {
     return (
-        <div className="w-[80%] ml-[50%] translate-x-[-50%] p-[20px] bg-[#fff] shadow-md rounded-[20px] mt-[30px]">
+        <div className="md:w-[80%] w-[95%] ml-[50%] translate-x-[-50%] p-[20px] bg-[#fff] shadow-md rounded-[20px] mt-[30px]">
             <h6 className="text-[red] uppercase">
                 about premier league tickets
             </h6>

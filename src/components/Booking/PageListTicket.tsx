@@ -238,9 +238,9 @@ export default function PageListTicket({
                                                 : ""
                                         }
                                         alt="stadium"
-                                        width={400}
-                                        height={400}
-                                        className="w-[100%] rounded-[10px] "
+                                        width={100}
+                                        height={220}
+                                        className="w-[100%] md:h-[400px] rounded-[10px] "
                                     />
                                 </div>
                             </Col>
