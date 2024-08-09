@@ -8,7 +8,7 @@ import { Suspense } from "react";
 
 import { io } from "socket.io-client";
 // const socket = io("ws://localhost:8081");
-const socket = io("ws://api.nha.vandev.top");
+const socket = io("wss://api.nha.vandev.top");
 
 interface IParams {
     params: {
