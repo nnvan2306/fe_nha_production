@@ -238,7 +238,7 @@ export default function PageListTicket({
                                                 : ""
                                         }
                                         alt="stadium"
-                                        width={1000}
+                                        width={400}
                                         height={400}
                                         className="w-[100%] rounded-[10px] "
                                     />
