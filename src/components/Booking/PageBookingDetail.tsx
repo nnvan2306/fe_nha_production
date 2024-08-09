@@ -323,7 +323,7 @@ export default function PageBookingDetail({
 
                             <Row>
                                 <Col md={12} span={24} className="md:pr-[20px]">
-                                    <div className="w-[100%] ">
+                                    <div className="w-[100%]">
                                         <label htmlFor="email">
                                             Email Address{" "}
                                             <span className="text-[red]">
@@ -341,9 +341,30 @@ export default function PageBookingDetail({
                                                 setEmail(e.target.value)
                                             }
                                         />
-                                    </div>
 
-                                    <div className="w-[100%]  mt-[30px]">
+                                        <div className="w-[100%] md:mt-[0px] mt-[30px]">
+                                            <label htmlFor="reEmail">
+                                                Confirm Email Address{" "}
+                                                <span className="text-[red]">
+                                                    *
+                                                </span>
+                                            </label>
+                                            <br />
+                                            <input
+                                                id="reEmail"
+                                                type="email"
+                                                required
+                                                className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
+                                                value={reEmail}
+                                                onChange={(e) =>
+                                                    setReEmail(e.target.value)
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col md={12} span={24} className="md:pl-[20px]">
+                                    <div className="w-[100%] md:mt-[0px] mt-[30px]">
                                         <label htmlFor="phoneNumber">
                                             Mobile Phone{" "}
                                             <span className="text-[red]">
@@ -358,27 +379,6 @@ export default function PageBookingDetail({
                                             country="VN"
                                             value={phoneNumber}
                                             onChange={setPhoneNumber}
-                                        />
-                                    </div>
-                                </Col>
-                                <Col md={12} span={24} className="md:pl-[20px]">
-                                    <div className="w-[100%] md:mt-[0px] mt-[30px]">
-                                        <label htmlFor="reEmail">
-                                            Confirm Email Address{" "}
-                                            <span className="text-[red]">
-                                                *
-                                            </span>
-                                        </label>
-                                        <br />
-                                        <input
-                                            id="reEmail"
-                                            type="email"
-                                            required
-                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md"
-                                            value={reEmail}
-                                            onChange={(e) =>
-                                                setReEmail(e.target.value)
-                                            }
                                         />
                                     </div>
                                 </Col>
@@ -465,50 +465,7 @@ export default function PageBookingDetail({
                                             }
                                         />
                                     </div>
-                                    <div className="w-[100%] ">
-                                        <label htmlFor="address">
-                                            Address
-                                            <span className="text-[red]">
-                                                *
-                                            </span>
-                                        </label>
-                                        <br />
 
-                                        <input
-                                            type="text"
-                                            id="address"
-                                            required
-                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                            value={address}
-                                            onChange={(e) =>
-                                                setAddress(e.target.value)
-                                            }
-                                        />
-                                    </div>
-
-                                    <div className="w-[100%] ">
-                                        <label htmlFor="country">
-                                            Country
-                                            <span className="text-[red]">
-                                                *
-                                            </span>
-                                        </label>
-                                        <br />
-
-                                        <input
-                                            type="text"
-                                            id="country"
-                                            required
-                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
-                                            value={country}
-                                            onChange={(e) =>
-                                                setCountry(e.target.value)
-                                            }
-                                        />
-                                    </div>
-                                </Col>
-
-                                <Col md={12} span={24} className="md:pl-[20px]">
                                     <div className="w-[100%] ">
                                         <label htmlFor="lastName">
                                             Last Name
@@ -531,6 +488,29 @@ export default function PageBookingDetail({
                                     </div>
 
                                     <div className="w-[100%] ">
+                                        <label htmlFor="address">
+                                            Address
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="address"
+                                            required
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={address}
+                                            onChange={(e) =>
+                                                setAddress(e.target.value)
+                                            }
+                                        />
+                                    </div>
+                                </Col>
+
+                                <Col md={12} span={24} className="md:pl-[20px]">
+                                    <div className="w-[100%] ">
                                         <label htmlFor="city">
                                             City
                                             <span className="text-[red]">
@@ -547,6 +527,27 @@ export default function PageBookingDetail({
                                             value={city}
                                             onChange={(e) =>
                                                 setCity(e.target.value)
+                                            }
+                                        />
+                                    </div>
+
+                                    <div className="w-[100%] ">
+                                        <label htmlFor="country">
+                                            Country
+                                            <span className="text-[red]">
+                                                *
+                                            </span>
+                                        </label>
+                                        <br />
+
+                                        <input
+                                            type="text"
+                                            id="country"
+                                            required
+                                            className="w-[100%] p-[10px] mt-[10px] border-[1px] border-solid border-[#ccc] rounded-[10px] shadow-md mb-[20px]"
+                                            value={country}
+                                            onChange={(e) =>
+                                                setCountry(e.target.value)
                                             }
                                         />
                                     </div>
@@ -610,7 +611,7 @@ export default function PageBookingDetail({
                 <Col
                     md={10}
                     span={24}
-                    className="md:pl-[20px] md:mb-[0px] mb-[30px] "
+                    className="md:pl-[20px] md:mb-[0px] mb-[30px] md:order-2"
                 >
                     <div className="w-[100%] shadow-md rounded-[10px] overflow-hidden">
                         <Image
